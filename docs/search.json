@@ -1,0 +1,43 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "EAE1106 - Métodos Computacionais para Economia",
+    "section": "",
+    "text": "Sobre este material\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "crumbs": [
+      "Sobre este material"
+    ]
+  },
+  {
+    "objectID": "summary.html",
+    "href": "summary.html",
+    "title": "Fundamentos de Computação",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.",
+    "crumbs": [
+      "Fundamentos de Computação"
+    ]
+  },
+  {
+    "objectID": "01-introducao.html",
+    "href": "01-introducao.html",
+    "title": "1  Jupyter Notebook",
+    "section": "",
+    "text": "print(\"Hello World\")\n\nHello World",
+    "crumbs": [
+      "Fundamentos de Computação",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Jupyter Notebook</span>"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Fundamentos de Computação",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.",
+    "crumbs": [
+      "Fundamentos de Computação"
+    ]
+  }
+]
