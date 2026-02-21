@@ -1,0 +1,41 @@
+/* Remove o título textual do livro na sidebar (reader-mode) */
+/*.sidebar .sidebar-title {
+  display: none ;
+}
+
+/* Headings */
+
+.quarto-section-identifier {
+  color: #6C6C6C;
+  font-weight: 600;
+}
+
+.content h2.anchored,
+.content h3.anchored,
+.content h4.anchored {
+  color: #2b2b2b;
+  font-weight: 300;
+}
+
+/* JupyterLab-like code cell styling */
+div.sourceCode {
+  background-color: #f7f7f7 !important;
+  border: 1px solid #cfcfcf !important;
+  border-radius: 2px;
+  padding: 10px;
+}
+
+pre.sourceCode {
+  background-color: #f7f7f7 !important;
+  color: #000000; /* Standard code color */
+}
+
+/* Optional: Match syntax highlighting */
+code.sourceCode span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code.sourceCode span.dt { color: #902000; } /* DataType */
+code.sourceCode span.dv { color: #40a070; } /* DecVal */
+code.sourceCode span.bn { color: #40a070; } /* BaseN */
+code.sourceCode span.fl { color: #40a070; } /* Float */
+code.sourceCode span.ch { color: #4070a0; } /* Char */
+code.sourceCode span.st { color: #4070a0; } /* String */
+code.sourceCode span.co { color: #60a0b0; font-style: italic; } /* Comment */

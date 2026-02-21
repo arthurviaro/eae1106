@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Como um computador funciona – EAE1106 - Métodos Computacionais para Economia</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./primeiros-passos.html" rel="next">
+<link href="./fundamentos.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-25a4e8620ae17d49cd0c3861fdf92567.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fundamentos.html">Fundamentos de Computação</a></li><li class="breadcrumb-item"><a href="./computacao.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Como um computador funciona</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/usp.jpg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/usp.jpg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">EAE1106 - Métodos Computacionais para Economia</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/arthurviaro/eae1106" title="Código fonte" class="quarto-navigation-tool px-1" aria-label="Código fonte"><i class="bi bi-github"></i></a>
+    <a href="./EAE1106---Métodos-Computacionais-para-Economia.pdf" title="Baixar PDF" class="quarto-navigation-tool px-1" aria-label="Baixar PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sobre este material</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prefacio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introdução</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./fundamentos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentos de Computação</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./computacao.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Como um computador funciona</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./primeiros-passos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Primeiros passos no Python</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">1.1</span> Introdução</a>
+  <ul class="collapse">
+  <li><a href="#pré-requisitos" id="toc-pré-requisitos" class="nav-link" data-scroll-target="#pré-requisitos"><span class="header-section-number">1.1.1</span> Pré-requisitos</a></li>
+  </ul></li>
+  <li><a href="#como-um-computador-funciona" id="toc-como-um-computador-funciona" class="nav-link" data-scroll-target="#como-um-computador-funciona"><span class="header-section-number">1.2</span> Como um computador funciona</a>
+  <ul class="collapse">
+  <li><a href="#sistema-computacional" id="toc-sistema-computacional" class="nav-link" data-scroll-target="#sistema-computacional"><span class="header-section-number">1.2.1</span> Sistema computacional</a></li>
+  <li><a href="#arquitetura-de-um-computador" id="toc-arquitetura-de-um-computador" class="nav-link" data-scroll-target="#arquitetura-de-um-computador"><span class="header-section-number">1.2.2</span> Arquitetura de um computador</a></li>
+  <li><a href="#bits-e-bytes" id="toc-bits-e-bytes" class="nav-link" data-scroll-target="#bits-e-bytes"><span class="header-section-number">1.2.3</span> Bits e bytes</a></li>
+  <li><a href="#ascii" id="toc-ascii" class="nav-link" data-scroll-target="#ascii"><span class="header-section-number">1.2.4</span> ASCII</a></li>
+  <li><a href="#unicode" id="toc-unicode" class="nav-link" data-scroll-target="#unicode"><span class="header-section-number">1.2.5</span> UNICODE</a></li>
+  <li><a href="#rgb" id="toc-rgb" class="nav-link" data-scroll-target="#rgb"><span class="header-section-number">1.2.6</span> RGB</a></li>
+  <li><a href="#processamento-memória-e-armazenamento-na-prática" id="toc-processamento-memória-e-armazenamento-na-prática" class="nav-link" data-scroll-target="#processamento-memória-e-armazenamento-na-prática"><span class="header-section-number">1.2.7</span> Processamento, memória e armazenamento na prática</a></li>
+  </ul></li>
+  <li><a href="#arquivos-e-diretórios" id="toc-arquivos-e-diretórios" class="nav-link" data-scroll-target="#arquivos-e-diretórios"><span class="header-section-number">1.3</span> Arquivos e diretórios</a>
+  <ul class="collapse">
+  <li><a href="#estrutura-hierárquica" id="toc-estrutura-hierárquica" class="nav-link" data-scroll-target="#estrutura-hierárquica"><span class="header-section-number">1.3.1</span> Estrutura hierárquica</a></li>
+  <li><a href="#extensões-de-arquivos" id="toc-extensões-de-arquivos" class="nav-link" data-scroll-target="#extensões-de-arquivos"><span class="header-section-number">1.3.2</span> Extensões de arquivos</a></li>
+  </ul></li>
+  <li><a href="#terminal" id="toc-terminal" class="nav-link" data-scroll-target="#terminal"><span class="header-section-number">1.4</span> Terminal</a></li>
+  <li><a href="#linguagens-de-programação" id="toc-linguagens-de-programação" class="nav-link" data-scroll-target="#linguagens-de-programação"><span class="header-section-number">1.5</span> Linguagens de programação</a>
+  <ul class="collapse">
+  <li><a href="#sintaxe-e-semântica" id="toc-sintaxe-e-semântica" class="nav-link" data-scroll-target="#sintaxe-e-semântica"><span class="header-section-number">1.5.1</span> Sintaxe e semântica</a></li>
+  <li><a href="#diferenças-entre-linguagens-naturais-e-formais" id="toc-diferenças-entre-linguagens-naturais-e-formais" class="nav-link" data-scroll-target="#diferenças-entre-linguagens-naturais-e-formais"><span class="header-section-number">1.5.2</span> Diferenças entre linguagens naturais e formais</a></li>
+  <li><a href="#alto-nível-x-baixo-nível" id="toc-alto-nível-x-baixo-nível" class="nav-link" data-scroll-target="#alto-nível-x-baixo-nível"><span class="header-section-number">1.5.3</span> Alto nível X baixo nível</a></li>
+  <li><a href="#linguagem-compilada-x-interpretada" id="toc-linguagem-compilada-x-interpretada" class="nav-link" data-scroll-target="#linguagem-compilada-x-interpretada"><span class="header-section-number">1.5.4</span> Linguagem Compilada X Interpretada</a></li>
+  <li><a href="#paradigmas" id="toc-paradigmas" class="nav-link" data-scroll-target="#paradigmas"><span class="header-section-number">1.5.5</span> Paradigmas</a></li>
+  <li><a href="#tipagem" id="toc-tipagem" class="nav-link" data-scroll-target="#tipagem"><span class="header-section-number">1.5.6</span> Tipagem</a></li>
+  </ul></li>
+  <li><a href="#algoritmos" id="toc-algoritmos" class="nav-link" data-scroll-target="#algoritmos"><span class="header-section-number">1.6</span> Algoritmos</a></li>
+  <li><a href="#pseudocódigo" id="toc-pseudocódigo" class="nav-link" data-scroll-target="#pseudocódigo"><span class="header-section-number">1.7</span> Pseudocódigo</a></li>
+  <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão"><span class="header-section-number">1.8</span> Conclusão</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">1.9</span> Exercícios</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/arthurviaro/eae1106/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./fundamentos.html">Fundamentos de Computação</a></li><li class="breadcrumb-item"><a href="./computacao.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Como um computador funciona</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-computacao" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Como um computador funciona</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introdução" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">1.1</span> Introdução</h2>
+<p>Antes de escrever qualquer linha de código, é importante entender o ambiente no qual a programação acontece. Programar não é apenas aprender uma linguagem específica, mas também compreender como o computador organiza arquivos, executa comandos e interage com o sistema operacional. Muitos dos erros e dificuldades enfrentados por iniciantes em programação não estão relacionados à lógica do código em si, mas ao uso do computador como ferramenta de trabalho: navegar por diretórios, localizar arquivos, executar programas e interpretar mensagens do sistema. Esses aspectos são frequentemente tratados como triviais, mas são fundamentais para o uso eficiente de qualquer linguagem de programação.</p>
+<p>Este capítulo introduz conceitos fundamentais sobre o funcionamento de computadores, a representação de informações em bits e bytes, a organização de arquivos e a forma como interagimos com o sistema operacional via terminal. Esses elementos servirão como infraestrutura conceitual para todo o restante do curso. O foco aqui não é aprofundar detalhes técnicos de hardware ou sistemas operacionais, mas fornecer uma visão prática e funcional do ambiente computacional que será utilizado ao longo da disciplina.</p>
+<div id="fig-olddesk" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-olddesk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/old_desktop.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%" width="700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-olddesk-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.1: Setup usual de um computador pessoal no começo dos anos 2000. Fonte: <em>Wikimedia Commons</em>
+</figcaption>
+</figure>
+</div>
+<section id="pré-requisitos" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" class="anchored" data-anchor-id="pré-requisitos"><span class="header-section-number">1.1.1</span> Pré-requisitos</h3>
+<p>Neste capítulo introdutório não utilizaremos nenhum programa ou linguagem. Ele foi escrito para que mesmo o aluno sem nenhum tipo de conhecimento em computação e com o mínimo de conhecimento a respeito de operações matemática elementares tenha capacidade de acompanhar. Basta curiosidade!</p>
+</section>
+</section>
+<section id="como-um-computador-funciona" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="como-um-computador-funciona"><span class="header-section-number">1.2</span> Como um computador funciona</h2>
+<p>Um computador realiza duas coisas e apenas duas coisas: faz operações e guarda de forma eficiente o resultado dessas operações. No entanto, ao fazer essas duas coisas de forma extremamente eficiente essa máquina chamada computador nos permite receber, armazenar, processar e transmitir informações. Em essência, o computador nos serve ao propósito de <strong>resolução de problemas</strong>. Isso significa que, através de uma linguagem formal (especificamente operações de computação), podemos formular problemas e programar meios de resolver de forma automatizada tais problemas. No fim das contas, programar é o ato de criar programas, isto é, estabelecer uma sequência de instruções em linguagem formal que especifica como executar uma determinada operação no computador.</p>
+<p>Mas antes de avançar na ideia de programa e algoritmos, quais são as características de um computador como o conhecemos?</p>
+<section id="sistema-computacional" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="sistema-computacional"><span class="header-section-number">1.2.1</span> Sistema computacional</h3>
+<p>Um sistema computacional é resultado da integração de componentes atuando como uma entidade, com o propósito de processar dados, isto é, realizar algum tipo de operação lógica envolvendo os dados, de modo a produzir diferentes níveis de informações. Tais sistemas são compostos por 3 principais elementos: hardware, software e o componente humano. O hardware inclui os componentes físicos enquanto o software é o conjunto de instruções que diz ao hardware o que fazer. No entanto, o software não elabora e decide sozinho o tipo de instrução a ser enviada ao hardware, é só através do componente humano que as instruções e objetivos são definidos.</p>
+<ul>
+<li><strong>Hardware</strong>: componente físico de um sistema de computação, isto é, todos os equipamentos utilizados pelo usuário nas ações de entrada, processamento, armazenamento e saída de dados. Exemplos:
+<ul>
+<li>Teclado, mouse, impressora</li>
+<li>Unidade central de processamento (CPU, em inglês) ou processador</li>
+<li>Placa mãe</li>
+<li>Placa de vídeo (GPU)</li>
+<li>Memória RAM</li>
+<li>Disco rígido de armazenamento</li>
+</ul></li>
+<li><strong>Software</strong>: componente lógico de um sistema de computação, isto é, séries de instruções que fazem o computador funcionar. São os famosos programas de computador, que podem ser (i) proprietários e utilizáveis a partir da compra de uma licença ou (ii) gratuitos. Exemplos:
+<ul>
+<li>Editores de texto (e.g., Microsoft Word)</li>
+<li>Editor de planilhas (e.g., Microsoft Excel)</li>
+<li>Browsers para navegação na internet (e.g., Safari e Google Chrome)</li>
+</ul></li>
+<li><strong>Componente humano</strong>: as pessoas, que utilizam o computador basicamente como ferramenta para atingir determinado fim, para resolver problemas. Sem a ação de um indivíduo o sistema computacional não funciona, já que (ainda) depende das instruções e direcionamento humano para definir o que o software deve fazer e como deve interagir com o hardware.</li>
+</ul>
+</section>
+<section id="arquitetura-de-um-computador" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="arquitetura-de-um-computador"><span class="header-section-number">1.2.2</span> Arquitetura de um computador</h3>
+<p>A arquitetura de um computador define como os componentes estão interconectados e como eles colaboram para executar tarefas. Os computadores, como os conhecemos hoje, são estruturados em cima da lógica proposta inicialmente por John Von Neumann, matemático húngaro que viveu durante a primeira metade do século XX e que contribuiu imensamente em várias áreas das ciências. Embora tenhamos hoje uma complexidade maior nos elementos que compõe a arquitetura de um computador, a estrutura básica por trás dos computadores mais modernos continua sendo aquela proposta por Von Neumann. Essa arquitetura pode ser representado pelo diagrama abaixo:</p>
+<div id="fig-arquitetura" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-arquitetura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/arquitetura_VonNeumann.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%" width="700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-arquitetura-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.2: Diagrama que representa o funcionamento da arquitetura Von-Neumann
+</figcaption>
+</figure>
+</div>
+<p>Essencialmente, o hadware que compõe as partes da arquitetura de um computador podem ser dividas em 3 partes:</p>
+<ul>
+<li><p><strong>Dispositivos de entrada e saída</strong>: é através deles que o usuário dialoga com a máquina. Através do teclado e mouse, por exemplo, o usuário fornece informações ao computador a partir das quais processos serão realizados e seus resultados serão percebidos pelos dispositivos de saída (monitor e impressora, por exemplo).</p></li>
+<li><p><strong>Processador ou CPU</strong>: é o cérebro do sistema computacional, é nele que serão executados cálculos e instruções lógicas dos usuários.</p></li>
+<li><p><strong>Memória</strong>: aqui são armazenados temporariamente os resultados dos cálculos, dados e instruções. Esse armazenamento na memória, porém, não é feito de forma permanente, ele serve apenas como suporte ao processador. É como se o processador utilizasse a memória de caderno de anotações, retomando o resultado dos cálculos já realizados sempre que necessário.</p></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled" title="Importante">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Não confunda <em>memória</em> com o que chamamos de <em>armazenamento</em>. A memória do computador, normalmente na forma da chamada memória RAM (sigla para <em>Random Access Memory</em>), é responsável por armazenar temporariamente os dados de dos programas que estão em uso, permitindo acesso rápido pelo processador. É também chamada de memória volátil: todo o seu conteúdo é perdido quando o computador é desligado.</p>
+<p>Já as informações armazenadas no disco rígido (<em>Hard Disk Drive</em>, HDD) ou na unidade de estado sólido (<em>Solid-State Drive</em>, SSD) não são perdidas quando o computador é desligado. Esses dispositivos mantêm os dados armazenados de forma persistente, funcionando como a “memória de longo prazo” do computador. Por isso, esse tipo de armazenamento é chamado de memória não volátil.</p>
+<p>Fazendo uma analogia com o funcionamento do nosso cérebro, a memória RAM armazena informações de curto prazo, como o que você almoçou hoje. Esse tipo de informação é importante ao longo do dia, por exemplo para saber se você já se alimentou bem ou se ainda está longe da sua meta diária de proteína, mas costuma ser esquecida depois que você dorme.</p>
+<p>Já o HDD ou SSD armazena informações de longo prazo, como memórias da infância ou experiências passadas. Essas informações não são utilizadas constantemente no dia a dia, mas permanecem disponíveis e podem ser úteis em conversas com amigos ou como aprendizado acumulado, por exemplo na hora de decidir como cuidar dos seus filhos quando chegar a hora.</p>
+</div>
+</div>
+</section>
+<section id="bits-e-bytes" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" class="anchored" data-anchor-id="bits-e-bytes"><span class="header-section-number">1.2.3</span> Bits e bytes</h3>
+<p>Para entender como um computador armazena e processa informações, é necessário compreender o conceito de sistema binário ou sistema de base 2<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Diferentemente do sistema decimal, que utilizamos no dia a dia e possui dez dígitos (de 0 a 9), os computadores operam utilizando apenas dois estados possíveis: 0 e 1. Pense nisso como um interruptor, em que 1 representa o estado “ligado” e 0 o estado “desligado”. Os processadores atuais de um computador são resultado da junção de bilhões desses minúsculos “interruptores”, também chamados de transistores.</p>
+<p>Esses dois estados, 0 ou 1, também são chamados de bits (do inglês <em>binary digits</em>). Um bit representa a menor unidade de informação que um computador pode armazenar. Qualquer informação processada por um computador – números, textos, imagens ou vídeos – é, em última instância, representada como uma sequência de bits.</p>
+<p>Como trabalhar com bits individualmente seria pouco prático, eles são agrupados em unidades maiores chamadas de bytes. Um byte é composto por 8 bits e permite representar um conjunto maior de valores. Um byte pode representar 256 (<span class="math inline">\(2^8 = 256\)</span>) combinações diferentes, o que é suficiente para representar todas as letras maiúsculas e minúsculas, números e símbolos básicos do alfabeto inglês. Não à toa, o byte se tornou a unidade padrão de medida quando o assunto é capacidade de armazenar informação em um computador. A Tabela <a href="#tbl-binario" class="quarto-xref">Tabela&nbsp;<span>1.1</span></a> mostra como converter alguns números do sistema decimal para o sistema binário de 8 bits, em que cada dígito dibário indica a presença ou ausência de uma potência de 2.</p>
+<div id="tbl-binario" class="hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,20,60]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-binario-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1.1: Representação de números decimais no sistema binário e detalhamento do cálculo para conversão.
+</figcaption>
+<div aria-describedby="tbl-binario-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-hover caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 60%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Número decimal</th>
+<th style="text-align: center;">Número binário</th>
+<th style="text-align: center;">Cálculo para conversão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">00000000</td>
+<td style="text-align: center;"><span class="math inline">\(0\cdot 2^7 + 0\cdot 2^6 + 0\cdot 2^5 + 0\cdot 2^4 + 0\cdot 2^3 + 0\cdot 2^2 + 0\cdot 2^1 + 0\cdot 2^0 = 0\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">00000001</td>
+<td style="text-align: center;"><span class="math inline">\(0\cdot 2^7 + 0\cdot 2^6 + 0\cdot 2^5 + 0\cdot 2^4 + 0\cdot 2^3 + 0\cdot 2^2 + 0\cdot 2^1 + 1\cdot 2^0 = 1\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">00000101</td>
+<td style="text-align: center;"><span class="math inline">\(0\cdot 2^7 + 0\cdot 2^6 + 0\cdot 2^5 + 0\cdot 2^4 + 0\cdot 2^3 + 1\cdot 2^2 + 0\cdot 2^1 + 1\cdot 2^0 = 5\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">00110000</td>
+<td style="text-align: center;"><span class="math inline">\(0\cdot 2^7 + 0\cdot 2^6 + 1\cdot 2^5 + 1\cdot 2^4 + 0\cdot 2^3 + 0\cdot 2^2 + 0\cdot 2^1 + 0\cdot 2^0 = 48\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">137</td>
+<td style="text-align: center;">10001001</td>
+<td style="text-align: center;"><span class="math inline">\(1\cdot 2^7 + 0\cdot 2^6 + 0\cdot 2^5 + 0\cdot 2^4 + 1\cdot 2^3 + 0\cdot 2^2 + 0\cdot 2^1 + 1\cdot 2^0 = 137\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">255</td>
+<td style="text-align: center;">11111111</td>
+<td style="text-align: center;"><span class="math inline">\(1\cdot 2^7 + 1\cdot 2^6 + 1\cdot 2^5 + 1\cdot 2^4 + 1\cdot 2^3 + 1\cdot 2^2 + 1\cdot 2^1 + 1\cdot 2^0 = 255\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>A partir dos bytes, surgem unidades maiores, amplamente utilizadas para medir o tamanho de arquivos, a quantidade de memória e a capacidade de armazenamento: quilobytes, megabytes, gigabytes, terabytes e petabytes. Essas unidades indicam, essencialmente, quantos bytes são necessários para representar uma determinada quantidade de informação.</p>
+<ul>
+<li>Kilobyte (KB): <span class="math inline">\(1{,}024\)</span> (ou <span class="math inline">\(2^{10}\)</span>) bytes.</li>
+<li>Megabyte (MB): <span class="math inline">\(1{,}048{,}576\)</span> (ou <span class="math inline">\(2^{20}\)</span>) bytes.</li>
+<li>Gigabyte (GB): <span class="math inline">\(1{,}073{,}741{,}824\)</span> (ou <span class="math inline">\(2^{30}\)</span>) bytes.</li>
+<li>Terabyte (TB): <span class="math inline">\(1{,}099{,}511{,}627{,}776\)</span> (ou <span class="math inline">\(2^{40}\)</span>) bytes.</li>
+<li>Petabyte (PB): <span class="math inline">\(1{,}125{,}899{,}906{,}842{,}624\)</span> (ou <span class="math inline">\(2^{50}\)</span>) bytes.</li>
+<li>Exabyte, Zettabyte, Yottabyte…</li>
+</ul>
+<p>Compreender bits e bytes é fundamental para entender por que arquivos têm tamanhos diferentes, por que algumas operações exigem mais memória do que outras e por que certas tarefas computacionais são mais custosas do ponto de vista de processamento. Esses agrupamentos de bits (bytes) são as unidades básicas que a memória e o armazenamento usam para guardar informação. A próxima seção explica o papel desses componentes e como eles impactam o desempenho prático.</p>
+</section>
+<section id="ascii" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" class="anchored" data-anchor-id="ascii"><span class="header-section-number">1.2.4</span> ASCII</h3>
+<p>Assim como os números são representados por padrões binários de zeros e uns, os caracteres de texto — letras, números, sinais de pontuação e símbolos — também são codificados como sequências de bits. Como os mesmos padrões binários poderiam ser interpretados de maneiras distintas, tornou-se necessário estabelecer uma convenção padronizada.</p>
+<p>Uma das primeiras e mais importantes convenções foi o ASCII (<em>American Standard Code for Information Interchange</em>). O ASCII associa um número inteiro específico a cada caractere, permitindo que computadores representem texto de forma consistente. Por exemplo, a letra <code>A</code> está associada ao número decimal 65, que em binário é representado por <code>01000001</code>.</p>
+<p>Suponha que você recebesse uma sequência binária correspondente aos números decimais 72, 73 e 33. Ao convertê-los segundo a tabela ASCII, obteríamos os caracteres <code>H, I e !</code>, formando a expressão <code>HI!</code>. É graças a padrões como o ASCII que diferentes computadores “concordam” sobre qual número representa qual caractere.</p>
+<p>A tabela a seguir apresenta um mapa dos valores ASCII:</p>
+<div id="tbl-ascii" class="hover quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,20,60]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-ascii-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabela&nbsp;1.2: Tabela ASCII.
+</figcaption>
+<div aria-describedby="tbl-ascii-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="table-hover caption-top table">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: center;">NUL</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">DLE</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: center;">SP</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: center;">@</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: center;">P</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: center;">`</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: center;">p</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: center;">SOH</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">DC1</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: center;">!</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: center;">A</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: center;">Q</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: center;">a</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: center;">q</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: center;">STX</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">DC2</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: center;">”</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: center;">B</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: center;">R</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: center;">b</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: center;">r</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">ETX</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">DC3</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: center;">#</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: right;">67</td>
+<td style="text-align: center;">C</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: center;">S</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: center;">c</td>
+<td style="text-align: right;">115</td>
+<td style="text-align: center;">s</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: center;">EOT</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">DC4</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: center;">$</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: center;">D</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: center;">T</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: center;">d</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: center;">t</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">ENQ</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">NAK</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: center;">%</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: center;">E</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: center;">U</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: center;">e</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: center;">u</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td style="text-align: center;">ACK</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">SYN</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: center;">&amp;</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: center;">F</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: center;">V</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: center;">f</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: center;">v</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">BEL</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: center;">ETB</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: center;">’</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: center;">G</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: center;">W</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: center;">g</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: center;">w</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">8</td>
+<td style="text-align: center;">BS</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: center;">CAN</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: center;">(</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: center;">H</td>
+<td style="text-align: right;">88</td>
+<td style="text-align: center;">X</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: center;">h</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: center;">x</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">9</td>
+<td style="text-align: center;">HT</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">EM</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: center;">)</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: center;">I</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: center;">Y</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: center;">i</td>
+<td style="text-align: right;">121</td>
+<td style="text-align: center;">y</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">10</td>
+<td style="text-align: center;">LF</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: center;">SUB</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: center;">*</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: center;">:</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: center;">J</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: center;">Z</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: center;">j</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: center;">z</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">11</td>
+<td style="text-align: center;">VT</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: center;">ESC</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: center;">+</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: center;">;</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: center;">K</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: center;">[</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: center;">k</td>
+<td style="text-align: right;">123</td>
+<td style="text-align: center;">{</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">12</td>
+<td style="text-align: center;">FF</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: center;">FS</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: center;">,</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: center;">&lt;</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: center;">L</td>
+<td style="text-align: right;">92</td>
+<td style="text-align: center;">\</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: center;">l</td>
+<td style="text-align: right;">124</td>
+<td style="text-align: center;">|</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">CR</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: center;">GS</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: center;">-</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: center;">=</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: center;">M</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: center;">]</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: center;">m</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: center;">}</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">14</td>
+<td style="text-align: center;">SO</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: center;">RS</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: center;">.</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: center;">&gt;</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: center;">N</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: center;">^</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: center;">n</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: center;">~</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">SI</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: center;">US</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: center;">/</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: center;">?</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: center;">O</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: center;">_</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: center;">o</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: center;">DEL</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Note que cada caractere ASCII ocupa 1 byte (8 bits). Com 8 bits, é possível representar até 256 valores distintos (de 0 a 255). No entanto, o ASCII padrão utiliza apenas os valores de 0 a 127, totalizando 128 caracteres. Os códigos de 0 a 31 e o 127 correspondem a caracteres de controle (como quebra de linha e tabulação), enquanto os valores de 32 a 126 representam caracteres imprimíveis.</p>
+</section>
+<section id="unicode" class="level3" data-number="1.2.5">
+<h3 data-number="1.2.5" class="anchored" data-anchor-id="unicode"><span class="header-section-number">1.2.5</span> UNICODE</h3>
+<p>Com a expansão da comunicação digital em escala global, o limite de 128 caracteres do ASCII original - e mesmo as extensões de 256 caracteres - tornou-se insuficiente. Era necessário um padrão capaz de representar diferentes alfabetos, sistemas de escrita, símbolos matemáticos, caracteres técnicos e, mais recentemente, emojis.</p>
+<p>😀 😃 😄 😁 😆 😅 😂 🙂 🙃 😉 😊 😇 😍 😘 😗 😙 😚 😋 😛 😜 😝 🤑 🤓 😎 🤗 😏 😶 😐 😑 😒 🙄 😬 😕 ☹️ 😟 😮 😯 😲 😳 😦 😧 😨</p>
+<p>O Unicode surgiu com esse objetivo: criar um sistema universal de codificação capaz de representar praticamente todos os sistemas de escrita utilizados pela humanidade, além de símbolos e elementos gráficos. Diferentemente do ASCII, o Unicode não está limitado a 8 bits. Ele define um conjunto muito mais amplo de códigos (chamados code points), que podem ser representados por diferentes esquemas de codificação, como UTF-8, UTF-16 e UTF-32. O UTF-8, por exemplo, é hoje o padrão dominante na internet.</p>
+<p>Embora o código numérico associado a cada caractere seja universal, sua aparência visual pode variar entre sistemas e fabricantes. Assim, um mesmo emoji pode ter pequenas diferenças de design em dispositivos da Apple, Google ou Microsoft. O padrão Unicode continua em expansão, incorporando novos caracteres e emojis para refletir transformações culturais, linguísticas e tecnológicas.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+</section>
+<section id="rgb" class="level3" data-number="1.2.6">
+<h3 data-number="1.2.6" class="anchored" data-anchor-id="rgb"><span class="header-section-number">1.2.6</span> RGB</h3>
+<p>Os mesmos zeros e uns que representam letras e números também podem representar cores. No sistema RGB (Red, Green, Blue), cada cor é definida pela combinação das intensidades de vermelho, verde e azul. Cada uma dessas três intensidades é representada por um número entre 0 e 255 — ou seja, 8 bits para cada canal de cor. Assim, uma cor no sistema RGB utiliza 3 bytes (24 bits no total):</p>
+<p><img src="images/rgb-1.png" class="img-fluid"></p>
+<p>Por exemplo, a sequência numérica (72, 73, 33) — que no contexto ASCII corresponde a <code>HI!</code> — poderia, em um contexto de imagem, ser interpretada como uma cor específica. Essa combinação resulta em um tom escuro amarelado-esverdeado:</p>
+<p><img src="images/rgb-2.png" class="img-fluid"> = <img src="images/rgb-3.png" class="img-fluid"></p>
+<p>Cada conjunto de três valores RGB forma um pixel (um ponto de cor). Uma imagem digital nada mais é do que uma grande matriz de pixels, isto é, uma matriz de números. Quanto maior o número de pixels, maior a resolução da imagem. Da mesma forma, sons e vídeos também são representados por sequências numéricas. No caso do áudio, os números codificam variações de amplitude ao longo do tempo; no caso do vídeo, combinam-se sequências de imagens (frames) com informação sonora. Em última instância, todo conteúdo digital — texto, imagem, som ou vídeo — é armazenado como padrões de zeros e uns.</p>
+</section>
+<section id="processamento-memória-e-armazenamento-na-prática" class="level3" data-number="1.2.7">
+<h3 data-number="1.2.7" class="anchored" data-anchor-id="processamento-memória-e-armazenamento-na-prática"><span class="header-section-number">1.2.7</span> Processamento, memória e armazenamento na prática</h3>
+<p>Podemos entender o funcionamento de um computador como um fluxo contínuo de <strong>leitura</strong>, <strong>processamento</strong> e <strong>armazenamento</strong> de bits. Quando observamos as especificações de um computador pessoal, é comum encontrar informações como número de núcleos do processador (<em>cores</em>), frequência do processador em gigahertz (GHz), quantidade de memória RAM e capacidade de armazenamento em disco. Esses números descrevem, essencialmente, a velocidade e a escala com que o computador consegue manipular grandes volumes de informação binária em cada etapa desse fluxo contínuo.</p>
+<p><strong>Processamento</strong> refere-se à execução de instruções sobre dados representados em bits. O processador é o componente responsável por realizar operações elementares que, em última instância, são operações lógicas sobre sequências de zeros e uns. A frequência do processador indica aproximadamente quantos ciclos de processamento podem ser realizados por segundo. Frequências mais altas permitem que mais instruções sejam executadas em menos tempo, embora o desempenho final dependa também da organização do código, do tipo de tarefa e do acesso à memória. Além disso, processadores modernos possuem múltiplos <em>cores</em> ou núcleos. O uso de múltiplos núcleos permite paralelismo, isto é, a execução simultânea de diferentes partes de uma tarefa, de forma análoga a dividir um trabalho entre várias pessoas para concluí-lo mais rapidamente.</p>
+<p><strong>Memória (RAM)</strong> é o espaço onde os dados e instruções ficam armazenados temporariamente enquanto estão sendo processados. É na memória RAM que o computador mantém os bytes que serão acessados repetidamente pelo processador. Quanto maior a quantidade de RAM disponível, maior é o volume de dados que pode ser mantido “em uso” ao mesmo tempo. Quando a RAM é insuficiente, o computador passa a usar o disco como apoio, o que reduz drasticamente o desempenho.</p>
+<p><strong>Armazenamento</strong>, por sua vez, diz respeito ao local onde os dados são guardados de forma permanente. HDDs e SSDs armazenam grandes volumes de bytes mesmo quando o computador está desligado. A diferença principal é que SSDs permitem acesso muito mais rápido aos dados, reduzindo o tempo necessário para carregar programas, abrir arquivos e transferir grandes conjuntos de dados para a memória.</p>
+<p>Vistos em conjunto, processamento, memória e armazenamento formam um sistema integrado: dados são lidos do disco, carregados na memória, processados pela CPU e, quando necessário, gravados novamente no armazenamento. Para tarefas simples, esse fluxo passa despercebido. Para programação, análise de dados e computação numérica compreender essas etapas ajuda a interpretar erros, gargalos de desempenho e limitações práticas do ambiente computacional.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="O que significam as especificações do seu computador?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>O que significam as especificações do seu computador?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Considere um computador com processador com 16 núcleos e frequência de 3.2 GHz, 32 GB de memória RAM e 1 TB de SSD. Esses números descrevem como ele lida com bits e bytes em diferentes etapas do processamento.</p>
+<ul>
+<li><p><strong>16 núcleos (cores)</strong> indicam que o processador pode executar várias tarefas ao mesmo tempo. Em aplicações que permitem paralelismo – como certas operações numéricas ou análises sobre grandes conjuntos de dados – isso é semelhante a dividir o trabalho entre dezesseis pessoas em vez de apenas uma.</p></li>
+<li><p><strong>3.2 GHz</strong> refere-se à velocidade com que cada núcleo executa instruções elementares. Em termos simples, indica quantos passos o processador consegue dar por segundo ao manipular dados representados em sistema binário.</p></li>
+<li><p><strong>32 GB de RAM</strong> significam que até esse volume de dados pode permanecer disponível para acesso rápido enquanto programas estão em execução. Bases de dados grandes, matrizes extensas e múltiplos processos consomem memória rapidamente.</p></li>
+<li><p><strong>1 TB de SSD</strong> indica a capacidade de armazenamento permanente.</p></li>
+</ul>
+<p>Em análise de dados e programação, problemas de desempenho raramente estão ligados apenas à velocidade do processador. Com frequência, eles surgem porque os dados são grandes demais para caber na memória ou porque operações são realizadas de forma pouco eficiente. Entender essas especificações ajuda a interpretar erros, lentidão e limitações práticas do ambiente computacional.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="arquivos-e-diretórios" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="arquivos-e-diretórios"><span class="header-section-number">1.3</span> Arquivos e diretórios</h2>
+<p>Mais do que armazenar informação, é importante entender <em>onde</em> e <em>como</em> a informação é armazenada. Assim como na vida cotidiana, é preciso ter organização no armazenamento para saber como e onde procurar determinada informação no computador. Se você é uma pessoa organizada, você sabe que o iogurte estará sempre guardada na geladeira e em algum pote fechado, não é preciso procurar debaixo do chuveiro em um saco de pão.</p>
+<section id="estrutura-hierárquica" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="estrutura-hierárquica"><span class="header-section-number">1.3.1</span> Estrutura hierárquica</h3>
+<p>Os diretórios servem justamente para organizar o armazenamento do computador. É como se você pudesse separar o seu SSD primeiro em cômodos, depois em armários dentro de cada cômodo, em gavetas dentro de cada armário e assim por diante. Formalmente, um diretório pode ser entendido como um contêiner no qual arquivos e outros diretórios podem estar organizados, formando uma estrutura hierárquica. Essa organização permite localizar, acessar e manipular arquivos de forma sistemática, especialmente em projetos maiores.</p>
+<p>Por exemplo, a organização de um projeto de análise de dados pode ter a seguinte forma:</p>
+<pre class="text"><code>C:\
+└── projeto\
+    ├── data\
+    │   └── dados.csv
+    ├── scripts\
+    │   └── analise.py
+    └── resultados\
+        └── figura1.png</code></pre>
+<p>Nesse exemplo, <code>projeto</code> é um diretório que está dentro da partição C e que contém outros diretórios. O arquivo <code>dados.csv</code>, por exemplo, está dentro do diretório <code>data</code>, que é um diretório localizado dentro do diretório <code>projeto</code>. Para acessar esse arquivo <code>dados.csv</code> dentro dessa estrutura hierárquica de diretórios utilizamos duas formas principais: o caminho absoluto ou o caminho relativo.</p>
+<ul>
+<li><strong>Caminho absoluto</strong>: descreve a localização completa a partir da raiz do sistema de arquivos. Nesse caso, o caminho absoluto seria <code>C:\projeto\data\dados.csv</code>.</li>
+<li><strong>Caminho relativo</strong>: descreve a localização em relação ao diretório atual. Isso quer dizer que, se estivermos trabalhando em um programa a partir do diretório <code>projeto</code>, para acessar o arquivo de dados basta descrever o caminho relativo a partir dali: <code>data/dados.csv</code>.</li>
+</ul>
+</section>
+<section id="extensões-de-arquivos" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="extensões-de-arquivos"><span class="header-section-number">1.3.2</span> Extensões de arquivos</h3>
+<p>Para além do <em>onde</em>, a informação em si pode ser armazenada de várias formas. Você pode guardar o iogurte em uma jarra de vidro ou mantê-lo no recipiente original. Um conjunto de informação é armazenada em um arquivo que pode ter vários formatos ou <strong>extensões</strong>. A extensão do arquivo corresponde ao sufixo após o ponto no nome do arquivo e indica como os dados estão organizados internamente e quais programas sabem interpretá-los corretamente. Do ponto de vista conceitual, a extensão não “muda” o dado em si, mas define a estrutura lógica usada para representar a informação. O mesmo conjunto de informações pode ser salvo em formatos diferentes, dependendo do objetivo (leitura humana, processamento automático, troca entre sistemas etc.).</p>
+<p>Um formato muito comum em análise de dados é o CSV (<code>.csv</code>, <em>Comma-Separated Values</em>). Trata-se de um arquivo de texto em que os dados são organizados em linhas e colunas, sendo as colunas separadas por um delimitador, geralmente uma vírgula. Cada linha representa uma observação e a primeira linha costuma conter os nomes das variáveis. Arquivos CSV são amplamente utilizados porque (i) são simples e legíveis; (ii) podem ser abertos em editores de texto, planilhas e softwares estatísticos; e (iii) são facilmente importados por linguagens como Python.</p>
+<p>Outro formato bastante utilizado é o JSON (<code>.json</code>, <em>JavaScript Object Notation</em>). Embora também seja um arquivo de texto, sua estrutura é diferente. Em vez de linhas e colunas, os dados são organizados como pares chave–valor, de forma semelhante a um dicionário, podendo conter listas e estruturas aninhadas. Esse formato é muito usado para troca de dados entre sistemas e aplicações, além do uso para armazenamento de configurações.</p>
+<p>Outras extensões comuns incluem:</p>
+<ul>
+<li><code>.txt</code>: texto simples, sem estrutura fixa.</li>
+<li><code>.xlsx</code>: arquivos de planilha do Microsoft Excel.</li>
+<li><code>.py</code>: arquivos de código Python.</li>
+</ul>
+<p>É importante enfatizar que a extensão não garante o conteúdo do arquivo: um <code>.csv</code> mal formatado pode não ser lido corretamente, e um arquivo <code>.txt</code> pode conter dados altamente estruturados. Ainda assim, seguir convenções de extensão é essencial para organização de projetos, reprodutibilidade e interoperabilidade entre ferramentas. Considere a tabela de notas abaixo:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">nome</th>
+<th style="text-align: center;">nusp</th>
+<th style="text-align: center;">ingresso</th>
+<th style="text-align: center;">materia</th>
+<th style="text-align: center;">media</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Joao</td>
+<td style="text-align: center;">12345678</td>
+<td style="text-align: center;">2026</td>
+<td style="text-align: center;">EAE1106</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Miguel</td>
+<td style="text-align: center;">5253678</td>
+<td style="text-align: center;">2023</td>
+<td style="text-align: center;">EAE1106</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Alice</td>
+<td style="text-align: center;">9743678</td>
+<td style="text-align: center;">2025</td>
+<td style="text-align: center;">EAE1106</td>
+<td style="text-align: center;">9</td>
+</tr>
+</tbody>
+</table>
+<p>O armazenamento desses dados em formato CSV e JSON é feito da seguinte maneira:</p>
+<ul>
+<li><p>Formato CSV</p>
+<pre class="text"><code>nome,nusp,ingresso,materia,media
+Joao,12345678,2026,EAE1106,8
+Miguel,52543678,2023,EAE1106,4
+Alice,9743678,2025,EAE1106,9</code></pre></li>
+<li><p>Formato JSON</p>
+<pre class="text"><code>[
+{
+   "nome": "Joao",
+   "nusp": 12345678,
+   "ingresso": 2026,
+   "materia": "EAE1106",
+   "media": 8
+},
+{
+   "nome": "Miguel",
+   "nusp": 52543678,
+   "ingresso": 2023,
+   "materia": "EAE1106",
+   "media": 4
+},
+{
+   "nome": "Alice",
+   "nusp": 9743678,
+   "ingresso": 2025,
+   "materia": "EAE1106",
+   "media": "9"
+}
+]</code></pre></li>
+</ul>
+<p>Mas qual a importância disso tudo? Entender como os computadores armazenam números e como arquivos e diretórios são organizados e acessados pelo sistema operacional ajuda a compreender limitações e comportamentos observados na prática. Por exemplo, explica por que um sistema de 32 bits é capaz de alocar apenas até 4 GB de memória RAM ou por que arquivos com milhões de linhas podem ser difíceis de abrir ou processar em um computador local.</p>
+<p>Ter um conhecimento mínimo sobre o funcionamento do computador e sobre como os programas interagem com sua arquitetura permite entender o que ocorre “por trás das cortinas”. Com isso, podemos usar o computador como uma ferramenta para resolver problemas — e não como um fim em si. Para chegar a esse ponto, precisamos de meios formais para nos comunicar com o sistema operacional e, posteriormente, expressar instruções de forma lógica e precisa.</p>
+</section>
+</section>
+<section id="terminal" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="terminal"><span class="header-section-number">1.4</span> Terminal</h2>
+<p>Um passo intermediário entre o funcionamento interno do computador e as linguagens de programação é o terminal. O terminal é uma interface textual que permite interagir diretamente com o sistema operacional por meio de comandos simples. Em vez de clicar em ícones ou navegar por menus gráficos, o usuário descreve explicitamente o que deseja que o computador faça.</p>
+<p>O uso do terminal torna visíveis conceitos introduzidos na seção anterior, como arquivos e diretórios, além de fornecer um primeiro contato com a lógica de comandos que será essencial ao longo do curso. A Figura <a href="#fig-terminal" class="quarto-xref">Figura&nbsp;<span>1.3</span></a> ilustra o ambiente típico do terminal nos dois principais sistemas operacionais em uso atualmente.</p>
+<div id="fig-terminal" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-terminal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/terminal_windows.jpg" class="img-fluid figure-img"></p>
+<figcaption>Windows</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/terminal_macos.jpeg" class="img-fluid figure-img"></p>
+<figcaption>MacOS</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-terminal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.3: Interface usual do terminal
+</figcaption>
+</figure>
+</div>
+<p>Comandos básicos no terminal (ou prompt de comando) do Windows incluem:</p>
+<ul>
+<li><code>dir</code>: lista arquivos e diretórios no ambiente atual</li>
+<li><code>cd</code>: muda de diretório</li>
+<li><code>mkdir</code>: cria um novo diretório</li>
+</ul>
+<p>No exemplo do painel A da Figura <a href="#fig-terminal" class="quarto-xref">Figura&nbsp;<span>1.3</span></a>, <code>cd "C:\projeto"</code> muda o ambiente atual do diretório <code>C:\Users\user</code> para <code>C:\projeto</code>. Note, porém, que se a pasta <code>projeto</code> estiver em outra partição do seu armazenamento, é preciso primeiro mudar para essa partição para depois utilizar o comando <code>cd</code>. A Figura <a href="#fig-cmd" class="quarto-xref">Figura&nbsp;<span>1.4</span></a> ilustra esses dois casos.</p>
+<div id="fig-cmd" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cmd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/cmd1.jpg" class="img-fluid figure-img"></p>
+<figcaption>Diretório na mesma partição</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/cmd2.jpg" class="img-fluid figure-img"></p>
+<figcaption>Diretório em outra partição</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1.4: Exemplo de uso do terminal para mudar o ambiente atual
+</figcaption>
+</figure>
+</div>
+<p>Mesmo que você utilize interfaces gráficas, compreender o terminal facilita o entendimento de como o computador está organizado e de como o sistema operacional executa tarefas básicas. Ao longo do curso, o terminal será utilizado principalmente para executar programas, navegar entre diretórios e instalar novos pacotes e ferramentas.</p>
+<p>Apesar de útil, o terminal ainda exige que as instruções sejam dadas comando a comando, de forma relativamente limitada e pouco reutilizável. Se queremos resolver problemas mais gerais e automatizar tarefas de forma sistemática, é necessário um nível adicional de abstração.</p>
+</section>
+<section id="linguagens-de-programação" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="linguagens-de-programação"><span class="header-section-number">1.5</span> Linguagens de programação</h2>
+<p>Para atingir esse nível adicional de abstração, precisamos de um meio de comunicar instruções ao computador de maneira precisa e sem ambiguidades. Esse meio são as linguagens de programação, que definem regras formais para descrever operações, decisões e cálculos que o computador pode executar. Diferentemente das linguagens naturais, como o português que eu e você falamos, as linguagens de programação são linguagens formais, que foram criadas pelas pessoas para aplicações específicas. A notação usada pelos matemáticos é uma linguagem formal adequada para representar relações entre números e símbolos; químicos utilizam linguagens formais para representar a estrutura de moléculas. Utilizamos as linguagens de programação para nos comunicar de forma inequívoca com os computadores.</p>
+<section id="sintaxe-e-semântica" class="level3" data-number="1.5.1">
+<h3 data-number="1.5.1" class="anchored" data-anchor-id="sintaxe-e-semântica"><span class="header-section-number">1.5.1</span> Sintaxe e semântica</h3>
+<p>Toda linguagem de programação possui dois níveis fundamentais: sintaxe e semântica.</p>
+<p>A <strong>sintaxe</strong> refere-se às regras de escrita da linguagem. Ela define quais símbolos e quais sequências de símbolos são válidas: onde usar parênteses, palavras-chave, operadores e a ordem correta dos elementos. Erros de sintaxe são, em geral, fáceis de identificar porque a execução do programa é interrompida e uma mensagem de erro é apresentada. Exemplos comuns incluem esquecer um caractere obrigatório em determinada sequência, utilizar parênteses, colchetes ou aspas sem o fechamento correspondente ou escrever palavras-chave de forma incorreta. Nesses casos, o computador não consegue sequer interpretar a estrutura do código, independentemente da intenção do programador.</p>
+<p>Por outro lado, a <strong>semântica</strong> refere-se ao significado das instruções. Um código pode estar sintaticamente correto, mas produzir resultados errados por não representar corretamente a intenção do programador. Erros semânticos são mais sutis, pois o código respeita todas as regras formais da linguagem e é executado normalmente, mas o resultado obtido está incorreto. Por exemplo, um programa pode calcular uma média dividindo a soma dos valores pelo número errado de observações ou usar uma variável diferente da pretendida em uma expressão. Esses erros não geram mensagens automáticas do computador e só podem ser detectados pela análise crítica dos resultados produzidos.</p>
+<p>Essa distinção é central em programação. O computador consegue verificar automaticamente erros de sintaxe, mas não é capaz de julgar se o significado do programa está correto do ponto de vista do problema que se deseja resolver.</p>
+</section>
+<section id="diferenças-entre-linguagens-naturais-e-formais" class="level3" data-number="1.5.2">
+<h3 data-number="1.5.2" class="anchored" data-anchor-id="diferenças-entre-linguagens-naturais-e-formais"><span class="header-section-number">1.5.2</span> Diferenças entre linguagens naturais e formais</h3>
+<p>Embora as linguagens formais e naturais tenham muitas características em comum – símbolos, estrutura, sintaxe e semântica – há algumas diferenças:</p>
+<ol type="1">
+<li><p><strong>Ambiguidade</strong>: as linguagens naturais são cheias de ambiguidade e as pessoas lidam com isso usando pistas contextuais e outras informações. As linguagens formais são criadas para ser quase ou completamente inequívocas, ou seja, qualquer afirmação tem exatamente um significado, independentemente do contexto</p></li>
+<li><p><strong>Redundância</strong>: para compensar a ambiguidade e reduzir equívocos, as linguagens naturais usam muita redundância. Por causa disso, muitas vezes são verborrágicas. As linguagens formais são menos redundantes e mais concisas.</p></li>
+<li><p><strong>Literalidade</strong>: as linguagens naturais são cheias de expressões e metáforas. Se eu digo “caiu a ficha”, provavelmente não há ficha nenhuma na história, nem nada que tenha caído (esta é uma expressão para dizer que alguém entendeu algo depois de certo período de confusão). As linguagens formais têm significados exatamente iguais ao que expressam.</p></li>
+</ol>
+<p>Como todos nós crescemos falando linguagens naturais, às vezes é difícil se ajustar a linguagens formais. As linguagens formais são mais densas que as naturais, então exigem mais tempo para a leitura. Além disso, a estrutura é importante, então nem sempre é melhor ler de cima para baixo e da esquerda para a direita. Em vez disso, aprenda a analisar o programa primeiro, identificando os símbolos e interpretando a estrutura. E os detalhes fazem diferença. Pequenos erros em ortografia e pontuação, que podem não importar tanto nas linguagens naturais, podem fazer uma grande diferença em uma língua formal.</p>
+</section>
+<section id="alto-nível-x-baixo-nível" class="level3" data-number="1.5.3">
+<h3 data-number="1.5.3" class="anchored" data-anchor-id="alto-nível-x-baixo-nível"><span class="header-section-number">1.5.3</span> Alto nível X baixo nível</h3>
+<p>As linguagens de programação também diferem quanto ao seu nível de abstração. Na ciência da computação, <strong>linguagens de programação de alto nível</strong> abstraem detalhes do funcionamento interno do computador, permitindo que o programador se concentre na lógica do problema. São linguagens mais próximas das linguagens humanas e mais distantes das linguagens de máquina (e do sistema binário). Tais linguagens podem usar elementos de linguagem natural, serem mais fáceis de usar, ou podem ocultar totalmente áreas significativas de sistemas de computação, como o gerenciamento de memória. Isso torna o processo de desenvolvimento de um programa mais simples e eficiente. Python, R e Java são alguns exemplos de linguagens de alto nível.</p>
+<p>Por outro lado, uma <strong>linguagem de baixo nível</strong> é uma linguagem de programação que fornece pouca ou nenhuma abstração de conceitos de programação e está muito próxima de escrever instruções de máquina reais. A palavra “baixo” refere-se à pequena ou inexistente quantidade de abstração entre a linguagem e a linguagem de máquina; por causa disso, as linguagens de baixo nível são às vezes descritas como <em>próximas do hardware</em>. Programas escritos em linguagens de baixo nível tendem a ser relativamente não portáteis e dependentes do computador para o qual foram escritas. Assembly é uma das linguagens de mais baixo nível à disposição do programador.</p>
+<p>Em cursos como Economia e outras ciências aplicadas, linguagens de alto nível são preferidas porque reduzem o custo cognitivo, o tempo necessário para produzir código e aumentam a produtividade.</p>
+</section>
+<section id="linguagem-compilada-x-interpretada" class="level3" data-number="1.5.4">
+<h3 data-number="1.5.4" class="anchored" data-anchor-id="linguagem-compilada-x-interpretada"><span class="header-section-number">1.5.4</span> Linguagem Compilada X Interpretada</h3>
+<p>Outra distinção importante diz respeito à forma como o código é executado. Em <strong>linguagens compiladas</strong> o código é traduzido integralmente para código de máquina antes da execução. Elas também dão ao desenvolvedor mais controle sobre os aspectos de hardware, como gerenciamento de memória e uso da CPU. As linguagens compiladas precisam de uma etapa de “construção” – elas precisam ser compiladas manualmente primeiro. Somente após essa etapa que o código pode rodar por completo. Linguagens como C e C++ seguem esse modelo.</p>
+<p>Em <strong>linguagens interpretadas</strong>, as instruções não são executadas diretamente pela máquina de destino, mas lidas e executadas, linha por linha, por algum outro programa, um intérprete. Isso permite maior flexibilidade e facilita a experimentação, embora geralmente com menor desempenho em tempo de máquina. Python e R são exemplos clássicos de linguagens interpretadas.</p>
+<p>Embora usualmente mais lentas, essa simplicidade e flexibilidade em escrever código torna linguagens interpretadas particularmente adequadas para aprendizado, análise de dados e trabalho empírico. Lembre-se, no fim das contas, o tempo relevante não é apenas o tempo de máquina, mas o tempo que você leva para escrever e depurar código.</p>
+</section>
+<section id="paradigmas" class="level3" data-number="1.5.5">
+<h3 data-number="1.5.5" class="anchored" data-anchor-id="paradigmas"><span class="header-section-number">1.5.5</span> Paradigmas</h3>
+<p>Linguagens de programação também podem ser classificadas segundo o paradigma que adotam, isto é, o estilo predominante de organização do código. Entre os principais paradigmas de programação podemos citar programação imperativa, procedural, funcional, declarativa e programação orientada a objetos. Na programação imperativa, por exemplo, o programador diz como, o quê e em qual ordem exatamente um programa ou rotina deve realizar. É neste paradigma que surgiram as famosas estruturas condicionais e atribuição de valor à variáveis. Por outro lado, na programação orientada a objetos o programa é estruturado em objetos que combinam dados e comportamento. Mais detalhes sobre paradigmas de programação podem ser obtidos <a href="https://www.freecodecamp.org/news/an-introduction-to-programming-paradigms/#what-is-a-programming-paradigm">aqui</a>.</p>
+<p>Muitas linguagens modernas, incluindo Python, são multiparadigma, permitindo combinar diferentes estilos conforme o problema.</p>
+</section>
+<section id="tipagem" class="level3" data-number="1.5.6">
+<h3 data-number="1.5.6" class="anchored" data-anchor-id="tipagem"><span class="header-section-number">1.5.6</span> Tipagem</h3>
+<p>Por fim, as linguagens diferem quanto à forma como tratam os tipos de dados. Em linguagens de tipagem estática, o tipo de cada variável é definido explicitamente no código e verificado antes da execução. O Python utiliza tipagem dinâmica, isso significa que o próprio interpretador do Python infere o tipo dos dados que uma variável recebe, sem a necessidade que o usuário diga de que tipo determinada variável é. Além disso, o Python é uma linguagem fortemente tipada, o que significa que o interpretador do Python avalia as expressões por conta própria e não faz conversões automáticas de valores entre tipos de dados não compatíveis. Ao fazer operações com tipos incompatíveis, o Python não converte automaticamente esses tipos pra você, ele vai dar erro.</p>
+<p>Tipagem dinâmica reduz a quantidade de código inicial e facilita experimentação, mas exige atenção adicional para evitar erros lógicos já que o usuário não define explicitamente o tipo do dado. No entanto, a tipagem forte reduz a chance de resultados inesperados por conta de tipos definidos ou convertidos de forma equivocada já que a linguagem não tenta corrigir o erro por conta própria.</p>
+</section>
+</section>
+<section id="algoritmos" class="level2" data-number="1.6">
+<h2 data-number="1.6" class="anchored" data-anchor-id="algoritmos"><span class="header-section-number">1.6</span> Algoritmos</h2>
+<p>A resolução de problemas está no centro da Ciência da Computação. Um algoritmo é um conjunto finito e bem definido de instruções, organizadas passo a passo, para resolver um problema ou realizar uma tarefa. Considere um problema simples: encontrar um nome em uma lista telefônica. Como poderíamos resolvê-lo?</p>
+<p>Uma abordagem seria percorrer a lista página por página, do início ao fim, até localizar o nome desejado. Outra possibilidade seria examinar duas páginas por vez, tentando acelerar o processo. Uma estratégia ainda mais eficiente seria abrir a lista aproximadamente no meio e perguntar: “O nome que procuro está antes ou depois desta página?”. A partir dessa resposta, descarta-se metade da lista e repete-se o procedimento na parte restante, reduzindo o problema pela metade a cada etapa.</p>
+<p>Cada uma dessas estratégias constitui um algoritmo - isto é, uma sequência organizada de instruções para alcançar um objetivo. Programadores transformam esse tipo de raciocínio em código, permitindo que o computador execute o algoritmo de forma automática e precisa.</p>
+</section>
+<section id="pseudocódigo" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="pseudocódigo"><span class="header-section-number">1.7</span> Pseudocódigo</h2>
+<p>O pseudocódigo é uma forma de descrever algoritmos utilizando uma linguagem próxima da linguagem natural, mas estruturada de maneira semelhante a um programa de computador. Ele não segue rigorosamente a sintaxe de uma linguagem específica, mas organiza o raciocínio lógico de forma clara e sequencial.</p>
+<p>Considere, por exemplo, o terceiro algoritmo utilizado para resolver o problema da lista telefônica. Poderíamos descrevê-lo em pseudocódigo da seguinte maneira:</p>
+<pre class="{plain}"><code>1  Pegue a lista telefônica
+2  Abra no meio da lista
+3  Observe a página
+4  Se a pessoa estiver na página
+5      Ligue para a pessoa
+6  Senão, se a pessoa estiver antes
+7      Abra no meio da metade esquerda
+8      Volte para a linha 3
+9  Senão, se a pessoa estiver depois
+10     Abra no meio da metade direita
+11     Volte para a linha 3
+12 Senão
+13     Pare</code></pre>
+<p>O pseudocódigo é importante por pelo menos duas razões. Primeiro, ele permite estruturar e testar a lógica da solução antes de traduzi-la para uma linguagem formal. Segundo, ele facilita a comunicação do raciocínio para outras pessoas, mesmo que elas não dominem uma linguagem de programação específica.</p>
+<p>Observe algumas características desse exemplo:</p>
+<ul>
+<li>Algumas linhas começam com verbos como “pegue”, “abra” ou “observe”. Essas ações correspondem, em programação, a <code>funções</code> ou procedimentos.</li>
+<li>Há instruções como “se” e “senão”, que representam estruturas <code>condicionais</code>, isto é, decisões baseadas em determinadas condições.</li>
+<li>Certas afirmações podem ser avaliadas como verdadeiras ou falsas, como “a pessoa está antes no livro”. Essas são chamadas de expressões <code>booleanas</code>.</li>
+<li>Instruções como “volte para a linha 3” representam estruturas de repetição, conhecidas como <code>loops</code> (ou laços).</li>
+</ul>
+<p>Esses elementos - funções, condicionais, expressões booleanas e laços de repetição - constituem os blocos fundamentais da programação. No contexto do Python, linguagem utilizada neste curso, aprenderemos a implementar cada um desses componentes de maneira formal e estruturada.</p>
+</section>
+<section id="conclusão" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="conclusão"><span class="header-section-number">1.8</span> Conclusão</h2>
+<p>Neste capítulo, foram apresentados os fundamentos básicos sobre o funcionamento de um sistema computacional, incluindo arquitetura, memória, organização de arquivos, interação com o sistema operacional e o papel das linguagens de programação. Esses conceitos fornecem a base necessária para compreender como o computador executa instruções e por que certas limitações surgem na prática.</p>
+<p>A partir daqui, o curso passa a utilizar Python como linguagem de trabalho. Python é uma linguagem de alto nível, interpretada e multiparadigma que é amplamente empregada em análise de dados e pesquisa empírica em Economia, pois permite expressar soluções de forma clara e concisa, além de oferecer um amplo conjunto de bibliotecas científicas. No próximo capítulo, iniciaremos o trabalho prático: escrever código em Python, executar programas, interpretar erros e manipular dados diretamente no computador.</p>
+</section>
+<section id="exercícios" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">1.9</span> Exercícios</h2>
+<ol type="1">
+<li><p>Um arquivo de dados possui 10 milhões de linhas e 80 colunas, com todas as células contendo valores numéricos. Suponha que cada valor numérico ocupe 8 bytes na memória.</p>
+<ol type="a">
+<li>Faça uma estimativa aproximada da quantidade de memória RAM (em GB) necessária para carregar esse arquivo inteiro na memória.</li>
+<li>Explique por que um computador com pouca memória RAM pode ter dificuldade para trabalhar com esse arquivo, mesmo que o arquivo “caiba” no disco rígido.</li>
+</ol></li>
+<li><p>Sobre o sistema binário responda:</p>
+<ol type="a">
+<li>Converta o número decimal 13 para a representação binária.</li>
+<li>Converta o número binário 101101 para decimal.</li>
+<li>Argumente, em poucas linhas, sobre a vantagem de computadores utilizarem o sistema binário em vez do sistema decimal.</li>
+</ol></li>
+<li><p>Considere a seguinte estrutura de diretórios:</p>
+<pre class="text"><code>D:/home/usuario/projeto/
+├── dados/
+│   └── alunos.csv
+│   └── professores.csv
+│   └── materias.csv
+├── scripts/
+│   └── analise.py
+│   └── amostra_final.py
+└── resultados/
+   └── figura.png
+   └── tabela.csv</code></pre>
+<ol type="a">
+<li>Escreva o caminho absoluto para o acessar o arquivo <code>materias.csv</code>.</li>
+<li>Suponha que você esteja no diretório scripts. Escreva o caminho relativo para acessar <code>materias.csv</code>. Dica: a pasta dados e scripts estão no mesmo nível hierárquico.</li>
+</ol></li>
+<li><p>Considere a matemática como uma linguagem formal, com regras bem definidas de escrita (sintaxe) e de significado (semântica). Suponha que o objetivo seja calcular as raízes de uma equação do segundo grau da forma <span class="math inline">\(ax^2 + bx + c = 0\)</span>. Para tal você utilizará a fórmula de Bháskara.</p>
+<ol type="a">
+<li><p>Suponha que você opte por programar essa fórmula tal qual apresentada abaixo em uma determinada linguagem de programação. Qual seria a saída esperada? Discuta o resultado.</p>
+<p><span class="math display">\[x = \frac{-b \ge \sqrt{b^2 - 4ac}}{2a}\]</span></p></li>
+<li><p>Suponha que você opte por programar essa fórmula tal qual apresentada abaixo em uma determinada linguagem de programação. Qual seria a saída esperada? Discuta o resultado.</p>
+<p><span class="math display">\[x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2}\]</span></p></li>
+</ol></li>
+</ol>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Para entender um pouco mais sobre a história do sistema binário acesse o <a href="https://imasters.com.br/tecnologia/a-historia-do-codigo-binario-a-base-da-computacao-moderna">link</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Se desejar se aprofundar no tema, você pode consultar mais informações sobre o sistema <a href="https://en.wikipedia.org/wiki/Unicode">UNICODE</a> e sobre <a href="https://en.wikipedia.org/wiki/Emoji">emojis</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./fundamentos.html" class="pagination-link" aria-label="Fundamentos de Computação">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Fundamentos de Computação</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./primeiros-passos.html" class="pagination-link" aria-label="Primeiros passos no Python">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Primeiros passos no Python</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Arthur Viaro · Departamento de Economia · FEA-USP</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/arthurviaro/eae1106/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>EAE1106 - Métodos Computacionais para Economia</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
