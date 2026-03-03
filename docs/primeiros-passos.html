@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -71,6 +106,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -163,8 +227,48 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">2.1</span> Introdução</a>
+  <ul class="collapse">
+  <li><a href="#pré-requisitos" id="toc-pré-requisitos" class="nav-link" data-scroll-target="#pré-requisitos"><span class="header-section-number">2.1.1</span> Pré-requisitos</a></li>
+  </ul></li>
+  <li><a href="#o-que-é-python" id="toc-o-que-é-python" class="nav-link" data-scroll-target="#o-que-é-python"><span class="header-section-number">2.2</span> O Que é Python?</a>
+  <ul class="collapse">
+  <li><a href="#por-que-python-em-um-curso-de-economia" id="toc-por-que-python-em-um-curso-de-economia" class="nav-link" data-scroll-target="#por-que-python-em-um-curso-de-economia"><span class="header-section-number">2.2.1</span> Por que Python em um Curso de Economia?</a></li>
+  </ul></li>
+  <li><a href="#como-instalar-o-python" id="toc-como-instalar-o-python" class="nav-link" data-scroll-target="#como-instalar-o-python"><span class="header-section-number">2.3</span> Como Instalar o Python?</a>
+  <ul class="collapse">
+  <li><a href="#instalação-pelo-site-oficial" id="toc-instalação-pelo-site-oficial" class="nav-link" data-scroll-target="#instalação-pelo-site-oficial"><span class="header-section-number">2.3.1</span> Instalação pelo Site Oficial</a></li>
+  <li><a href="#instalando-via-anaconda-recomendado" id="toc-instalando-via-anaconda-recomendado" class="nav-link" data-scroll-target="#instalando-via-anaconda-recomendado"><span class="header-section-number">2.3.2</span> Instalando via Anaconda (Recomendado)</a></li>
+  <li><a href="#conhecendo-o-anaconda" id="toc-conhecendo-o-anaconda" class="nav-link" data-scroll-target="#conhecendo-o-anaconda"><span class="header-section-number">2.3.3</span> Conhecendo o Anaconda</a></li>
+  <li><a href="#gerenciamento-de-ambientes" id="toc-gerenciamento-de-ambientes" class="nav-link" data-scroll-target="#gerenciamento-de-ambientes"><span class="header-section-number">2.3.4</span> Gerenciamento de ambientes</a></li>
+  <li><a href="#instalando-pacotes" id="toc-instalando-pacotes" class="nav-link" data-scroll-target="#instalando-pacotes"><span class="header-section-number">2.3.5</span> Instalando Pacotes</a></li>
+  </ul></li>
+  <li><a href="#ides" id="toc-ides" class="nav-link" data-scroll-target="#ides"><span class="header-section-number">2.4</span> IDEs</a>
+  <ul class="collapse">
+  <li><a href="#componentes-típicos-de-uma-ide" id="toc-componentes-típicos-de-uma-ide" class="nav-link" data-scroll-target="#componentes-típicos-de-uma-ide"><span class="header-section-number">2.4.1</span> Componentes típicos de uma IDE</a></li>
+  <li><a href="#spyder" id="toc-spyder" class="nav-link" data-scroll-target="#spyder"><span class="header-section-number">2.4.2</span> Spyder</a></li>
+  <li><a href="#jupyter-notebook" id="toc-jupyter-notebook" class="nav-link" data-scroll-target="#jupyter-notebook"><span class="header-section-number">2.4.3</span> Jupyter Notebook</a></li>
+  <li><a href="#google-colaboratory-colab" id="toc-google-colaboratory-colab" class="nav-link" data-scroll-target="#google-colaboratory-colab"><span class="header-section-number">2.4.4</span> Google Colaboratory (Colab)</a></li>
+  <li><a href="#vs-code" id="toc-vs-code" class="nav-link" data-scroll-target="#vs-code"><span class="header-section-number">2.4.5</span> VS Code</a></li>
+  <li><a href="#positron" id="toc-positron" class="nav-link" data-scroll-target="#positron"><span class="header-section-number">2.4.6</span> Positron</a></li>
+  <li><a href="#qual-escolher" id="toc-qual-escolher" class="nav-link" data-scroll-target="#qual-escolher"><span class="header-section-number">2.4.7</span> Qual Escolher?</a></li>
+  </ul></li>
+  <li><a href="#markdown" id="toc-markdown" class="nav-link" data-scroll-target="#markdown"><span class="header-section-number">2.5</span> Markdown</a></li>
+  <li><a href="#construindo-o-primeiro-programa" id="toc-construindo-o-primeiro-programa" class="nav-link" data-scroll-target="#construindo-o-primeiro-programa"><span class="header-section-number">2.6</span> Construindo o Primeiro Programa</a>
+  <ul class="collapse">
+  <li><a href="#usando-python-como-uma-calculadora" id="toc-usando-python-como-uma-calculadora" class="nav-link" data-scroll-target="#usando-python-como-uma-calculadora"><span class="header-section-number">2.6.1</span> Usando Python como uma Calculadora</a></li>
+  <li><a href="#instruções-e-variáveis" id="toc-instruções-e-variáveis" class="nav-link" data-scroll-target="#instruções-e-variáveis"><span class="header-section-number">2.6.2</span> Instruções e variáveis</a></li>
+  <li><a href="#valores-e-tipos" id="toc-valores-e-tipos" class="nav-link" data-scroll-target="#valores-e-tipos"><span class="header-section-number">2.6.3</span> Valores e Tipos</a></li>
+  </ul></li>
+  <li><a href="#conclusão" id="toc-conclusão" class="nav-link" data-scroll-target="#conclusão"><span class="header-section-number">2.7</span> Conclusão</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">2.8</span> Exercícios</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/arthurviaro/eae1106/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -188,8 +292,785 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introdução" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">2.1</span> Introdução</h2>
+<p>Criado em 1989 por Guido van Rossum, no Centro de Matemática e Ciência da Computação (CWI), na Holanda, o Python é hoje uma das linguagens de programação mais utilizadas no mundo, com forte presença em ciência de dados, estatística e pesquisa científica. Ao longo desta disciplina, ele será a ferramenta central para manipulação de dados, realização de cálculos numéricos, produção de gráficos e implementação de rotinas frequentemente empregadas em trabalhos empíricos em Economia.</p>
+<p>Neste momento inicial do curso, o objetivo não é dominar toda a linguagem nem escrever programas complexos. O foco é operacional: aprender a executar comandos simples, compreender o funcionamento do ambiente de programação e desenvolver familiaridade com a lógica básica de interação com o computador por meio de código. É importante enfatizar que programar não significa memorizar comandos, mas aprender a ler, testar e depurar código. Erros farão parte do processo desde o início — e isso é esperado. Eles constituem uma fonte valiosa de informação sobre como o computador está interpretando as instruções fornecidas.</p>
+<p>Ao final deste capítulo, o aluno deverá ser capaz de:</p>
+<ul>
+<li>Compreender o que é o Python e por que ele é relevante para Economia;</li>
+<li>Instalar o Python e suas bibliotecas;</li>
+<li>Entender o que são ambientes virtuais e por que são utilizados;</li>
+<li>Compreender o papel das IDEs;</li>
+<li>Executar seus primeiros comandos.</li>
+</ul>
+<p>Essas competências serão utilizadas continuamente ao longo do curso e são essenciais para o avanço em tópicos posteriores, como criação de funções, manipulação de objetos, análise de dados e visualização. Antes de explorar novos comandos, contudo, é fundamental compreender o ambiente no qual o programa é executado e como ocorre a interação entre o usuário e o interpretador.</p>
+<section id="pré-requisitos" class="level3" data-number="2.1.1">
+<h3 data-number="2.1.1" class="anchored" data-anchor-id="pré-requisitos"><span class="header-section-number">2.1.1</span> Pré-requisitos</h3>
+<p>Este material foi elaborado para que o aluno que acompanhou e assimilou o capítulo anterior — sobre fundamentos de computação — esteja plenamente apto a prosseguir. Não há pré-requisitos adicionais. Ainda assim, é importante estar confortável com conceitos como arquivos, diretórios, sistemas operacionais e noções básicas sobre como programas são executados em um computador.</p>
+</section>
+</section>
+<section id="o-que-é-python" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="o-que-é-python"><span class="header-section-number">2.2</span> O Que é Python?</h2>
+<p>Python é uma linguagem de programação de alto nível, interpretada e de propósito geral, amplamente reconhecida por sua simplicidade, legibilidade e versatilidade. Criada no final de 1989 no Centrum Wiskunde &amp; Informatica (CWI), foi oficialmente lançada em 1991. Seu nome foi inspirado no grupo britânico de comédia <em>Monty Python</em>.</p>
+<p>Ser uma linguagem de alto nível significa que Python abstrai muitos detalhes técnicos do funcionamento interno do computador, como o gerenciamento manual de memória. O fato de ser interpretada implica que o código é executado dinamicamente por um interpretador, sem necessidade de um processo prévio de compilação completa. Essas características tornam Python especialmente adequado para ensino e desenvolvimento científico.</p>
+<p>Atualmente, o Python possui forte presença em ciência de dados, aprendizado de máquina e inteligência artificial, desenvolvimento web, automação e pesquisa acadêmica.</p>
+<p>Como qualquer ferramenta, o Python possui qualidades e limitações. Entre seus principais pontos fortes estão:</p>
+<ul>
+<li><strong>Simplicidade sintática e legibilidade</strong>: o código tende a ser claro e próximo de um pseudocódigo executável. A indentação obrigatória para definir blocos reforça boas práticas de organização.</li>
+<li><strong>Alta produtividade</strong>: é possível escrever programas funcionais com poucas linhas de código.</li>
+<li><strong>Ecossistema robusto de bibliotecas</strong>: há ferramentas consolidadas para computação numérica (NumPy), manipulação de dados (Pandas), visualização (Matplotlib), métodos científicos (SciPy) e aprendizado de máquina (scikit-learn), entre muitas outras.</li>
+<li><strong>Portabilidade</strong>: funciona em Windows, macOS e Linux com pouca ou nenhuma modificação.</li>
+<li><strong>Comunidade ativa</strong>: possui uma das comunidades mais ativas do mundo da programação, com vasta produção de conteúdo, bibliotecas de código aberto e fóruns especializados.</li>
+</ul>
+<p>Além do ambiente acadêmico, o Python é amplamente utilizado por grandes empresas de tecnologia e finanças, como Google, Netflix, Uber e Goldman Sachs.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Diversos indicadores internacionais apontam o crescimento consistente da linguagem ao longo dos últimos anos. Índices como o <em>TIOBE Programming Community Index</em> frequentemente posicionam o Python entre as linguagens mais utilizadas no mundo.</p>
+<div id="fig-tiobe" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tiobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/tiobe-index.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%" width="700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tiobe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.1: TIOBE Programming Community Index. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+<p>A principal limitação do Python está relacionada ao desempenho. Por ser interpretado e operar em alto nível de abstração, tende a ser mais lento que linguagens compiladas como C ou C++. No entanto, essa diferença raramente é decisiva em aplicações típicas de Economia e ciência de dados. Muitas bibliotecas numéricas utilizam implementações internas otimizadas em C, C++ ou Fortran, enquanto Python atua como interface de alto nível — combinando facilidade de uso com desempenho satisfatório. Aplicações que exigem controle extremamente fino de memória ou execução em tempo real podem se beneficiar de linguagens de nível mais baixo. Em Economia aplicada, contudo, esses casos são raros.</p>
+<section id="por-que-python-em-um-curso-de-economia" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="por-que-python-em-um-curso-de-economia"><span class="header-section-number">2.2.1</span> Por que Python em um Curso de Economia?</h3>
+<p>Neste curso, Python será utilizado como ferramenta central para:</p>
+<ul>
+<li>Manipulação e limpeza de bases de dados;</li>
+<li>Construção e transformação de variáveis;</li>
+<li>Implementação de procedimentos estatísticos;</li>
+<li>Simulações numéricas;</li>
+<li>Visualização de dados;</li>
+<li>Organização de rotinas empíricas de forma replicável.</li>
+</ul>
+<p>O objetivo não é formar programadores profissionais, mas fornecer ao aluno uma ferramenta robusta que amplie sua capacidade analítica. Aprender Python, nesse contexto, significa aprender a estruturar raciocínios quantitativos de forma clara, reproduzível e escalável — três atributos fundamentais na pesquisa aplicada.</p>
+<p>Nos próximos tópicos, passaremos da discussão conceitual para a prática: instalação, ambiente de execução e primeiros comandos.</p>
+</section>
+</section>
+<section id="como-instalar-o-python" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="como-instalar-o-python"><span class="header-section-number">2.3</span> Como Instalar o Python?</h2>
+<p>Existem diferentes formas de instalar o Python e diversas maneiras de interagir com a linguagem. Apresentamos primeiro a instalação pelo site oficial e, em seguida, a alternativa recomendada para fins acadêmicos e ciência de dados: o Anaconda.</p>
+<section id="instalação-pelo-site-oficial" class="level3" data-number="2.3.1">
+<h3 data-number="2.3.1" class="anchored" data-anchor-id="instalação-pelo-site-oficial"><span class="header-section-number">2.3.1</span> Instalação pelo Site Oficial</h3>
+<p>A forma mais simples é fazer o download diretamente no <a href="https://www.python.org/">site oficial</a>. A instalação oficial fornece o interpretador do Python e um conjunto básico de bibliotecas padrão. No entanto, bibliotecas amplamente utilizadas em áreas como ciência de dados — por exemplo, NumPy e Pandas — não vêm instaladas por padrão e precisam ser adicionadas posteriormente via gerenciador de pacotes. Além disso, dependendo do sistema operacional, pode ser necessário realizar configurações adicionais para que o Python seja reconhecido no terminal.</p>
+<p>Passo a passo:</p>
+<ol type="1">
+<li>Acesse o site oficial.</li>
+<li>Clique na opção de Downloads.</li>
+<li>Baixe o instalador correspondente ao seu sistema operacional (Windows, macOS ou Linux). O site geralmente identifica automaticamente o seu sistema e sugere a versão mais adequada.</li>
+</ol>
+<div id="fig-python-mac" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-python-mac-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/install-python.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%" width="700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-python-mac-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.2: Instalação Python
+</figcaption>
+</figure>
+</div>
+<ol start="4" type="1">
+<li>No Windows, marque a opção <code>Add python.exe to PATH</code> antes de clicar em <em>Install Now</em>. Essa é etapa é fundamental, pois permite que o Python seja executado diretamente no terminal a partir de qualquer diretório do sistema.</li>
+</ol>
+<div id="fig-python-windows" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-python-windows-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/install-python-windows.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%" width="700">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-python-windows-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.3: Instalação Python no Windows
+</figcaption>
+</figure>
+</div>
+<ol start="5" type="1">
+<li>Após a instalação, abra o Prompt de Comando (ou PowerShell) e execute o seguinte comando:</li>
+</ol>
+<pre class="{bash}"><code>python --version</code></pre>
+<p>Se a instalação tiver sido realizada corretamente, o terminal exibirá a versão instalada do Python. Em alguns casos, pode ser necessário reiniciar o computador para que as configurações do PATH entrem em vigor.</p>
+<p>Embora a instalação pelo site oficial funcione perfeitamente, para fins didáticos — especialmente em cursos que envolvem ciência de dados, estatística e computação científica — recomenda-se fortemente a utilização da distribuição Anaconda. O Anaconda já inclui o Python, diversas bibliotecas amplamente utilizadas (NumPy, Pandas, Matplotlib, SciPy) e ferramentas úteis como o Jupyter Notebook e o Spyder. Isso reduz significativamente problemas de instalação, conflitos de versões e dificuldades iniciais, facilitando bastante o ambiente de desenvolvimento.</p>
+<p>Nos próximos tópicos, veremos como instalar o Python via Anaconda e por que essa alternativa é, em geral, a mais conveniente para este curso.</p>
+</section>
+<section id="instalando-via-anaconda-recomendado" class="level3" data-number="2.3.2">
+<h3 data-number="2.3.2" class="anchored" data-anchor-id="instalando-via-anaconda-recomendado"><span class="header-section-number">2.3.2</span> Instalando via Anaconda (Recomendado)</h3>
+<p>O Anaconda é uma distribuição gratuita do Python voltada para computação científica e análise de dados. Ele simplifica significativamente a configuração do ambiente de desenvolvimento, pois já inclui, de forma integrada:</p>
+<ul>
+<li>O interpretador Python;</li>
+<li>Centenas de bibliotecas científicas pré-instaladas;</li>
+<li>O gerenciador de pacotes e ambientes <code>conda</code>;</li>
+<li>Ferramentas como Jupyter Notebook, JupyterLab e Spyder.</li>
+</ul>
+<p>Além de tornar a instalação mais simples, o Anaconda facilita o gerenciamento de dependências e reduz conflitos entre versões de bibliotecas — algo especialmente importante em projetos acadêmicos e empíricos.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>O passo a passo abaixo foi elaborado com base no Windows 10. Em macOS e Linux, o procedimento é bastante semelhante, podendo haver pequenas diferenças nas telas do instalador.</em></p>
+</div>
+</div>
+<ol type="1">
+<li>Acesse o <a href="https://www.anaconda.com/download">site oficial</a> do Anaconda. Escolha a versão compatível com o seu sistema operacional (Windows, macOS ou Linux) e faça o download do instalador correspondente.</li>
+</ol>
+<div id="fig-anaconda1" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-anaconda1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/anaconda_download.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anaconda1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.4: Tela de download da distribuição Anaconda. Janeiro de 2026
+</figcaption>
+</figure>
+</div>
+<ol type="1">
+<li>Após concluir o download, clique duas vezes no arquivo baixado e siga as instruções do assistente de instalação. Em geral, recomenda-se manter as opções padrão sugeridas pelo instalador. Caso a instalação seja realizada para todos os usuários do computador, pode ser necessária permissão de administrador.</li>
+</ol>
+<div id="fig-anaconda2" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-anaconda2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/anaconda_install.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anaconda2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.5: Tela de instalação da distribuição Anaconda. Janeiro de 2026
+</figcaption>
+</figure>
+</div>
+<p>Após a instalação, o Python e as principais bibliotecas científicas estarão prontos para uso. O <code>Anaconda Navigator</code> pode ser acessado pelo menu Iniciar e oferece uma interface gráfica para abrir aplicativos (como Jupyter e Spyder), instalar pacotes e gerenciar ambientes de forma intuitiva.</p>
+<p>Já o <code>Anaconda Prompt</code> permite executar comandos diretamente no terminal, sendo especialmente útil para criar e gerenciar ambientes virtuais, instalar bibliotecas e utilizar o gerenciador de pacotes <code>conda</code>.</p>
+</section>
+<section id="conhecendo-o-anaconda" class="level3" data-number="2.3.3">
+<h3 data-number="2.3.3" class="anchored" data-anchor-id="conhecendo-o-anaconda"><span class="header-section-number">2.3.3</span> Conhecendo o Anaconda</h3>
+<p>Como mencionado anteriormente, o Anaconda é uma distribuição do Python voltada para computação científica — incluindo áreas como ciência de dados e análise estatística. Seu principal objetivo é simplificar o gerenciamento e a instalação de pacotes, tornando o ambiente mais estável e fácil de configurar.</p>
+<p>O controle de versões e a instalação de bibliotecas no Anaconda são realizados por meio do <code>conda</code>, seu gerenciador de pacotes e ambientes. Com o conda, é possível:</p>
+<ul>
+<li>Criar ambientes virtuais isolados;</li>
+<li>Instalar versões específicas de bibliotecas;</li>
+<li>Evitar conflitos entre dependências;</li>
+<li>Reproduzir ambientes utilizados em diferentes projetos.</li>
+</ul>
+<p>Essa funcionalidade é especialmente importante em contextos acadêmicos e profissionais, nos quais a reprodutibilidade dos resultados é fundamental.</p>
+<p>Além do gerenciamento via terminal, o Anaconda inclui o <code>Anaconda Navigator</code>, uma interface gráfica intuitiva (<em>user-friendly</em>) que permite administrar pacotes e aplicativos sem a necessidade de utilizar comandos no terminal.</p>
+<p>Ao abrir o Anaconda Navigator no Windows, a tela inicial será semelhante à apresentada abaixo:</p>
+<div id="fig-anaconda3" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-anaconda3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/anaconda_navigator.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-anaconda3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.6: Tela inicial do Anaconda Navigator. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+<p>Por meio do Navigator, é possível:</p>
+<ul>
+<li>Criar e gerenciar ambientes;</li>
+<li>Instalar e atualizar bibliotecas;</li>
+<li>Abrir ferramentas como Jupyter Notebook, JupyterLab e Spyder;</li>
+<li>Visualizar os pacotes instalados em cada ambiente.</li>
+</ul>
+<p>Embora, ao longo do curso, também utilizemos comandos no terminal, o Navigator é uma alternativa prática para quem prefere uma interface gráfica. Para mais informações sobre funcionalidades avançadas do Anaconda, a <a href="https://www.anaconda.com/docs/getting-started/main">documentação oficial</a> é um bom ponto de partida.</p>
+</section>
+<section id="gerenciamento-de-ambientes" class="level3" data-number="2.3.4">
+<h3 data-number="2.3.4" class="anchored" data-anchor-id="gerenciamento-de-ambientes"><span class="header-section-number">2.3.4</span> Gerenciamento de ambientes</h3>
+<p>Ambientes (<em>environments</em>) em Python são diretórios isolados que contêm um interpretador específico do Python, a biblioteca padrão correspondente e um conjunto próprio de pacotes instalados para um determinado projeto. Eles são fundamentais para gerenciar dependências específicas de cada projeto, evitar conflitos entre versões de bibliotecas, impedir interferência com a instalação global do Python e garantir portabilidade e reprodutibilidade. Criar ambientes separados não é apenas uma boa prática — é praticamente uma necessidade em projetos acadêmicos e profissionais.</p>
+<p>Para visualizar seus ambientes no Anaconda Navigator, selecione <code>Environments</code> no menu lateral. Cada ambiente listado representa um espaço isolado com suas próprias dependências.</p>
+<div id="fig-nav-env-labeled" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nav-env-labeled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/nav-env-labeled.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nav-env-labeled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.7: Gerenciamento de ambientes no Anaconda Navigator. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+<p>Use a caixa <code>Search Environments</code> para localizar um ambiente pelo nome. Você pode digitar o nome completo ou apenas parte dele para filtrar a lista e exibir apenas os ambientes que contenham a sequência de caracteres digitada.</p>
+<div id="fig-nav-env-search" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nav-env-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/nav-env-search.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nav-env-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.8: Buscando ambientes no Anaconda Navigator. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+<p>Na parte inferior da lista de ambientes, o Anaconda Navigator disponibiliza botões para criar, clonar, importar, exportar, fazer backup e remover ambientes.</p>
+<div id="fig-nav-env-buttons" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nav-env-buttons-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/nav-env-buttons.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nav-env-buttons-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.9: Gerenciando ambientes no Anaconda Navigator. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+<p>Para criar um novo ambiente:</p>
+<ol type="1">
+<li>Clique em <strong>Create</strong> (ícone “+”) na parte inferior da lista de ambientes.</li>
+<li>No diálogo <em>Create new environment</em>, informe um nome descritivo para o novo ambiente.</li>
+<li>Selecione Python como interpretador.</li>
+<li>Escolha a versão desejada do Python no menu suspenso.</li>
+<li>Clique em <strong>Create</strong>.</li>
+</ol>
+<div id="fig-nav-env-create" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nav-env-create-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/nav-env-create.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nav-env-create-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.10: Criando ambientes no Anaconda Navigator. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Por que escolher a versão do Python?</strong> Pacotes gerenciados pelo conda são construídos para versões específicas do interpretador. Escolher a versão adequada garante compatibilidade entre as bibliotecas instaladas e o ambiente de execução.</p>
+</div>
+</div>
+</section>
+<section id="instalando-pacotes" class="level3" data-number="2.3.5">
+<h3 data-number="2.3.5" class="anchored" data-anchor-id="instalando-pacotes"><span class="header-section-number">2.3.5</span> Instalando Pacotes</h3>
+<p>Você pode expandir as funcionalidades do seu ambiente Python instalando pacotes de duas formas principais:<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<ul>
+<li><strong>Anaconda Navigator</strong>: interface gráfica (clique e seleção), recomendada para quem prefere evitar o uso do terminal.</li>
+<li><strong>Conda via linha de comando (Anaconda Prompt no Windows ou Terminal no macOS/Linux)</strong>: método mais rápido, flexível e adequado para automação e projetos mais avançados.</li>
+</ul>
+<p>Para instalar novos pacotes utilizando o terminal, abra o <strong>Anaconda Prompt</strong>, que já vem configurado para reconhecer o comando <code>conda</code>. Como exemplo, vamos instalar o pacote <a href="https://github.com/tqdm/tqdm#installation"><code>tqdm</code></a>, utilizado para criar barras de progresso em loops e tarefas repetitivas.</p>
+<ol type="1">
+<li>Abra o terminal adequado: No Windows, use o Anaconda Prompt; no macOS ou Linux, utilize o terminal padrão.</li>
+<li>Ative seu ambiente (Recomendado): Evite instalar pacotes no ambiente base para manter o sistema organizado.</li>
+</ol>
+<pre class="{bash}"><code>conda activate nome_do_ambiente</code></pre>
+<ol start="3" type="1">
+<li>Antes de instalar, verifique a existência do pacote:</li>
+</ol>
+<pre class="{bash}"><code>conda list tqdm</code></pre>
+<ol start="4" type="1">
+<li>Se o pacote não for listado, utilize o gerenciador <code>conda</code> para instalar o pacote:</li>
+</ol>
+<pre class="{bash}"><code>conda install tqdm</code></pre>
+<p>Após a instalação, o pacote estará disponível para uso no ambiente ativo.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Dica: Caso o pacote não seja encontrado nos canais padrão do Conda, você pode recorrer ao <code>pip install tqdm</code>.</p>
+</div>
+</div>
+<p>Uma das grandes vantagens do Anaconda é o seu ecossistema “out-of-the-box”: as principais bibliotecas científicas — como NumPy, SciPy, Matplotlib e Pandas — já vêm pré-instaladas. Diferente da instalação “pura” do Python, onde cada pacote deve ser adicionado manualmente, o Anaconda oferece um ambiente pronto para análise de dados desde o primeiro uso. Além disso, o comando <code>conda list</code> funciona como um inventário completo, exibindo não apenas os pacotes instalados, mas também suas versões específicas, o canal de origem e o ambiente ativo no momento.</p>
+<p><strong>Entendendo a Diferença: <code>conda</code> vs <code>pip</code></strong></p>
+<p>Embora ambos instalem bibliotecas, eles operam com filosofias diferentes. Entender quando usar cada um evita conflitos que podem “quebrar” seu ambiente de trabalho.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<ul>
+<li><code>pip</code> (<em>Python Package Index</em>): É o gerenciador padrão e específico da linguagem Python. Ele foca em instalar bibliotecas Python disponíveis no repositório PyPI. É a escolha ideal quando você precisa de uma biblioteca muito específica ou muito recente que ainda não foi homologada pelo Anaconda.</li>
+<li><code>conda</code> (<em>Anaconda/Conda-forge</em>): É um gerenciador de ambientes e pacotes agnóstico à linguagem. Além de Python, ele gerencia bibliotecas em R, C++, Java e dependências de sistema (como drivers da NVIDIA). O conda é mais rigoroso: ele verifica se a nova instalação causará conflitos com o que já existe no seu ambiente, garantindo maior estabilidade.</li>
+</ul>
+</section>
+</section>
+<section id="ides" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="ides"><span class="header-section-number">2.4</span> IDEs</h2>
+<p>A interação com Python ocorre por meio de um ambiente de desenvolvimento. Esses ambientes são chamados de <strong>IDEs</strong> (<em>Integrated Development Environments</em>), ou Ambientes de Desenvolvimento Integrado.</p>
+<p>Uma IDE é um software que reúne, em um único local, as principais ferramentas necessárias para o desenvolvimento de programas. Seu uso torna o processo de escrita, execução e depuração de código mais eficiente, organizado e produtivo.</p>
+<p>Existem IDEs específicas para determinadas linguagens ou finalidades, e outras mais gerais e flexíveis. Entre as mais conhecidas estão <strong>Visual Studio Code</strong>, <strong>Sublime Text</strong> e <strong>PyCharm</strong>.</p>
+<section id="componentes-típicos-de-uma-ide" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="componentes-típicos-de-uma-ide"><span class="header-section-number">2.4.1</span> Componentes típicos de uma IDE</h3>
+<p>Embora variem em funcionalidades e interface, as IDEs geralmente incluem os seguintes elementos:</p>
+<ul>
+<li><strong>Editor de texto</strong>: Permite escrever e editar programas com recursos como destaque de sintaxe, identação automática e autocompletar, facilitando a organização e a legibilidade do código.</li>
+<li><strong>Ferramentas integradas de execução/compilação</strong>: Responsáveis por compilar (em linguagens compiladas) ou executar o código diretamente no ambiente, permitindo testar o programa sem sair da IDE.</li>
+<li><strong>Depurador integrado</strong>: Ferramenta que auxilia na identificação e correção de erros, possibilitando executar o código passo a passo e inspecionar variáveis durante a execução.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em linguagens compiladas, a IDE também integra um compilador. No caso do Python, que é interpretado, o foco está na integração com o interpretador.</p>
+</div>
+</div>
+<p>O uso de uma IDE traz diversas vantagens:</p>
+<ul>
+<li>Reduz o tempo de desenvolvimento;</li>
+<li>Facilita a organização do código;</li>
+<li>Aumenta a produtividade;</li>
+<li>Ajuda a identificar erros com maior rapidez;</li>
+<li>Centraliza ferramentas essenciais em um único ambiente.</li>
+</ul>
+</section>
+<section id="spyder" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="spyder"><span class="header-section-number">2.4.2</span> Spyder</h3>
+<p>O Spyder é uma IDE de código aberto voltada especialmente para computação científica e análise de dados. Trata-se de uma ferramenta leve, simples e, ao mesmo tempo, bastante poderosa.</p>
+<p>Entre seus principais recursos, destacam-se:</p>
+<ul>
+<li>Editor com destaque de sintaxe e organização automática do código;</li>
+<li>Console interativo integrado;</li>
+<li>Depurador (debugger) eficiente;</li>
+<li>Explorador de variáveis, que permite visualizar objetos armazenados na memória.</li>
+</ul>
+<p>O explorador de variáveis é particularmente útil para iniciantes, pois evita a necessidade de imprimir repetidamente variáveis no console para inspecionar seus conteúdos. O Spyder é instalado automaticamente com o Anaconda, o que o torna uma opção prática e acessível para uso acadêmico.</p>
+<div id="fig-spyder" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-spyder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/spyder.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-spyder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.11: Spyder. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="jupyter-notebook" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="jupyter-notebook"><span class="header-section-number">2.4.3</span> Jupyter Notebook</h3>
+<p>O Jupyter Notebook é amplamente utilizado em ciência de dados, pesquisa e ensino. Diferentemente de uma IDE tradicional baseada em arquivos .py, o Jupyter organiza o trabalho em notebooks, compostos por células. Essas células podem conter:</p>
+<ul>
+<li>Código executável;</li>
+<li>Texto explicativo em Markdown;</li>
+<li>Fórmulas matemáticas (LaTeX);</li>
+<li>Gráficos e visualizações.</li>
+</ul>
+<p>Essa estrutura permite intercalar explicação e execução, tornando o código mais claro, documentado e replicável. Por isso, o Jupyter é particularmente adequado para análise exploratória de dados, relatórios técnicos, projetos acadêmicos e material didático. Grande parte do material deste curso foi desenvolvida em Jupyter, justamente por sua capacidade de integrar texto, código e resultados em um único documento!</p>
+<div id="fig-jupyter" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-jupyter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/jupyter-notebook.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-jupyter-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.12: Jupyter Notebook. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="google-colaboratory-colab" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="google-colaboratory-colab"><span class="header-section-number">2.4.4</span> Google Colaboratory (Colab)</h3>
+<p>O <a href="https://colab.research.google.com/notebooks/intro.ipynb">Google Colaboratory</a> (Colab) é um ambiente baseado em nuvem, mantido pelo Google, que permite executar notebooks diretamente no navegador, sem necessidade de instalação local. Assim como o Jupyter, o Colab permite combinar:</p>
+<ul>
+<li>Código Python;</li>
+<li>Texto em Markdown;</li>
+<li>Imagens e gráficos;</li>
+<li>Resultados das execuções.</li>
+</ul>
+<p>A principal diferença é que, no Colab, o código é executado em servidores do Google — e não no seu computador. Isso pode ser vantajoso para tarefas mais pesadas, especialmente quando se utiliza GPU. A versão gratuita possui limitações de memória e tempo de execução, enquanto planos pagos oferecem maior capacidade computacional.</p>
+<p>O Colab é uma excelente alternativa para quem não deseja instalar o Python localmente, utiliza múltiplos computadores ou precisa compartilhar notebooks com facilidade.</p>
+<div id="fig-colab" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-colab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/colab.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-colab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.13: Google Colab. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="vs-code" class="level3" data-number="2.4.5">
+<h3 data-number="2.4.5" class="anchored" data-anchor-id="vs-code"><span class="header-section-number">2.4.5</span> VS Code</h3>
+<p>O Visual Studio Code (VS Code) é um editor de código altamente flexível e extensível, amplamente utilizado tanto por iniciantes quanto por desenvolvedores profissionais. Embora não seja exclusivamente voltado para Python, ele pode ser configurado como uma IDE completa por meio da instalação da extensão oficial de Python.</p>
+<p>As principais vantagens são:</p>
+<ul>
+<li>Interface moderna e altamente personalizável;</li>
+<li>Integração com Git e controle de versões;</li>
+<li>Suporte a múltiplas linguagens;</li>
+<li>Excelente sistema de extensões;</li>
+<li>Integração com Jupyter Notebooks.</li>
+</ul>
+<p>O VS Code é particularmente interessante para alunos que desejam utilizar Python em projetos mais amplos ou que pretendem avançar para desenvolvimento de software ou aplicações mais complexas.</p>
+<div id="fig-vscode" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vscode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/vscode.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vscode-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.14: VS Code. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="positron" class="level3" data-number="2.4.6">
+<h3 data-number="2.4.6" class="anchored" data-anchor-id="positron"><span class="header-section-number">2.4.6</span> Positron</h3>
+<p>O Positron é uma ferramenta mais recente desenvolvida pela Posit (antiga RStudio), projetada para oferecer um ambiente moderno voltado à ciência de dados. Ele combina características de:</p>
+<ul>
+<li>IDE tradicional;</li>
+<li>Ambiente interativo;</li>
+<li>Integração com notebooks;</li>
+<li>Ferramentas avançadas para análise de dados.</li>
+</ul>
+<p>Seu foco está na produtividade em projetos de dados, com forte integração a fluxos de trabalho científicos. Embora ainda esteja em expansão, representa uma alternativa promissora para quem trabalha com Python (e também com R) em contextos analíticos.</p>
+<div id="fig-positron" class="quarto-float quarto-figure quarto-figure-center anchored" data-max-width="100%" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-positron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/positron.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-max-width="100%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-positron-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.15: Positron. Fevereiro de 2026
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="qual-escolher" class="level3" data-number="2.4.7">
+<h3 data-number="2.4.7" class="anchored" data-anchor-id="qual-escolher"><span class="header-section-number">2.4.7</span> Qual Escolher?</h3>
+<p>Para este curso, recomenda-se prioritariamente:</p>
+<ul>
+<li>Jupyter Notebook (principal ferramenta didática);</li>
+<li>Spyder (para quem prefere uma IDE tradicional);</li>
+<li>Colab (para quem não deseja instalar nada localmente).</li>
+</ul>
+<p>Ferramentas como VS Code e Positron são excelentes opções para projetos mais avançados. Independentemente da escolha, o mais importante não é a ferramenta em si, mas a capacidade de organizar o raciocínio computacional de forma clara, estruturada e replicável.</p>
+</section>
+</section>
+<section id="markdown" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="markdown"><span class="header-section-number">2.5</span> Markdown</h2>
+<p>Markdown é uma linguagem de marcação leve (<em>lightweight markup language</em>) utilizada para adicionar formatação a documentos de texto simples (plain text). Criada por John Gruber em 2004, tornou-se uma das linguagens de marcação mais populares do mundo. Diferentemente de editores do tipo <code>WYSIWYG</code> (como o Microsoft Word), nos quais você clica em botões para aplicar formatação visual imediata, no Markdown a formatação é feita por meio de símbolos inseridos diretamente no texto. Esses símbolos indicam como o conteúdo deve ser exibido quando o documento for processado. A marcação em si não aparece no resultado final — apenas o texto formatado.</p>
+<p>Pode parecer mais simples utilizar um editor tradicional para formatar textos, mas o Markdown oferece diversas vantagens:</p>
+<ol type="1">
+<li>Arquivos em Markdown são apenas texto simples. Isso significa que podem ser abertos em qualquer editor de texto, não dependem de formatos proprietários (como <code>.docx</code>) e são fáceis de compartilhar entre sistemas operacionais.</li>
+<li>Você pode criar e editar arquivos Markdown em qualquer sistema operacional (Windows, macOS, Linux) e em praticamente qualquer dispositivo.</li>
+<li>Mesmo que a aplicação que você utiliza deixe de existir no futuro, seus arquivos Markdown continuarão legíveis como texto simples. Isso é especialmente importante para documentos acadêmicos, relatórios e materiais que precisam ser preservados por longos períodos.</li>
+<li>Markdown pode ser facilmente convertido em HTML, a linguagem utilizada pelos navegadores.</li>
+</ol>
+<p>Ao longo do curso, utilizaremos o Jupyter Notebook para trabalhar com Python e Markdown. Sem Markdown, as células do Jupyter exibiriam apenas código. Embora seja possível usar comentários no Python (<code># comentário</code>), eles não permitem formatação avançada, não suportam links ou imagens e não estruturam o texto visualmente.</p>
+<p>O Markdown resolve esse problema, permitindo alternar naturalmente entre explicações teóricas, código executável e resultados e gráficos. Abaixo estão os principais elementos da sintaxe básica<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 41%">
+<col style="width: 58%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Elemento</th>
+<th>Sintaxe Markdown</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Título (Cabeçalho)</td>
+<td># Título 1<br>## Título 2<br>### Título 3</td>
+</tr>
+<tr class="even">
+<td>Negrito</td>
+<td><code>**texto em negrito**</code></td>
+</tr>
+<tr class="odd">
+<td>Itálico</td>
+<td><code>*texto em itálico*</code></td>
+</tr>
+<tr class="even">
+<td>Citação (Bloco de citação)</td>
+<td><code>&gt; texto citado</code></td>
+</tr>
+<tr class="odd">
+<td>Lista numerada</td>
+<td>1. Primeiro item<br>2. Segundo item</td>
+</tr>
+<tr class="even">
+<td>Lista com marcadores</td>
+<td>- Primeiro item<br>- Segundo item</td>
+</tr>
+<tr class="odd">
+<td>Código (em linha)</td>
+<td><code>código</code></td>
+</tr>
+<tr class="even">
+<td>Linha horizontal</td>
+<td><code>---</code></td>
+</tr>
+<tr class="odd">
+<td>Link</td>
+<td><code>[texto](https://www.exemplo.com)</code></td>
+</tr>
+<tr class="even">
+<td>Imagem</td>
+<td><code>![alt](imagem.jpg)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="construindo-o-primeiro-programa" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="construindo-o-primeiro-programa"><span class="header-section-number">2.6</span> Construindo o Primeiro Programa</h2>
+<p>Uma vez compreendido o papel do ambiente de programação, o próximo passo é escrever e executar instruções simples. Tradicionalmente, o primeiro programa em qualquer linguagem exibe a mensagem “<em>Hello, World!</em>”. Em Python, ele é escrito da seguinte forma:</p>
+<div id="41f3a2ce" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello, World!"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hello, World!</code></pre>
+</div>
+</div>
+<p>Esse é um exemplo do uso da função <code>print()</code>. Apesar do nome, ela não “imprime” nada em papel; sua função é exibir um resultado na tela. Alguns pontos importantes:</p>
+<ul>
+<li>As aspas delimitam o texto que será exibido. Elas não aparecem no resultado.</li>
+<li>Os parênteses indicam que print é uma função.</li>
+<li>O conteúdo dentro dos parênteses é o argumento da função.</li>
+</ul>
+<p>Exploraremos funções com mais detalhes em breve. Por ora, o importante é entender que estamos fornecendo uma instrução ao interpretador e ele a executa imediatamente.</p>
+<section id="usando-python-como-uma-calculadora" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="usando-python-como-uma-calculadora"><span class="header-section-number">2.6.1</span> Usando Python como uma Calculadora</h3>
+<p>Além de exibir texto, o interpretador Python pode ser utilizado como uma calculadora simples. Basta digitar uma expressão e o resultado será apresentado. Os operadores aritméticos básicos (adição, subtração, multiplicação e divisão) são: <code>+</code>, <code>-</code>, <code>*</code> e <code>/</code>. Por exemplo:</p>
+<div id="fb6f7609" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>4</code></pre>
+</div>
+</div>
+<div id="efd7f568" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span> <span class="op">-</span> <span class="dv">10</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>40</code></pre>
+</div>
+</div>
+<div id="443a2c6a" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span> <span class="op">*</span> <span class="dv">5</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>40</code></pre>
+</div>
+</div>
+<div id="69e9eeb6" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> <span class="op">/</span> <span class="dv">4</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>5.0</code></pre>
+</div>
+</div>
+<p>O operador <code>**</code> é utilizado para calcular potências:</p>
+<div id="b2b2c6aa" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="op">**</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>100</code></pre>
+</div>
+</div>
+<p>Em algumas linguagens, o símbolo <code>^</code> representa a exponenciação. No Python, entretanto, <code>^</code> é um operador <em>bitwise</em> (XOR).</p>
+<div id="9c95fef8" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="op">^</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>4</code></pre>
+</div>
+</div>
+<p>O resultado pode parecer inesperado caso você não esteja familiarizado com operações bit a bit. Não abordaremos operadores bitwise neste curso, pois eles não são relevantes para nossos objetivos imediatos.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>Note que parênteses <code>()</code> podem ser usados para agrupar expressões. Por exemplo,</p>
+<div id="ff207e09" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">50</span> <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">6</span>) <span class="op">/</span> <span class="dv">4</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>5.0</code></pre>
+</div>
+</div>
+<p>Em Python, números inteiros (por exemplo, 2, 4 e 20) são do tipo <code>int</code>. Já os números com parte fracionária (por exemplo, 5.0 e 1.6) são do tipo <code>float</code>. Veremos mais sobre tipos de dados ao longo do curso.</p>
+<p>Por enquanto, é válido mencionar que a divisão tradicional (<code>/</code>) sempre retorna um número do tipo ponto flutuante (<code>float</code>), mesmo quando o resultado é inteiro:</p>
+<div id="154ade14" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># divisão clássica retorna um ponto flutuante</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="op">/</span> <span class="dv">3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>5.666666666666667</code></pre>
+</div>
+</div>
+<p>Para realizar uma divisão inteira (divisão pelo piso) e receber um inteiro como resultado, você pode utilizar o operador <code>//</code>:</p>
+<div id="d667bb39" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># divisão pelo piso descarta a parte fracionária</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="op">//</span> <span class="dv">3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>5</code></pre>
+</div>
+</div>
+<p>Para obter o resto da divisão, utilize <code>%</code>:</p>
+<div id="f28ac7f6" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># o operador % retorna o resto da divisão</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="op">%</span> <span class="dv">3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>2</code></pre>
+</div>
+</div>
+</section>
+<section id="instruções-e-variáveis" class="level3" data-number="2.6.2">
+<h3 data-number="2.6.2" class="anchored" data-anchor-id="instruções-e-variáveis"><span class="header-section-number">2.6.2</span> Instruções e variáveis</h3>
+<p>Uma instrução é a unidade básica de um programa — uma linha de código que produz algum efeito, como exibir um valor na tela ou armazenar uma informação na memória. Entre os recursos mais importantes de uma linguagem de programação está a possibilidade de trabalhar com variáveis. Uma <strong>variável</strong> pode ser entendida como um nome que faz referência a um valor armazenado na memória do computador. Ela funciona como um rótulo que aponta para um dado — que pode ser um número, um texto, ou estruturas mais complexas. Em termos simples:</p>
+<div class="callout callout-style-simple callout-none no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Uma variável é um contêiner para um valor dentro do seu programa.</p>
+</div>
+</div>
+</div>
+<p>No Python, criamos uma variável por meio de uma instrução de atribuição, utilizando o operador <code>=</code>:</p>
+<div id="74a9c0fd" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>nome <span class="op">=</span> <span class="st">"Arthur"</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">17</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> <span class="fl">3.141592653589793</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Essas três linhas fazem o seguinte:</p>
+<ul>
+<li>Atribuem uma <code>string</code> à variável nome;</li>
+<li>Atribuem o <code>número inteiro</code> 17 à variável n;</li>
+<li>Atribuem uma aproximação de <span class="math inline">\(\pi\)</span> à variável pi.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O símbolo <code>=</code> aqui não significa igualdade matemática. Ele é chamado de operador de atribuição. Ele funciona da seguinte maneira: “O valor à direita é atribuído (copiado) para o nome à esquerda”. Assim, a leitura correta é: “A variável <code>n</code> recebe o valor 17.”</p>
+</div>
+</div>
+<p>Depois de definida, uma variável pode ser utilizada em expressões:</p>
+<div id="6ca0159e" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">+</span> <span class="dv">25</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>42</code></pre>
+</div>
+</div>
+<div id="55617d31" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> n <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">16</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>50</code></pre>
+</div>
+</div>
+<p>Diferentemente da matemática, em programação não precisamos nos limitar a nomes como <code>x</code> ou <code>y</code>. Podemos usar nomes descritivos, como <code>idade</code> ou <code>nome_completo</code>. Boas práticas para nomes de variáveis são:</p>
+<ul>
+<li>Podem conter letras e números;</li>
+<li>Não podem começar com número;</li>
+<li>Podem conter sublinhado (<code>_</code>);</li>
+<li>Não podem conter espaços;</li>
+<li>Não podem ser palavras reservadas da linguagem.</li>
+</ul>
+<p>Se você der um nome ilegal a uma variável, recebe um erro de sintaxe:</p>
+<div id="16269165" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2026</span><span class="er">curso</span> <span class="op">=</span> <span class="st">"Métodos Computacionais"</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre>  <span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[15]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-red-fg">    </span><span class="ansi-red-fg">2026curso = "Métodos Computacionais"</span>
+       ^
+<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid decimal literal
+</pre>
+</div>
+</div>
+</div>
+<p>Esse nome é inválido porque começa com número. Outro exemplo de nome ilegal é:</p>
+<div id="ea10390a" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="op">=</span> <span class="st">"Métodos Computacionais"</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre>  <span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[16]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-red-fg">    </span><span class="ansi-red-fg">class = "Métodos Computacionais"</span>
+          ^
+<span class="ansi-red-fg">SyntaxError</span><span class="ansi-red-fg">:</span> invalid syntax
+</pre>
+</div>
+</div>
+</div>
+<p>Aqui o problema é diferente: <code>class</code> é uma palavra-chave do Python. Palavras-chave são termos reservados pela linguagem para definir sua estrutura. Elas não podem ser usadas como nomes de variáveis. Algumas palavras-chave do Python 3 são:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">and</span>         <span class="kw">del</span>         <span class="im">from</span>        <span class="va">None</span>        <span class="va">True</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">as</span>          <span class="cf">elif</span>        <span class="kw">global</span>      <span class="kw">nonlocal</span>    <span class="cf">try</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span>      <span class="cf">else</span>        <span class="cf">if</span>          <span class="kw">not</span>         <span class="cf">while</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="cf">break</span>       <span class="cf">except</span>      <span class="im">import</span>      <span class="kw">or</span>          <span class="cf">with</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span>       <span class="va">False</span>       <span class="kw">in</span>          <span class="cf">pass</span>        <span class="cf">yield</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="cf">continue</span>    <span class="cf">finally</span>     <span class="kw">is</span>          <span class="cf">raise</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span>         <span class="cf">for</span>         <span class="kw">lambda</span>      <span class="cf">return</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Não é necessário memorizar essa lista. A maioria das IDEs destaca palavras-chave em cores diferentes, facilitando sua identificação.</p>
+</section>
+<section id="valores-e-tipos" class="level3" data-number="2.6.3">
+<h3 data-number="2.6.3" class="anchored" data-anchor-id="valores-e-tipos"><span class="header-section-number">2.6.3</span> Valores e Tipos</h3>
+<p>Até agora vimos três tipos de valores:</p>
+<ul>
+<li>2 é um número inteiro;</li>
+<li>42.0 é um número de ponto flutuante; e</li>
+<li>“Hello World!” é uma string, assim chamada porque as letras que contém estão em uma sequ6encia em cadeia.</li>
+</ul>
+<p>Um tipo de valor é conhecido como <strong>tipo</strong>. Todo valor tem um tipo - ou, em algumas ocasiões, dizemos que ele “pertence” a um tipo específico. O Python disponibiliza uma função chamada <code>type</code>, que indica o tipo de qualquer valor.</p>
+<p>Por exemplo, um número inteiro tem um o tipo <code>int</code>:</p>
+<div id="6f5f5d80" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>int</code></pre>
+</div>
+</div>
+<p>Um número decimal, ou de ponto flutuante, tem o tipo <code>float</code>:</p>
+<div id="21d36fcb" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(<span class="fl">42.0</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>float</code></pre>
+</div>
+</div>
+<p>E uma sequência de caracteres, ou string, tem o tipo <code>str</code>:</p>
+<div id="e085ac28" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(<span class="st">"Hello World!"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>str</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusão" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="conclusão"><span class="header-section-number">2.7</span> Conclusão</h2>
+<p>Neste capítulo você aprendeu a instalar o Python, executar comandos iniciais e a navegar no ambiente de programação. Mais importante que decorar instruções é desenvolver uma atitude prática perante o código: formular hipóteses, testar, interpretar erros, corrigir e validar novamente. Nos próximos capítulos vamos explorar os objetos básicos da linguagem — números, strings e listas — sempre apoiando os novos conceitos nas habilidades operacionais adquiridas aqui.</p>
+</section>
+<section id="exercícios" class="level2" data-number="2.8">
+<h2 data-number="2.8" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">2.8</span> Exercícios</h2>
+<ol type="1">
+<li><p>Utilize o Python para responder as seguintes perguntas:</p>
+<ol type="a">
+<li>Quantos segundos há em 42 minutos e 42 segundos?</li>
+<li>Quantas milhas há em 10 quilômetros? Dica: uma milha equivale a 1,61 quilômetro.</li>
+<li>Se você correr 10 quilômetros em 42 minutos e 42 segundos, qual é o <em>pace</em> médio (tempo por quilômetro em minutos e segundos)?</li>
+</ol></li>
+<li><p>Crie uma variável chamada <code>salario_mensal</code> com valor igual a <span class="math inline">\(3500\)</span>.</p>
+<ol type="a">
+<li>Crie uma variável chamada <code>rendimento_anual</code> que seja construída a partir de <code>salario_mensal</code> e considere o recebimento do 13º salário no mês de dezembro. Utilize uma instrução para exibir <code>rendimento_anual</code> na tela.</li>
+<li>Calcule e exiba na tela o valor do rendimento anual após o pagamento de impostos, considerando a incidência de uma alíquota média de <span class="math inline">\(16.5\%\)</span>.</li>
+</ol></li>
+<li><p>Explique, com suas próprias palavras, a diferença entre escrever código em um editor de texto simples e escrever código em uma IDE ou ambiente interativo. Sua resposta deve mencionar pelo menos dois recursos que facilitam o aprendizado em IDEs.</p></li>
+<li><p>Considere o código abaixo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Resultado:"</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">==</span> <span class="dv">10</span> <span class="op">+</span> <span class="dv">5</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<ol type="a">
+<li>Execute o código e identifique o tipo e posição do(s) erro(s) no código.</li>
+<li>Explique com suas palavras o que está de errado.</li>
+<li>Corrija o(s) erro(s) e execute novamente.</li>
+</ol></li>
+</ol>
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Fonte: <a href="https://brainstation.io/career-guides/who-uses-python-today">https://brainstation.io/career-guides/who-uses-python-today</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>A documentação oficial da Anaconda sobre instalação de pacotes pode ser consultada <a href="https://www.anaconda.com/docs/tools/anaconda-org/installing-packages">neste link</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Para conhecer mais sobre a diferença entre esses dois métodos de instalação de pacotes, confira estes artigos sobre a arquitetura do Conda e estratégias de instalação: <a href="https://www.anaconda.com/blog/understanding-conda-and-pip">https://www.anaconda.com/blog/understanding-conda-and-pip</a> e <a href="https://pythonspeed.com/articles/conda-vs-pip/">https://pythonspeed.com/articles/conda-vs-pip/</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Consulte o <a href="https://www.markdownguide.org/">guia oficial</a> para mais informações sobre como usar o Markdown.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Saiba mais sobre operadores bitwise em <a href="http://wiki.python.org/moin/BitwiseOperators">http://wiki.python.org/moin/BitwiseOperators</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -612,7 +1493,7 @@ ul.task-list li input[type="checkbox"] {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/arthurviaro/eae1106/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/arthurviaro/eae1106/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>EAE1106 - Métodos Computacionais para Economia</p>
 </div>
