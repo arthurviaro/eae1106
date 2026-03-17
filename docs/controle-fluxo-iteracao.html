@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -215,20 +244,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">4.1</span> Introdução</a></li>
-  <li><a href="#expressões-booleanas" id="toc-expressões-booleanas" class="nav-link" data-scroll-target="#expressões-booleanas"><span class="header-section-number">4.2</span> Expressões Booleanas</a>
+  <li><a href="#controle-de-fluxo" id="toc-controle-de-fluxo" class="nav-link active" data-scroll-target="#controle-de-fluxo"><span class="header-section-number">4.1</span> Controle de Fluxo</a>
   <ul class="collapse">
-  <li><a href="#operadores-de-comparação" id="toc-operadores-de-comparação" class="nav-link" data-scroll-target="#operadores-de-comparação"><span class="header-section-number">4.2.1</span> Operadores de Comparação</a></li>
-  <li><a href="#operadores-lógicos" id="toc-operadores-lógicos" class="nav-link" data-scroll-target="#operadores-lógicos"><span class="header-section-number">4.2.2</span> Operadores Lógicos</a></li>
-  <li><a href="#operadores-de-identidade" id="toc-operadores-de-identidade" class="nav-link" data-scroll-target="#operadores-de-identidade"><span class="header-section-number">4.2.3</span> Operadores de Identidade</a></li>
-  <li><a href="#operadores-de-associação" id="toc-operadores-de-associação" class="nav-link" data-scroll-target="#operadores-de-associação"><span class="header-section-number">4.2.4</span> Operadores de Associação</a></li>
-  <li><a href="#operadores-de-atribuição" id="toc-operadores-de-atribuição" class="nav-link" data-scroll-target="#operadores-de-atribuição"><span class="header-section-number">4.2.5</span> Operadores de Atribuição</a></li>
+  <li><a href="#expressões-booleanas" id="toc-expressões-booleanas" class="nav-link" data-scroll-target="#expressões-booleanas"><span class="header-section-number">4.1.1</span> Expressões Booleanas</a></li>
+  <li><a href="#instruções-if" id="toc-instruções-if" class="nav-link" data-scroll-target="#instruções-if"><span class="header-section-number">4.1.2</span> Instruções <code>if</code></a></li>
+  <li><a href="#controle-de-fluxo-elif-e-else" id="toc-controle-de-fluxo-elif-e-else" class="nav-link" data-scroll-target="#controle-de-fluxo-elif-e-else"><span class="header-section-number">4.1.3</span> Controle de Fluxo: <code>elif</code> e <code>else</code></a></li>
+  <li><a href="#operador-or" id="toc-operador-or" class="nav-link" data-scroll-target="#operador-or"><span class="header-section-number">4.1.4</span> Operador <code>or</code></a></li>
+  <li><a href="#operador-and" id="toc-operador-and" class="nav-link" data-scroll-target="#operador-and"><span class="header-section-number">4.1.5</span> Operador <code>and</code></a></li>
+  <li><a href="#instrução-match" id="toc-instrução-match" class="nav-link" data-scroll-target="#instrução-match"><span class="header-section-number">4.1.6</span> Instrução <code>match</code></a></li>
   </ul></li>
-  <li><a href="#instruções-if" id="toc-instruções-if" class="nav-link" data-scroll-target="#instruções-if"><span class="header-section-number">4.3</span> Instruções <code>if</code></a></li>
-  <li><a href="#controle-de-fluxo-elif-e-else" id="toc-controle-de-fluxo-elif-e-else" class="nav-link" data-scroll-target="#controle-de-fluxo-elif-e-else"><span class="header-section-number">4.4</span> Controle de Fluxo: <code>elif</code> e <code>else</code></a></li>
-  <li><a href="#operador-or" id="toc-operador-or" class="nav-link" data-scroll-target="#operador-or"><span class="header-section-number">4.5</span> Operador <code>or</code></a></li>
-  <li><a href="#operador-and" id="toc-operador-and" class="nav-link" data-scroll-target="#operador-and"><span class="header-section-number">4.6</span> Operador <code>and</code></a></li>
-  <li><a href="#instrução-match" id="toc-instrução-match" class="nav-link" data-scroll-target="#instrução-match"><span class="header-section-number">4.7</span> Instrução <code>match</code></a></li>
+  <li><a href="#estruturas-de-repetição" id="toc-estruturas-de-repetição" class="nav-link" data-scroll-target="#estruturas-de-repetição"><span class="header-section-number">4.2</span> Estruturas de Repetição</a>
+  <ul class="collapse">
+  <li><a href="#repetições-com-while" id="toc-repetições-com-while" class="nav-link" data-scroll-target="#repetições-com-while"><span class="header-section-number">4.2.1</span> Repetições com <code>while()</code></a></li>
+  <li><a href="#repetições-com-for" id="toc-repetições-com-for" class="nav-link" data-scroll-target="#repetições-com-for"><span class="header-section-number">4.2.2</span> Repetições com <code>for()</code></a></li>
+  <li><a href="#mais-sobre-listas" id="toc-mais-sobre-listas" class="nav-link" data-scroll-target="#mais-sobre-listas"><span class="header-section-number">4.2.3</span> Mais sobre Listas</a></li>
+  <li><a href="#interrompendo-um-laço-de-repetição" id="toc-interrompendo-um-laço-de-repetição" class="nav-link" data-scroll-target="#interrompendo-um-laço-de-repetição"><span class="header-section-number">4.2.4</span> Interrompendo um Laço de Repetição</a></li>
+  <li><a href="#aplicação-teorema-central-do-limite" id="toc-aplicação-teorema-central-do-limite" class="nav-link" data-scroll-target="#aplicação-teorema-central-do-limite"><span class="header-section-number">4.2.5</span> Aplicação: Teorema Central do Limite</a></li>
+  </ul></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">4.3</span> Exercícios</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/arthurviaro/eae1106/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
     </div>
@@ -254,17 +287,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="introdução" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">4.1</span> Introdução</h2>
+<section id="controle-de-fluxo" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="controle-de-fluxo"><span class="header-section-number">4.1</span> Controle de Fluxo</h2>
 <p>Na programação, é muito comum precisarmos que determinados blocos de código sejam executados apenas quando uma condição específica for atendida. Para lidar com esse tipo de situação, o Python oferece mecanismos para controlar o fluxo de execução do programa, chamados de <strong>estruturas condicionais</strong>. As principais estruturas condicionais em Python são: <code>if</code>, <code>elif</code>, <code>else</code>.</p>
 <p>Essas estruturas permitem que o programa tome decisões durante a execução, escolhendo diferentes caminhos dependendo das condições definidas. Podemos imaginar isso como uma encruzilhada: dependendo da condição avaliada, o programa pode seguir por um caminho ou por outro. Para que essas decisões sejam possíveis, o Python utiliza <strong>expressões booleanas</strong> e <strong>operadores de comparação e lógicos</strong>, que permitem verificar relações entre valores.</p>
-</section>
-<section id="expressões-booleanas" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="expressões-booleanas"><span class="header-section-number">4.2</span> Expressões Booleanas</h2>
+<section id="expressões-booleanas" class="level3" data-number="4.1.1">
+<h3 data-number="4.1.1" class="anchored" data-anchor-id="expressões-booleanas"><span class="header-section-number">4.1.1</span> Expressões Booleanas</h3>
 <p>Uma <strong>expressão booleana</strong> é qualquer expressão que resulta em um dos dois valores lógicos possíveis: <code>True</code> (verdadeiro) ou <code>False</code> (falso). Essas expressões são essenciais para o controle de fluxo, pois determinam quais blocos de código serão executados.</p>
 <p>Expressões booleanas geralmente envolvem operadores de comparação (como <code>==</code>, <code>!=</code>, <code>&gt;</code>, <code>&lt;</code>) ou operadores lógicos (<code>and</code>, <code>or</code>, <code>not</code>). Essas expressões podem ser usadas diretamente em estruturas condicionais para tomar decisões no programa.</p>
-<section id="operadores-de-comparação" class="level3" data-number="4.2.1">
-<h3 data-number="4.2.1" class="anchored" data-anchor-id="operadores-de-comparação"><span class="header-section-number">4.2.1</span> Operadores de Comparação</h3>
+<section id="operadores-de-comparação" class="level4" data-number="4.1.1.1">
+<h4 data-number="4.1.1.1" class="anchored" data-anchor-id="operadores-de-comparação"><span class="header-section-number">4.1.1.1</span> Operadores de Comparação</h4>
 <p>Os operadores de comparação são usados para comparar dois valores. Esses operadores comparam um valor do lado esquerdo com um valor do lado direito, retornando <code>True</code> ou <code>False</code>.</p>
 <table class="caption-top table">
 <colgroup>
@@ -313,8 +345,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="operadores-lógicos" class="level3" data-number="4.2.2">
-<h3 data-number="4.2.2" class="anchored" data-anchor-id="operadores-lógicos"><span class="header-section-number">4.2.2</span> Operadores Lógicos</h3>
+<section id="operadores-lógicos" class="level4" data-number="4.1.1.2">
+<h4 data-number="4.1.1.2" class="anchored" data-anchor-id="operadores-lógicos"><span class="header-section-number">4.1.1.2</span> Operadores Lógicos</h4>
 <p>Além dos operadores de comparação, Python também possui operadores lógicos que permitem combinar múltiplas condições. Os principais são:</p>
 <table class="caption-top table">
 <colgroup>
@@ -343,8 +375,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="operadores-de-identidade" class="level3" data-number="4.2.3">
-<h3 data-number="4.2.3" class="anchored" data-anchor-id="operadores-de-identidade"><span class="header-section-number">4.2.3</span> Operadores de Identidade</h3>
+<section id="operadores-de-identidade" class="level4" data-number="4.1.1.3">
+<h4 data-number="4.1.1.3" class="anchored" data-anchor-id="operadores-de-identidade"><span class="header-section-number">4.1.1.3</span> Operadores de Identidade</h4>
 <p>Esses operadores são utilizados para comparar objetos, verificando se duas variáveis referenciam o mesmo objeto na memória.</p>
 <table class="caption-top table">
 <colgroup>
@@ -369,8 +401,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="operadores-de-associação" class="level3" data-number="4.2.4">
-<h3 data-number="4.2.4" class="anchored" data-anchor-id="operadores-de-associação"><span class="header-section-number">4.2.4</span> Operadores de Associação</h3>
+<section id="operadores-de-associação" class="level4" data-number="4.1.1.4">
+<h4 data-number="4.1.1.4" class="anchored" data-anchor-id="operadores-de-associação"><span class="header-section-number">4.1.1.4</span> Operadores de Associação</h4>
 <p>Esses operadores verificam se um elemento pertence ou não a uma estrutura de dados, como listas, strings ou tuplas.</p>
 <table class="caption-top table">
 <colgroup>
@@ -395,8 +427,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="operadores-de-atribuição" class="level3" data-number="4.2.5">
-<h3 data-number="4.2.5" class="anchored" data-anchor-id="operadores-de-atribuição"><span class="header-section-number">4.2.5</span> Operadores de Atribuição</h3>
+<section id="operadores-de-atribuição" class="level4" data-number="4.1.1.5">
+<h4 data-number="4.1.1.5" class="anchored" data-anchor-id="operadores-de-atribuição"><span class="header-section-number">4.1.1.5</span> Operadores de Atribuição</h4>
 <p>Esses operadores são utilizados para atribuir valores a variáveis e também para atualizar valores existentes.</p>
 <table class="caption-top table">
 <thead>
@@ -434,10 +466,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </section>
 </section>
-<section id="instruções-if" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="instruções-if"><span class="header-section-number">4.3</span> Instruções <code>if</code></h2>
+<section id="instruções-if" class="level3" data-number="4.1.2">
+<h3 data-number="4.1.2" class="anchored" data-anchor-id="instruções-if"><span class="header-section-number">4.1.2</span> Instruções <code>if</code></h3>
 <p>Para escrever programas úteis, quase sempre precisamos da capacidade de verificar condições e alterar o comportamento do programa de acordo com elas. As <strong>instruções condicionais</strong> nos dão essa capacidade. A forma mais simples é a instrução <code>if</code>. Vamos começar com o seguinte exemplo:</p>
-<div id="c7dc334b" class="cell" data-execution_count="1">
+<div id="5a14bbb4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de x? "</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de y? "</span>))</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -447,10 +479,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Observe como o programa recebe a entrada do usuário para x e y, convertendo esses valores para inteiros e armazenando-os nas respectivas variáveis x e y. Em seguida, a instrução <code>if</code> compara x e y. Se a condição <code>x &lt; y</code> for satisfeita, o comando <code>print</code> é executado.</p>
 <p>As instruções <code>if</code> utilizam valores booleanos (<code>True</code> ou <code>False</code>) para decidir se um bloco de código deve ou não ser executado. Se a comparação <code>x &lt; y</code> for <code>True</code>, o interpretador executa o bloco de código indentado.</p>
 </section>
-<section id="controle-de-fluxo-elif-e-else" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="controle-de-fluxo-elif-e-else"><span class="header-section-number">4.4</span> Controle de Fluxo: <code>elif</code> e <code>else</code></h2>
+<section id="controle-de-fluxo-elif-e-else" class="level3" data-number="4.1.3">
+<h3 data-number="4.1.3" class="anchored" data-anchor-id="controle-de-fluxo-elif-e-else"><span class="header-section-number">4.1.3</span> Controle de Fluxo: <code>elif</code> e <code>else</code></h3>
 <p>Uma instrução <code>if</code> pode ter uma segunda parte, chamada de cláusula <code>else</code>. A sintaxe é a seguinte:</p>
-<div id="2ee0304f" class="cell" data-execution_count="2">
+<div id="4ed2ef4e" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de x? "</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de y? "</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -465,7 +497,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Nosso código pode ser representado da seguinte forma:</p>
 <p><img src="./images/controle-fluxo-01.png" alt="Controle de fluxo" width="20%"></p>
 <p>Este programa pode ser melhorado evitando fazer três verificações consecutivas. Afinal, nem todas as três condições podem ser verdadeiras ao mesmo tempo!</p>
-<div id="9f4a2047" class="cell" data-execution_count="3">
+<div id="99cffcff" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de x? "</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de y? "</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -481,7 +513,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/controle-fluxo-02.png" alt="Controle de fluxo" width="60%"></p>
 <p>Embora o seu computador talvez não perceba diferença de velocidade entre o primeiro programa e essa versão revisada, considere que um servidor online executando bilhões ou trilhões desse tipo de cálculo todos os dias pode ser impactado até mesmo por uma pequena decisão de programação.</p>
 <p>Há ainda uma melhoria final que podemos fazer no programa. Observe que, logicamente, a verificação <code>elif x == y</code> <strong>não é necessária</strong>. Afinal, se x não é menor que y e x não é maior que y, então x necessariamente deve ser igual a y. Portanto, não precisamos executar <code>elif x == y</code>. Em vez disso, podemos criar um resultado padrão, que será executado caso nenhuma das condições anteriores seja verdadeira, utilizando a instrução <code>else</code>. Podemos revisar o código da seguinte forma:</p>
-<div id="e13dc77f" class="cell" data-execution_count="4">
+<div id="13194f23" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de x? "</span>))</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de y? "</span>))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -495,10 +527,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Observe como a complexidade relativa deste programa diminuiu após nossa revisão. Nosso código pode ser representado da seguinte forma:</p>
 <p><img src="images/controle-fluxo-03.png" alt="Controle de fluxo" width="60%"></p>
 </section>
-<section id="operador-or" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="operador-or"><span class="header-section-number">4.5</span> Operador <code>or</code></h2>
+<section id="operador-or" class="level3" data-number="4.1.4">
+<h3 data-number="4.1.4" class="anchored" data-anchor-id="operador-or"><span class="header-section-number">4.1.4</span> Operador <code>or</code></h3>
 <p>O operador <code>or</code> permite que o programa tome uma decisão entre uma ou mais alternativas. Por exemplo, podemos modificar ainda mais o nosso programa da seguinte forma:</p>
-<div id="5e27f2bc" class="cell" data-execution_count="5">
+<div id="c15ee401" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de x? "</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de y? "</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -508,7 +540,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"x é igual a y"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Observe que o resultado do programa permanece o mesmo, mas a complexidade foi reduzida. Com isso, a eficiência do código aumenta. Neste ponto, nosso código já está bastante bom. No entanto, será que o design do programa ainda pode ser melhorado? Podemos modificar nosso código da seguinte forma:</p>
-<div id="3bce1b3a" class="cell" data-execution_count="6">
+<div id="e53c8960" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de x? "</span>))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de y? "</span>))</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -518,7 +550,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"x é igual a y"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Observe que removemos completamente o operador <code>or</code> e simplesmente perguntamos: <strong>“x é diferente de y?”</strong>. Assim, fazemos apenas <strong>uma única verificação</strong>, o que torna o código mais eficiente. Para fins de ilustração, também poderíamos modificar nosso código da seguinte forma:</p>
-<div id="188f20ca" class="cell" data-execution_count="7">
+<div id="c45f9047" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de x? "</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de y? "</span>))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -530,10 +562,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Observe que o operador <code>==</code> verifica se os valores à esquerda e à direita são iguais entre si. O uso de dois sinais de igual é muito importante. Se você usar apenas um sinal de igual (<code>=</code>), o interpretador provavelmente retornará um erro. Nosso código pode ser ilustrado da seguinte forma:</p>
 <p><img src="images/controle-fluxo-04.png" alt="Controle de fluxo" width="60%"></p>
 </section>
-<section id="operador-and" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="operador-and"><span class="header-section-number">4.6</span> Operador <code>and</code></h2>
+<section id="operador-and" class="level3" data-number="4.1.5">
+<h3 data-number="4.1.5" class="anchored" data-anchor-id="operador-and"><span class="header-section-number">4.1.5</span> Operador <code>and</code></h3>
 <p>Assim como o operador <code>or</code>, o operador <code>and</code> também pode ser utilizado em instruções condicionais. Comece seu novo programa da seguinte forma:</p>
-<div id="962f53ef" class="cell" data-execution_count="8">
+<div id="e1579947" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nota <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Nota: "</span>))</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> nota <span class="op">&gt;=</span> <span class="dv">90</span> <span class="kw">and</span> nota <span class="op">&lt;=</span> <span class="dv">100</span>:</span>
@@ -548,7 +580,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Conceito: F"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Observe que, ao executar o programa, você poderá inserir uma nota e receber um conceito. No entanto, perceba que ainda existe potencial para erros (bugs). Normalmente, não devemos confiar que os usuários sempre irão inserir informações corretas. Podemos melhorar nosso código da seguinte forma:</p>
-<div id="58dd924f" class="cell" data-execution_count="9">
+<div id="de2f1a61" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nota <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Nota: "</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="dv">90</span> <span class="op">&lt;=</span> nota <span class="op">&lt;=</span> <span class="dv">100</span>:</span>
@@ -563,7 +595,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Conceito: F"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Observe como o Python permite encadear operadores e condições de uma maneira pouco comum em muitas outras linguagens de programação. Ainda assim, podemos melhorar ainda mais o nosso programa:</p>
-<div id="6dc56967" class="cell" data-execution_count="10">
+<div id="65c6f202" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nota <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Nota: "</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> nota <span class="op">&gt;=</span> <span class="dv">90</span>:</span>
@@ -579,10 +611,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Observe como o programa foi melhorado ao fazer menos verificações. Isso torna o código mais fácil de ler e muito mais fácil de manter no futuro. Você pode aprender mais na documentação oficial do Python sobre <a href="https://docs.python.org/3/tutorial/controlflow.html">controle de fluxo</a>.</p>
 </section>
-<section id="instrução-match" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="instrução-match"><span class="header-section-number">4.7</span> Instrução <code>match</code></h2>
+<section id="instrução-match" class="level3" data-number="4.1.6">
+<h3 data-number="4.1.6" class="anchored" data-anchor-id="instrução-match"><span class="header-section-number">4.1.6</span> Instrução <code>match</code></h3>
 <p>Assim como as instruções <code>if</code>, <code>elif</code> e <code>else</code>, as instruções <code>match</code> também podem ser usadas para executar código condicionalmente, dependendo de determinados valores. Considere o seguinte programa:</p>
-<div id="bb89976c" class="cell" data-execution_count="11">
+<div id="d742131d" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>curso <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Qual é o seu curso? "</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> curso <span class="op">==</span> <span class="st">"Economia"</span>:</span>
@@ -597,7 +629,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Curso não encontrado"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Observe que as três primeiras instruções condicionais exibem a mesma resposta. Podemos melhorar um pouco esse código utilizando a palavra-chave <code>or</code>:</p>
-<div id="6edf0f88" class="cell" data-execution_count="12">
+<div id="3b8a524f" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>curso <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Qual é o seu curso? "</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> curso <span class="op">==</span> <span class="st">"Economia"</span> <span class="kw">or</span> curso <span class="op">==</span> <span class="st">"Administração"</span> <span class="kw">or</span> curso <span class="op">==</span> <span class="st">"Contabilidade"</span>:</span>
@@ -608,7 +640,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Curso não encontrado"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Observe que o número de instruções <code>elif</code> diminuiu, melhorando a legibilidade do nosso código. Como alternativa, podemos usar instruções <code>match</code> para associar os cursos às unidades da USP. Considere o seguinte código:</p>
-<div id="9e9a6114" class="cell" data-execution_count="13">
+<div id="b68e609a" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>curso <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Qual é o seu curso? "</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">match</span> curso:</span>
@@ -624,7 +656,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Curso não encontrado"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Observe o uso do símbolo <code>_</code> no último <code>case</code>. Ele corresponde a <strong>qualquer entrada</strong>, resultando em um comportamento semelhante ao de uma instrução <code>else</code>. Uma instrução <code>match</code> compara o valor que aparece após a palavra-chave <code>match</code> com cada um dos valores definidos após as palavras-chave <code>case</code>. Quando uma correspondência é encontrada, o bloco de código indentado correspondente é executado e o programa interrompe as demais verificações. Podemos melhorar o código da seguinte forma:</p>
-<div id="a6f467fc" class="cell" data-execution_count="14">
+<div id="d9c1b9a2" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>curso <span class="op">=</span> <span class="bu">input</span>(<span class="st">"Qual é o seu curso? "</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">match</span> curso:</span>
@@ -636,6 +668,338 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Curso não encontrado"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Observe o uso da barra vertical simples (<code>|</code>). Assim como a palavra-chave <code>or</code>, ela permite verificar múltiplos valores dentro da mesma instrução <code>case</code>.</p>
+</section>
+</section>
+<section id="estruturas-de-repetição" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="estruturas-de-repetição"><span class="header-section-number">4.2</span> Estruturas de Repetição</h2>
+<p>Estruturas de repetição permitem executar um mesmo bloco de código múltiplas vezes, tornando o processo mais eficiente e menos sujeito a erros do que repetir comandos manualmente. São fundamentais para automatizar tarefas, processar grandes volumes de dados e implementar algoritmos que dependem de iteração.</p>
+<p>Neste capítulo, vamos explorar dois tipos principais de laços (loops):</p>
+<ul>
+<li><strong>Laços em que não sabemos previamente o número de repetições:</strong> <code>while()</code> (executam enquanto uma condição for verdadeira)</li>
+<li><strong>Laços em que sabemos previamente o número de repetições:</strong> <code>for()</code> (executam um número definido de vezes)</li>
+</ul>
+<p>Compreender essas estruturas é essencial para resolver problemas de forma eficiente e elegante em programação.</p>
+<section id="repetições-com-while" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="repetições-com-while"><span class="header-section-number">4.2.1</span> Repetições com <code>while()</code></h3>
+<p>O princípio de um loop <code>while</code> é que as instruções dentro do loop serão repetidas enquanto uma determinada condição for verdadeira. A ideia é que essa condição dependa de um ou mais objetos (variáveis) que sejam modificados durante as iterações; caso contrário, o loop se tornaria infinito. A sintaxe é a seguinte:</p>
+<div id="77520cc7" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> condicao:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    instrucoes</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Assim como nas instruções condicionais, as instruções devem ser escritas dentro de um <strong>bloco indentado</strong>. Vamos analisar um exemplo de um loop <code>while</code>:</p>
+<div id="77f75d7f" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> i <span class="op">!=</span> <span class="dv">0</span>:</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"FEA-USP!"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> i <span class="op">-</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FEA-USP!
+FEA-USP!
+FEA-USP!</code></pre>
+</div>
+</div>
+<p>Observe que o código executa corretamente, reduzindo o valor de n em 1 a cada “iteração” do loop. O termo <strong>iteração</strong> tem um significado especial em programação: refere-se a cada ciclo completo de execução do laço. A primeira iteração é chamada de iteração 0, a segunda é a iteração 1, e assim por diante.</p>
+<p>Em programação, normalmente contamos a partir do zero: 0, 1, 2, etc. Compreender o conceito de iteração é fundamental para entender como os laços funcionam e para controlar corretamente o fluxo de repetição em seus programas. Podemos melhorar o nosso código da seguinte maneira:</p>
+<div id="c49c008a" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> i <span class="op">&lt;=</span> <span class="dv">3</span>:</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"FEA-USP!"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> i <span class="op">+</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FEA-USP!
+FEA-USP!
+FEA-USP!</code></pre>
+</div>
+</div>
+<p>Note que, ao escrevermos <code>i = i + 1</code>, estamos atribuindo à variável <code>i</code> o valor da expressão à direita. No exemplo acima, começamos i em 1, como a maioria das pessoas costuma contar (1, 2, 3…). Se você executar o código acima, verá que ele imprime cinco vezes.</p>
+<p>Entretanto, em programação, é considerado uma boa prática começar a contagem pelo zero. Podemos aprimorar nosso código para iniciar a contagem em zero:</p>
+<div id="7c8ed804" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>i <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> i <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"FEA-USP!"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    i <span class="op">+=</span> <span class="dv">1</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FEA-USP!
+FEA-USP!
+FEA-USP!</code></pre>
+</div>
+</div>
+<p>Perceba que, ao alterar o operador para <code>i &lt; 3</code>, nosso código passa a funcionar como esperado: começamos a contagem em 0 e o laço é executado três vezes, imprimindo a mensagem três vezes. - Além disso, repare que <code>i += 1</code> é uma forma abreviada de escrever <code>i = i + 1</code>, facilitando a leitura e escrita do código. - Nosso código, até aqui, pode ser ilustrado da seguinte maneira:</p>
+<p><img src="images/while-01.png" alt="Repetição com while()" width="30%"></p>
+<p>Note que nosso loop conta o valor de i até 3, mas não inclui o 3.</p>
+</section>
+<section id="repetições-com-for" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="repetições-com-for"><span class="header-section-number">4.2.2</span> Repetições com <code>for()</code></h3>
+<p>Quando sabemos de antemão o número de repetições desejadas, o laço <code>for()</code> é a escolha ideal. Sua sintaxe é simples:</p>
+<div id="86b60f88" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> objeto <span class="kw">in</span> valores_possiveis:</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    instrucoes</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Nesse contexto, <code>objeto</code> é uma variável local que, a cada iteração, assume um dos valores definidos em <code>valores_possiveis</code>. As <code>instrucoes</code> são os comandos executados em cada repetição do laço.</p>
+<p>O laço <code>for</code> é especialmente útil para percorrer listas, sequências ou qualquer coleção de elementos. Por exemplo, podemos reescrever nosso código anterior da seguinte maneira:</p>
+<div id="c2bb23ab" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>]:</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"FEA-USP!"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FEA-USP!
+FEA-USP!
+FEA-USP!</code></pre>
+</div>
+</div>
+<p>Observe como esse código é mais limpo e fácil de entender em comparação ao exemplo anterior com o loop <code>while</code>. Aqui, a variável <code>i</code> começa em 0, imprime a mensagem, depois recebe 1, imprime novamente, depois recebe 2, imprime mais uma vez e então o laço termina automaticamente.</p>
+<p>Essa abordagem é eficiente para listas pequenas, mas imagine se você precisasse repetir a operação para um milhão de vezes! O ideal é criar códigos que funcionem bem para qualquer quantidade de repetições, tornando-os escaláveis e fáceis de manter. Veja como podemos aprimorar nosso código para esses casos:</p>
+<div id="8fb9cfbf" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="dv">3</span>):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"FEA-USP!"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FEA-USP!
+FEA-USP!
+FEA-USP!</code></pre>
+</div>
+</div>
+<p>A função <code>range()</code> é extremamente útil para criar sequências numéricas em laços de repetição, tornando o código mais limpo e eficiente. Seus principais argumentos são:</p>
+<ul>
+<li><code>start</code>: (opcional, padrão 0) valor inicial da sequência (<strong>incluído</strong>);</li>
+<li><code>stop</code>: valor final da sequência (<strong>não incluído</strong>);</li>
+<li><code>step</code>: (opcional, padrão 1) intervalo entre os valores.</li>
+</ul>
+<p>Por exemplo, ao utilizar <code>range(3)</code>, o Python gera automaticamente os valores 0, 1 e 2, permitindo que o laço execute exatamente três vezes sem a necessidade de criar listas manualmente ou controlar variáveis auxiliares.</p>
+<p>Podemos tornar nosso código ainda mais limpo e idiomático. Note que, neste caso, nunca utilizamos a variável <code>i</code> dentro do corpo do laço, apenas a usamos para controlar o número de repetições. Ou seja, embora o Python precise de <code>i</code> para contar as iterações, não precisamos desse valor para nenhuma outra finalidade.</p>
+<p>Em Python, quando a variável de iteração não é utilizada no corpo do laço, é uma boa prática representá-la por um sublinhado (<code>_</code>). Isso deixa claro para quem lê o código que o valor não será usado. Veja como fica:</p>
+<div id="182f37db" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"FEA-USP!"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FEA-USP!
+FEA-USP!
+FEA-USP!</code></pre>
+</div>
+</div>
+<p>Note que trocar o <code>i</code> por <code>_</code> não altera em nada o funcionamento do nosso programa. Na verdade, usar o sublinhado deixa explícito para quem lê o código que o valor da variável de controle não será utilizado, tornando o código mais claro e profissional.</p>
+<p>Sempre que você precisar apenas repetir uma ação um certo número de vezes, sem se importar com o valor da variável de iteração, prefira usar <code>_</code> no lugar de um nome qualquer. Isso é considerado uma boa prática em Python.</p>
+<p>Outra alternativa interessante é utilizar a multiplicação de strings para repetir uma mensagem várias vezes de forma ainda mais concisa. Veja o exemplo:</p>
+<div id="75de1208" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FEA-USP!"</span> <span class="op">*</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FEA-USP!FEA-USP!FEA-USP!</code></pre>
+</div>
+</div>
+<p>Note que, ao executar esse código, a mensagem será impressa três vezes, mas o resultado será <code>FEA-USP!FEA-USP!FEA-USP!</code> tudo na mesma linha. Como poderíamos adicionar uma quebra de linha ao final de cada mensagem?</p>
+<div id="46e68e34" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"FEA-USP!</span><span class="ch">\n</span><span class="st">"</span> <span class="op">*</span> <span class="dv">3</span>, end <span class="op">=</span> <span class="st">""</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>FEA-USP!
+FEA-USP!
+FEA-USP!</code></pre>
+</div>
+</div>
+<p>Note que esse código imprime a mensagem três vezes, cada uma em uma linha diferente. Ao adicionar <code>end=""</code> e o <code>\n</code>, informamos ao interpretador que deve inserir uma quebra de linha ao final de cada mensagem, mas sem adicionar uma linha em branco extra ao final do resultado.</p>
+</section>
+<section id="mais-sobre-listas" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="mais-sobre-listas"><span class="header-section-number">4.2.3</span> Mais sobre Listas</h3>
+<p>Considere o exemplo a seguir:</p>
+<div id="1cd1b7ca" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>alunos <span class="op">=</span> [<span class="st">"Ana"</span>, <span class="st">"Pedro"</span>, <span class="st">"Marcos"</span>]</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alunos[<span class="dv">0</span>])</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alunos[<span class="dv">1</span>])</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(alunos[<span class="dv">2</span>])</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ana
+Pedro
+Marcos</code></pre>
+</div>
+</div>
+<p>Observe que temos uma lista chamada alunos, contendo os nomes dos estudantes. Em seguida, imprimimos o aluno que está na posição 0, “Ana”. O mesmo é feito para os demais alunos, acessando cada posição da lista individualmente. No entanto, esse método não é prático se a lista for grande ou se não soubermos quantos elementos ela possui.</p>
+<p>Assim como ilustramos anteriormente, podemos usar um laço para percorrer toda a lista de forma automática e eficiente. Para isso, podemos utilizar a função <code>len()</code> para descobrir o tamanho (quantidade de elementos) da lista alunos</p>
+<div id="e6867876" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>alunos <span class="op">=</span> [<span class="st">"Ana"</span>, <span class="st">"Pedro"</span>, <span class="st">"Marcos"</span>]</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(alunos)):</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(alunos[i])</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ana
+Pedro
+Marcos</code></pre>
+</div>
+</div>
+<p>Outra forma ainda mais simples e legível de percorrer todos os elementos de uma lista é utilizando o próprio nome da variável na estrutura do laço. Veja:</p>
+<div id="afc59a7f" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>alunos <span class="op">=</span> [<span class="st">"Ana"</span>, <span class="st">"Pedro"</span>, <span class="st">"Marcos"</span>]</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> aluno <span class="kw">in</span> alunos:</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(aluno)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Ana
+Pedro
+Marcos</code></pre>
+</div>
+</div>
+<p>Note que, para cada aluno na lista alunos, o código irá imprimir o nome do aluno como esperado. Você pode se perguntar por que não usamos o sublinhado (<code>_</code>), como discutido anteriormente. Optamos por não fazer isso porque a variável aluno é utilizada explicitamente no nosso código.</p>
+</section>
+<section id="interrompendo-um-laço-de-repetição" class="level3" data-number="4.2.4">
+<h3 data-number="4.2.4" class="anchored" data-anchor-id="interrompendo-um-laço-de-repetição"><span class="header-section-number">4.2.4</span> Interrompendo um Laço de Repetição</h3>
+<p>Ao trabalhar com laços controlados por condição, pode surgir a necessidade de interromper ou pular partes da execução antes que a condição principal deixe de ser satisfeita. Para esses casos, Python oferece mecanismos explícitos de controle de fluxo. As duas principais palavras-chave para modificar o comportamento de um laço são:</p>
+<ul>
+<li>A instrução <code>continue</code> informa explicitamente ao Python para ir para a próxima iteração do laço.</li>
+<li>Já a instrução <code>break</code> faz com que o Python “quebre” o laço antes de terminar todas as iterações previstas.</li>
+</ul>
+<p>Essas ferramentas são úteis para tratar casos especiais, validar entradas ou evitar cálculos desnecessários dentro de um laço.</p>
+<div id="2b52044b" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de n? "</span>))</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">continue</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>No exemplo anterior, continuamos para a próxima iteração do laço quando n é menor que 0 — o que faz com que o usuário seja novamente solicitado a informar “Qual o valor de n?”. Se, por outro lado, n for maior ou igual a 0, saímos do laço e o restante do programa é executado normalmente.</p>
+<p>Note que a palavra-chave <code>continue</code> é redundante neste caso. Podemos melhorar nosso código da seguinte forma:</p>
+<div id="b1d6ee64" class="cell" data-execution_count="29">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">"Qual o valor de n? "</span>))</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"FEA-USP!"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Observe que esse laço <code>while</code> irá sempre executar até que n seja maior que 0. Quando n for maior que 0, o laço é interrompido.</p>
+</section>
+<section id="aplicação-teorema-central-do-limite" class="level3" data-number="4.2.5">
+<h3 data-number="4.2.5" class="anchored" data-anchor-id="aplicação-teorema-central-do-limite"><span class="header-section-number">4.2.5</span> Aplicação: Teorema Central do Limite</h3>
+<p>O Teorema Central do Limite (TCL) é um dos resultados mais importantes da estatística e da teoria das probabilidades. Em termos simples, ele afirma que, sob certas condições, a média de um grande número de variáveis aleatórias independentes e identicamente distribuídas tende a seguir uma distribuição normal, independentemente da distribuição original dessas variáveis.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Teorema Central do Limite">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Teorema Central do Limite
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suponha que estejamos amostrando de uma variável aleatória <span class="math inline">\(X\)</span> com média finita <span class="math inline">\(\mu\)</span> e desvio padrão finito <span class="math inline">\(\sigma\)</span>. Independentemente da distribuição original de <span class="math inline">\(X\)</span>, a distribuição da <em>média amostral</em> aproxima-se de uma distribuição normal à medida que o tamanho da amostra aumenta. Nessa caso, a média e o desvio padrão da distribuição das médias amostrais são dados por:</p>
+<p><span class="math display">\[\mu_{\bar{X}}=\mu\]</span></p>
+<p><span class="math display">\[\sigma_{\bar{X}}=\frac{\sigma}{\sqrt{N}}\]</span></p>
+</div>
+</div>
+<p>Vamos ilustrar esse resultado por meio de um experimento computacional simples:</p>
+<ol type="1">
+<li>Gerar várias amostras aleatórias de uma distribuição (por exemplo, uniforme);</li>
+<li>Calcular a média de cada amostra;</li>
+<li>Repetir esse processo muitas vezes, armazenando as médias obtidas;</li>
+<li>Analisar o comportamento dessas médias.</li>
+</ol>
+<p>Esse experimento permite observar, na prática, como a distribuição das médias amostrais se aproxima de uma normal, mesmo quando os dados originais não seguem esse formato.</p>
+<p>Vamos começar sorteando uma única amostra com 5 observações de uma distribuição uniforme entre 0 e 1:</p>
+<div id="c27f487a" class="cell" data-execution_count="30">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>amostra <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(amostra)</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.mean(amostra))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0.18093613 0.05880468 0.48911146 0.89842343 0.78313825]
+0.48208279067725285</code></pre>
+</div>
+</div>
+<p>Se executarmos esse código novamente, obteremos valores diferentes. Isso acontece porque estamos lidando com números aleatórios. Para tornar os resultados reprodutíveis, utilizamos a função <code>seed</code> do NumPy, que fixa o ponto de partida do gerador de números aleatórios:</p>
+<div id="9f93c824" class="cell" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">19</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>amostra <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">5</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(amostra)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.mean(amostra))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0.0975336  0.76124972 0.24693797 0.13813169 0.33144656]
+0.3150599084675772</code></pre>
+</div>
+</div>
+<p>Note que a média da amostra gerada dificilmente será exatamente igual a 0,5, que é a média teórica da distribuição uniforme <span class="math inline">\(U(0,1)\)</span>. É aqui que entra o Teorema Central do Limite: embora uma única amostra possa apresentar variações, a média das médias amostrais tende a se aproximar da média populacional conforme aumentamos o número de amostras.</p>
+<p>Vamos repetir o experimento várias vezes, gerando diversas amostras de tamanho 5 e calculando suas médias:</p>
+<div id="7e0bc735" class="cell" data-execution_count="32">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">19</span>)   <span class="co"># reprodutibilidade</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>n_amostras <span class="op">=</span> <span class="dv">10000</span>   <span class="co"># número de repetições</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>tamanho_amostra <span class="op">=</span> <span class="dv">5</span>  <span class="co"># tamanho de cada amostra</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Lista para armazenar as médias</span></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>medias <span class="op">=</span> []</span>
+<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Gerar as amostras e calcular as médias</span></span>
+<span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n_amostras):</span>
+<span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a>    amostra <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, tamanho_amostra)</span>
+<span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>    medias.append(np.mean(amostra))</span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular a média das médias</span></span>
+<span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a>media_das_medias <span class="op">=</span> np.mean(medias)</span>
+<span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Média das médias: </span><span class="sc">{</span>media_das_medias<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Média das médias: 0.4989</code></pre>
+</div>
+</div>
+<p>Observe que o valor obtido é muito próximo de 0,5, evidenciando o resultado teórico.</p>
+<p>Podemos aprofundar a análise variando o número de repetições do experimento:</p>
+<div id="261944f8" class="cell" data-execution_count="33">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">19</span>)                             <span class="co"># reprodutibilidade</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>n_amostras <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>, <span class="dv">10000</span>, <span class="dv">100000</span>] <span class="co"># número de repetições</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>tamanho_amostra <span class="op">=</span> <span class="dv">5</span>                            <span class="co"># tamanho de cada amostra</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> n <span class="kw">in</span> n_amostras:</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    medias <span class="op">=</span> []</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a>        amostra <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, tamanho_amostra)</span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>        medias.append(np.mean(amostra))</span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Média das médias: </span><span class="sc">{</span>np<span class="sc">.</span>mean(medias)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Média das médias: 0.3151
+Média das médias: 0.5157
+Média das médias: 0.4762
+Média das médias: 0.5011
+Média das médias: 0.4992
+Média das médias: 0.5002</code></pre>
+</div>
+</div>
+<p>Note que, à medida que o número de amostras aumenta, a média das médias se estabiliza em torno de 0,5.</p>
+</section>
+</section>
+<section id="exercícios" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">4.3</span> Exercícios</h2>
+<ol type="1">
+<li>Escreva um programa que receba a lista de rendas mensais abaixo e classifique cada observação nas seguintes categorias:</li>
+</ol>
+<ul>
+<li>Dados: <code>rendas = [1200, 3240, 3250, 7100, 12000, 5000, 7500, 1800, 4500]</code></li>
+<li>“Baixa renda” caso a renda mensal seja menor do que 2 salários mínimos.</li>
+<li>“Renda média” caso a renda mensal esteja entre 2 e 5 salários mínimos.</li>
+<li>“Alta renda” caso contrário.</li>
+</ul>
+<p>O programa deve retornar uma nova lista contendo as classificações na mesma ordem da lista original. Você deve utilizar as instruções <code>if</code> e <code>for</code>. Considere o salário mínimo de <span class="math inline">\(R\$ 1.621\)</span> (valor de 2026)</p>
+<ol start="2" type="1">
+<li><p>Utilize o loop <code>while</code> para construir um código que realize uma soma infinita de uma progressão geométrica em que o primeiro termo é igual a <span class="math inline">\(10\)</span> e a razão é igual a <span class="math inline">\(0.9\)</span>.Lembre-se de definir um critério de parada para que o loop não rode para sempre.</p></li>
+<li><p>Escreva um programa que, a partir de uma lista de dados, percorra todos os elementos um a um ignorando valores negativos, interrompendo o loop caso encontre um número maior do que <span class="math inline">\(8\)</span>, e somando todos os valores processados pelo loop antes da interrupção. Aplique esse programa à lista <code>numeros = [4,7,-2,9,1,2,-10,6,-5,3,7,-0.5,12,1,3,-2]</code>.</p></li>
+<li><p>Simule 10.000 lançamentos de um dado justo utilizando a função <code>randint</code> do <code>numpy.random</code>. Utilize um loop <code>for</code> e expressões condicionais para (i) calcular a frequência relativa de cada face e (ii) a média dos valores obtidos dentro da amostra de lançamentos.</p></li>
+<li><p>O último teorema de <em>Fermat</em> diz que não há nenhum número inteiro positivo <em>a,b,c</em> tal que <span class="math display">\[ a^n + b^n = c^n \]</span></p>
+<p>para quaisquer valores de n maiores do que 2.</p></li>
+</ol>
+<p>Use o que você aprendeu com condicionais, operações aritméticas e instruções print para testar se o teorema se mantém, dada a lista de números inteiros abaixo. Note que ao fim de cada iteração, o programa deve exibir “Holy smokes! Fermat was wrong” caso o teorema não valha e “Fermat was right” caso você não tenha refutado um gênio dos tempos modernos.</p>
+<ul>
+<li><code>a = [1,2,3,4,5,6,7,8,9,10]</code></li>
+<li><code>b = [1,2,3,4,5,6,7,8,9,10]</code></li>
+<li><code>n = [3,4,5,6,7,8,9,10,37,52,89,100]</code></li>
+</ul>
 
 
 </section>
