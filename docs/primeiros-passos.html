@@ -226,6 +226,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Controle de fluxo e iteração</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./funcoes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funções</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item">
@@ -826,7 +832,7 @@ Figura&nbsp;2.15: Positron. Fevereiro de 2026
 <section id="construindo-o-primeiro-programa" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="construindo-o-primeiro-programa"><span class="header-section-number">2.6</span> Construindo o Primeiro Programa</h2>
 <p>Uma vez compreendido o papel do ambiente de programação, o próximo passo é escrever e executar instruções simples. Tradicionalmente, o primeiro programa em qualquer linguagem exibe a mensagem “<em>Hello, World!</em>”. Em Python, ele é escrito da seguinte forma:</p>
-<div id="f9ad9732" class="cell" data-execution_count="1">
+<div id="610a94da" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hello, World!"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Hello, World!</code></pre>
@@ -842,39 +848,39 @@ Figura&nbsp;2.15: Positron. Fevereiro de 2026
 <section id="usando-python-como-uma-calculadora" class="level3" data-number="2.6.1">
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="usando-python-como-uma-calculadora"><span class="header-section-number">2.6.1</span> Usando Python como uma Calculadora</h3>
 <p>Além de exibir texto, o interpretador Python pode ser utilizado como uma calculadora simples. Basta digitar uma expressão e o resultado será apresentado. Os operadores aritméticos básicos (adição, subtração, multiplicação e divisão) são: <code>+</code>, <code>-</code>, <code>*</code> e <code>/</code>. Por exemplo:</p>
-<div id="a192e1d8" class="cell" data-execution_count="2">
+<div id="45f0a49b" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>4</code></pre>
 </div>
 </div>
-<div id="79fed57b" class="cell" data-execution_count="3">
+<div id="663a4e3f" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">50</span> <span class="op">-</span> <span class="dv">10</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>40</code></pre>
 </div>
 </div>
-<div id="31b0fa1c" class="cell" data-execution_count="4">
+<div id="5cf777f5" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">8</span> <span class="op">*</span> <span class="dv">5</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>40</code></pre>
 </div>
 </div>
-<div id="cb427fee" class="cell" data-execution_count="5">
+<div id="87ed726f" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="dv">20</span> <span class="op">/</span> <span class="dv">4</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>5.0</code></pre>
 </div>
 </div>
 <p>O operador <code>**</code> é utilizado para calcular potências:</p>
-<div id="439b2191" class="cell" data-execution_count="6">
+<div id="8fe43634" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> <span class="op">**</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>100</code></pre>
 </div>
 </div>
 <p>Em algumas linguagens, o símbolo <code>^</code> representa a exponenciação. No Python, entretanto, <code>^</code> é um operador <em>bitwise</em> (XOR).</p>
-<div id="fa4babdc" class="cell" data-execution_count="7">
+<div id="eb71e0aa" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="op">^</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>4</code></pre>
@@ -882,7 +888,7 @@ Figura&nbsp;2.15: Positron. Fevereiro de 2026
 </div>
 <p>O resultado pode parecer inesperado caso você não esteja familiarizado com operações bit a bit. Não abordaremos operadores bitwise neste curso, pois eles não são relevantes para nossos objetivos imediatos.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 <p>Note que parênteses <code>()</code> podem ser usados para agrupar expressões. Por exemplo,</p>
-<div id="0baa8a8a" class="cell" data-execution_count="8">
+<div id="d2f0fa17" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">50</span> <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> <span class="dv">6</span>) <span class="op">/</span> <span class="dv">4</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>5.0</code></pre>
@@ -890,7 +896,7 @@ Figura&nbsp;2.15: Positron. Fevereiro de 2026
 </div>
 <p>Em Python, números inteiros (por exemplo, 2, 4 e 20) são do tipo <code>int</code>. Já os números com parte fracionária (por exemplo, 5.0 e 1.6) são do tipo <code>float</code>. Veremos mais sobre tipos de dados ao longo do curso.</p>
 <p>Por enquanto, é válido mencionar que a divisão tradicional (<code>/</code>) sempre retorna um número do tipo ponto flutuante (<code>float</code>), mesmo quando o resultado é inteiro:</p>
-<div id="17876f7b" class="cell" data-execution_count="9">
+<div id="1ed1caab" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># divisão clássica retorna um ponto flutuante</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="op">/</span> <span class="dv">3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -898,7 +904,7 @@ Figura&nbsp;2.15: Positron. Fevereiro de 2026
 </div>
 </div>
 <p>Para realizar uma divisão inteira (divisão pelo piso) e receber um inteiro como resultado, você pode utilizar o operador <code>//</code>:</p>
-<div id="bcf567b4" class="cell" data-execution_count="10">
+<div id="15d71c45" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># divisão pelo piso descarta a parte fracionária</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="op">//</span> <span class="dv">3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
@@ -906,7 +912,7 @@ Figura&nbsp;2.15: Positron. Fevereiro de 2026
 </div>
 </div>
 <p>Para obter o resto da divisão, utilize <code>%</code>:</p>
-<div id="cb83a354" class="cell" data-execution_count="11">
+<div id="93ac5554" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># o operador % retorna o resto da divisão</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="dv">17</span> <span class="op">%</span> <span class="dv">3</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
@@ -928,7 +934,7 @@ Figura&nbsp;2.15: Positron. Fevereiro de 2026
 </div>
 </div>
 <p>No Python, criamos uma variável por meio de uma instrução de atribuição, utilizando o operador <code>=</code>:</p>
-<div id="6cc7d41a" class="cell" data-execution_count="12">
+<div id="516dd0f9" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>nome <span class="op">=</span> <span class="st">"Arthur"</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">17</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> <span class="fl">3.141592653589793</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -953,13 +959,13 @@ Importante
 </div>
 </div>
 <p>Depois de definida, uma variável pode ser utilizada em expressões:</p>
-<div id="d3dd2bae" class="cell" data-execution_count="13">
+<div id="892e60f2" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>n <span class="op">+</span> <span class="dv">25</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>42</code></pre>
 </div>
 </div>
-<div id="af7a457d" class="cell" data-execution_count="14">
+<div id="1546b0ab" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> n <span class="op">*</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">16</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(z)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -975,7 +981,7 @@ Importante
 <li>Não podem ser palavras reservadas da linguagem.</li>
 </ul>
 <p>Se você der um nome ilegal a uma variável, recebe um erro de sintaxe:</p>
-<div id="3aed285f" class="cell" data-execution_count="15">
+<div id="8185476f" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2026</span><span class="er">curso</span> <span class="op">=</span> <span class="st">"Métodos Computacionais"</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
@@ -988,7 +994,7 @@ Importante
 </div>
 </div>
 <p>Esse nome é inválido porque começa com número. Outro exemplo de nome ilegal é:</p>
-<div id="538c3efb" class="cell" data-execution_count="16">
+<div id="0eb0d827" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="op">=</span> <span class="st">"Métodos Computacionais"</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
@@ -1020,21 +1026,21 @@ Importante
 </ul>
 <p>Um tipo de valor é conhecido como <strong>tipo</strong>. Todo valor tem um tipo - ou, em algumas ocasiões, dizemos que ele “pertence” a um tipo específico. O Python disponibiliza uma função chamada <code>type</code>, que indica o tipo de qualquer valor.</p>
 <p>Por exemplo, um número inteiro tem um o tipo <code>int</code>:</p>
-<div id="575a3422" class="cell" data-execution_count="17">
+<div id="bca599bd" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>int</code></pre>
 </div>
 </div>
 <p>Um número decimal, ou de ponto flutuante, tem o tipo <code>float</code>:</p>
-<div id="d1d284e7" class="cell" data-execution_count="18">
+<div id="85faf4b4" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(<span class="fl">42.0</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>float</code></pre>
 </div>
 </div>
 <p>E uma sequência de caracteres, ou string, tem o tipo <code>str</code>:</p>
-<div id="508ea2f7" class="cell" data-execution_count="19">
+<div id="359e7632" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">type</span>(<span class="st">"Hello World!"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>str</code></pre>
