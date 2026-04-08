@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Expressões Regulares – EAE1106 - Métodos Computacionais para Economia</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./references.html" rel="next">
+<link href="./excecoes.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-8b4baf804e461d9b72633f0de59a0cac.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-25a4e8620ae17d49cd0c3861fdf92567.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch-01.html">Fundamentos de Computação</a></li><li class="breadcrumb-item"><a href="./regex.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Expressões Regulares</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./images/usp.jpg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./images/usp.jpg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">EAE1106 - Métodos Computacionais para Economia</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/arthurviaro/eae1106" title="Código fonte" class="quarto-navigation-tool px-1" aria-label="Código fonte"><i class="bi bi-github"></i></a>
+    <a href="./EAE1106---Métodos-Computacionais-para-Economia.pdf" title="Baixar PDF" class="quarto-navigation-tool px-1" aria-label="Baixar PDF"><i class="bi bi-file-pdf"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sobre este material</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./prefacio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prefácio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./ch-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fundamentos de Computação</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar seção">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./fundamentos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Como um computador funciona</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./primeiros-passos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Primeiros passos no Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tipos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Tipos de Dados e Expressões</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./controle-fluxo-iteracao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Controle de fluxo e iteração</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./funcoes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funções</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./excecoes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exceções</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./regex.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Expressões Regulares</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Índice</h2>
+   
+  <ul>
+  <li><a href="#modulo-re" id="toc-modulo-re" class="nav-link active" data-scroll-target="#modulo-re"><span class="header-section-number">7.1</span> O módulo <code>re</code></a></li>
+  <li><a href="#sintaxe" id="toc-sintaxe" class="nav-link" data-scroll-target="#sintaxe"><span class="header-section-number">7.2</span> Sintaxe dos padrões</a>
+  <ul class="collapse">
+  <li><a href="#metacaracteres-de-correspondência" id="toc-metacaracteres-de-correspondência" class="nav-link" data-scroll-target="#metacaracteres-de-correspondência"><span class="header-section-number">7.2.1</span> Metacaracteres de correspondência</a></li>
+  <li><a href="#metacaracteres-de-quantidade" id="toc-metacaracteres-de-quantidade" class="nav-link" data-scroll-target="#metacaracteres-de-quantidade"><span class="header-section-number">7.2.2</span> Metacaracteres de quantidade</a></li>
+  <li><a href="#âncoras-grupos-e-controle" id="toc-âncoras-grupos-e-controle" class="nav-link" data-scroll-target="#âncoras-grupos-e-controle"><span class="header-section-number">7.2.3</span> Âncoras, grupos e controle</a></li>
+  </ul></li>
+  <li><a href="#research" id="toc-research" class="nav-link" data-scroll-target="#research"><span class="header-section-number">7.3</span> <code>re.search</code></a></li>
+  <li><a href="#agrupamento-em-expressões-regulares" id="toc-agrupamento-em-expressões-regulares" class="nav-link" data-scroll-target="#agrupamento-em-expressões-regulares"><span class="header-section-number">7.4</span> Agrupamento em Expressões Regulares</a></li>
+  <li><a href="#rematch" id="toc-rematch" class="nav-link" data-scroll-target="#rematch"><span class="header-section-number">7.5</span> <code>re.match</code></a></li>
+  <li><a href="#refindall" id="toc-refindall" class="nav-link" data-scroll-target="#refindall"><span class="header-section-number">7.6</span> <code>re.findall</code></a></li>
+  <li><a href="#re.finditer" id="toc-re.finditer" class="nav-link" data-scroll-target="#re.finditer"><span class="header-section-number">7.7</span> <code>re.finditer</code> </a><a id="refinditer" class="nav-link" data-scroll-target="undefined"></a></li>
+  <li><a href="#resplit" id="toc-resplit" class="nav-link" data-scroll-target="#resplit"><span class="header-section-number">7.8</span> <code>re.split</code></a></li>
+  <li><a href="#resub" id="toc-resub" class="nav-link" data-scroll-target="#resub"><span class="header-section-number">7.9</span> <code>re.sub</code></a></li>
+  <li><a href="#flags" id="toc-flags" class="nav-link" data-scroll-target="#flags"><span class="header-section-number">7.10</span> Flags</a></li>
+  <li><a href="#exercícios" id="toc-exercícios" class="nav-link" data-scroll-target="#exercícios"><span class="header-section-number">7.11</span> Exercícios</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/arthurviaro/eae1106/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ch-01.html">Fundamentos de Computação</a></li><li class="breadcrumb-item"><a href="./regex.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Expressões Regulares</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="regex" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Expressões Regulares</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Expressões regulares (ou <em>regular expressions</em>, frequentemente abreviadas como regex) são sequências de caracteres usadas para verificar se um padrão existe em um texto (string).</p>
+<p>Elas são amplamente usadas, por exemplo, para validar formatos, extrair informações específicas ou transformar dados.</p>
+<p>Neste material, você vai aprender os principais conceitos de expressões regulares em Python. Começaremos importando o módulo <code>re</code>, responsável pelo suporte a regex na linguagem. Em seguida, você verá:</p>
+<ul>
+<li>como usar caracteres simples para fazer correspondências;</li>
+<li>como funcionam os metacaracteres (caracteres especiais);</li>
+<li>como aplicar repetições nos padrões;</li>
+<li>como criar grupos de captura e grupos nomeados;</li>
+<li>como utilizar as principais funções do módulo <code>re</code>, como <code>search</code>, <code>match</code>, <code>findall</code>, <code>finditer</code>, <code>split</code> e <code>sub</code>;</li>
+<li>como usar flags (modificadores) para ajustar o comportamento das buscas.</li>
+</ul>
+<p>Ao longo do capítulo, exemplos práticos mostram como as expressões regulares podem ser aplicadas para resolver problemas comuns de extração, validação e limpeza de dados.</p>
+<section id="modulo-re" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="modulo-re"><span class="header-section-number">7.1</span> O módulo <code>re</code></h2>
+<p>Em Python, as expressões regulares são suportadas pelo módulo <code>re</code>. Isso significa que, para começar a utilizá-las em seus scripts, é necessário importar esse módulo usando <code>import</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A biblioteca <code>re</code> em Python oferece diversas funções que fazem dela uma habilidade que vale a pena dominar. Todas recebem como primeiro argumento um <strong>padrão</strong>, ou seja, uma string especial que descreve o que procurar.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 73%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Função</th>
+<th>O que faz</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>re.search(padrão, string)</code></td>
+<td>Procura o padrão em qualquer posição da string; retorna um objeto <code>Match</code> ou <code>None</code></td>
+</tr>
+<tr class="even">
+<td><code>re.match(padrão, string)</code></td>
+<td>VVerifica se o padrão ocorre no início da string</td>
+</tr>
+<tr class="odd">
+<td><code>re.findall(padrão, string)</code></td>
+<td>Retorna todas as ocorrências do padrão como uma lista</td>
+</tr>
+<tr class="even">
+<td><code>re.finditer(padrão, string)</code></td>
+<td>Retorna um iterador de objetos <code>Match</code>, permitindo acessar detalhes como posição e grupos de cada ocorrência</td>
+</tr>
+<tr class="odd">
+<td><code>re.split(padrão, string)</code></td>
+<td>Divide a string nos pontos onde o padrão é encontrado</td>
+</tr>
+<tr class="even">
+<td><code>re.sub(padrão, substituição, string)</code></td>
+<td>Substitui todas as ocorrências do padrão por outro texto</td>
+</tr>
+</tbody>
+</table>
+<p>Veremos a seguir a linguagem desses padrões. Neste material, você verá algumas delas em detalhes.</p>
+</section>
+<section id="sintaxe" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="sintaxe"><span class="header-section-number">7.2</span> Sintaxe dos padrões</h2>
+<p>A “linguagem” das expressões regulares é formada por <strong>metacaracteres</strong> — símbolos com significado especial.</p>
+<section id="metacaracteres-de-correspondência" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="metacaracteres-de-correspondência"><span class="header-section-number">7.2.1</span> Metacaracteres de correspondência</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Símbolo</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.</code></td>
+<td>Qualquer caractere, exceto quebra de linha</td>
+</tr>
+<tr class="even">
+<td><code>\d</code></td>
+<td>Dígito decimal (<code>[0-9]</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>\D</code></td>
+<td>Qualquer caractere que não é dígito</td>
+</tr>
+<tr class="even">
+<td><code>\w</code></td>
+<td>Caractere alfanumérico ou <code>_</code> (<code>[a-zA-Z0-9_]</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>\W</code></td>
+<td>Qualquer caractere que não é alfanumérico</td>
+</tr>
+<tr class="even">
+<td><code>\s</code></td>
+<td>Espaço em branco (espaço, tab, <code>\n</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>\S</code></td>
+<td>Qualquer caractere que não é espaço em branco</td>
+</tr>
+<tr class="even">
+<td><code>[abc]</code></td>
+<td>Qualquer um dos caracteres listados</td>
+</tr>
+<tr class="odd">
+<td><code>[^abc]</code></td>
+<td>Qualquer caractere exceto os listados</td>
+</tr>
+<tr class="even">
+<td><code>[a-z]</code></td>
+<td>Qualquer caractere dentro do intervalo</td>
+</tr>
+<tr class="odd">
+<td><code>\b</code></td>
+<td>Limite de palavra (início ou fim de palavra)</td>
+</tr>
+<tr class="even">
+<td><code>\t</code></td>
+<td>Tabulação</td>
+</tr>
+<tr class="odd">
+<td><code>\n</code></td>
+<td>Nova linha</td>
+</tr>
+<tr class="even">
+<td><code>\r</code></td>
+<td>Corresponde ao return</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="metacaracteres-de-quantidade" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="metacaracteres-de-quantidade"><span class="header-section-number">7.2.2</span> Metacaracteres de quantidade</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Símbolo</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>*</code></td>
+<td>0 ou mais repetições</td>
+</tr>
+<tr class="even">
+<td><code>+</code></td>
+<td>1 ou mais repetições</td>
+</tr>
+<tr class="odd">
+<td><code>?</code></td>
+<td>0 ou 1 repetição (torna o elemento opcional)</td>
+</tr>
+<tr class="even">
+<td><code>{m}</code></td>
+<td>Exatamente <code>m</code> repetições</td>
+</tr>
+<tr class="odd">
+<td><code>{m,n}</code></td>
+<td>Entre <code>m</code> e <code>n</code> repetições</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="âncoras-grupos-e-controle" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="âncoras-grupos-e-controle"><span class="header-section-number">7.2.3</span> Âncoras, grupos e controle</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Símbolo</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>^</code></td>
+<td>Início da string</td>
+</tr>
+<tr class="even">
+<td><code>$</code></td>
+<td>Fim da string</td>
+</tr>
+<tr class="odd">
+<td><code>\A</code></td>
+<td>Início absoluto da string</td>
+</tr>
+<tr class="even">
+<td><code>\Z</code></td>
+<td>Fim absoluto da string</td>
+</tr>
+<tr class="odd">
+<td><code>A\|B</code></td>
+<td>A ou B</td>
+</tr>
+<tr class="even">
+<td><code>(...)</code></td>
+<td>Grupo de captura</td>
+</tr>
+<tr class="odd">
+<td><code>(?:...)</code></td>
+<td>Grupo sem captura</td>
+</tr>
+<tr class="even">
+<td><code>(?P&lt;nome&gt; ...)</code></td>
+<td>Grupo nomeado</td>
+</tr>
+<tr class="odd">
+<td><code>\</code></td>
+<td>Escape: remove o significado especial do próximo caractere</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Strings brutas (<code>r"..."</code>)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Em Python, o caractere <code>\</code> tem significado especial em strings comuns (por exemplo, <code>\n</code> representa nova linha e <code>\t</code> representa tabulação). Para evitar conflitos com os metacaracteres das expressões regulares (como <code>\d</code>, <code>\w</code>, <code>\s</code>), é recomendável escrever padrões regex usando strings brutas, com o prefixo <code>r"..."</code>. Assim, o Python não interpreta essas sequências como escapes da linguagem:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>re.search(<span class="vs">r"</span><span class="dv">\d</span><span class="op">+</span><span class="vs">"</span>, texto)   <span class="co"># correto — \d é interpretado pelo re</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>re.search(<span class="st">"</span><span class="er">\</span><span class="st">d+"</span>, texto)    <span class="co"># ambíguo — Python tenta interpretar \d antes</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+</section>
+<section id="research" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="research"><span class="header-section-number">7.3</span> <code>re.search</code></h2>
+<p>A função <code>re.search</code> percorre toda a string em busca da primeira posição onde o padrão corresponde. Se encontrar uma correspondência, retorna um objeto <code>Match</code>; caso contrário, retorna <code>None</code>.</p>
+<p>Diferente de <code>re.findall</code>, que retorna todas as ocorrências, <code>re.search</code> interrompe a busca ao encontrar a primeira correspondência — sendo mais eficiente quando o objetivo é apenas verificar se o padrão existe na string.</p>
+<div id="fdd1674a" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"O IPCA de março foi de 0,83%"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> re.search(<span class="st">"[0-9]+,[0-9]+"</span>, texto)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> re.search(<span class="vs">r"</span><span class="dv">\d</span><span class="op">+</span><span class="vs">,</span><span class="dv">\d</span><span class="op">+</span><span class="vs">"</span>, texto)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resultado)           <span class="co"># objeto Match</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resultado.group())   <span class="co"># trecho encontrado</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;re.Match object; span=(23, 27), match='0,83'&gt;
+0,83</code></pre>
+</div>
+</div>
+</section>
+<section id="agrupamento-em-expressões-regulares" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="agrupamento-em-expressões-regulares"><span class="header-section-number">7.4</span> Agrupamento em Expressões Regulares</h2>
+<p>O recurso de <strong>agrupamento</strong> em expressões regulares permite capturar partes específicas do texto que corresponde ao padrão.</p>
+<p>Trechos do padrão delimitados por parênteses <code>()</code> são chamados de <strong>grupos de captura</strong>. Esses parênteses não alteram o que será correspondido, mas organizam o resultado em partes que podem ser acessadas separadamente. É possível usar o método <code>.group()</code> para acessar essas partes:</p>
+<ul>
+<li><code>.group()</code> (ou <code>.group(0)</code>): retorna o trecho completo correspondente ao padrão</li>
+<li><code>.group(n)</code>: retorna um grupo específico (o n-ésimo grupo)</li>
+<li><code>.groups()</code>: retorna todos os grupos como tupla</li>
+</ul>
+<p>Considere um exemplo simples: imagine que precisamos extrair o dia, o mês e o ano de um trecho de texto. Nesse caso, faz sentido usarmos grupos de captura para isolar cada uma dessas partes, permitindo acessá-las individualmente a partir do resultado da correspondência.</p>
+<div id="01617596" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"A reunião do Copom em 18/03/2025 definiu a nova taxa básica de juros."</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> re.search(<span class="vs">r"</span><span class="kw">(</span><span class="dv">\d</span><span class="op">{2}</span><span class="kw">)</span><span class="vs">/</span><span class="kw">(</span><span class="dv">\d</span><span class="op">{2}</span><span class="kw">)</span><span class="vs">/</span><span class="kw">(</span><span class="dv">\d</span><span class="op">{4}</span><span class="kw">)</span><span class="vs">"</span>, texto)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> resultado:</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Data: </span><span class="sc">{</span>resultado<span class="sc">.</span>group()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Dia: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">1</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Mês: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">2</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Ano: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Grupos: </span><span class="sc">{</span>resultado<span class="sc">.</span>groups()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: 18/03/2025
+Dia: 18
+Mês: 03
+Ano: 2025
+Grupos: ('18', '03', '2025')</code></pre>
+</div>
+</div>
+<p>Outra forma de fazer isso é utilizando a sintaxe com <code>(?P&lt;nome&gt;...)</code>, que permite criar <strong>grupos nomeados</strong>.</p>
+<p>Grupos nomeados tornam o código mais legível e fácil de entender, pois você pode acessar cada parte pelo nome, em vez de depender da posição numérica.</p>
+<p>Vamos ver isso na prática usando o mesmo exemplo anterior.</p>
+<div id="3e6dcb21" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"A reunião do Copom em 18/03/2025 definiu a nova taxa básica de juros."</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>resultado <span class="op">=</span> re.search(<span class="vs">r"</span><span class="kw">(</span><span class="fu">?P&lt;dia&gt;</span><span class="dv">\d</span><span class="op">{2}</span><span class="kw">)</span><span class="vs">/</span><span class="kw">(</span><span class="fu">?P&lt;mes&gt;</span><span class="dv">\d</span><span class="op">{2}</span><span class="kw">)</span><span class="vs">/</span><span class="kw">(</span><span class="fu">?P&lt;ano&gt;</span><span class="dv">\d</span><span class="op">{4}</span><span class="kw">)</span><span class="vs">"</span>, texto)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> resultado:</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Data: </span><span class="sc">{</span>resultado<span class="sc">.</span>group()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Dia: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">1</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Mês: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">2</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Ano: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Grupos: </span><span class="sc">{</span>resultado<span class="sc">.</span>groups()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: 18/03/2025
+Dia: 18
+Mês: 03
+Ano: 2025
+Grupos: ('18', '03', '2025')</code></pre>
+</div>
+</div>
+<p>Uma forma simples e elegante de refinar o código anterior é usar o <strong>operador morsa</strong> (<code>:=</code>), que permite atribuir e testar um valor ao mesmo tempo:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>O operador morsa (<code>:=</code>)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Permite atribuir o resultado de uma expressão a uma variável dentro de uma condição. É especialmente útil com <code>re.search</code>, pois evita repetir a chamada e o nome da variável:</p>
+<div id="a701c4b6" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> resultado <span class="op">:=</span> re.search(<span class="vs">r"</span><span class="dv">...</span><span class="vs">"</span>, texto):  <span class="co"># atribui e testa em uma linha</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(resultado.group())</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<p>Cem o operador morsa (<code>:=</code>), o código anterior ficaria assim:</p>
+<div id="7c239165" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"A reunião do Copom em 18/03/2025 definiu a nova taxa básica de juros."</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> resultado <span class="op">:=</span> re.search(<span class="vs">r"</span><span class="kw">(</span><span class="fu">?P&lt;dia&gt;</span><span class="dv">\d</span><span class="op">{2}</span><span class="kw">)</span><span class="vs">/</span><span class="kw">(</span><span class="fu">?P&lt;mes&gt;</span><span class="dv">\d</span><span class="op">{2}</span><span class="kw">)</span><span class="vs">/</span><span class="kw">(</span><span class="fu">?P&lt;ano&gt;</span><span class="dv">\d</span><span class="op">{4}</span><span class="kw">)</span><span class="vs">"</span>, texto):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Data: </span><span class="sc">{</span>resultado<span class="sc">.</span>group()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Dia: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">1</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Mês: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">2</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Ano: </span><span class="sc">{</span>resultado<span class="sc">.</span>group(<span class="dv">3</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Grupos: </span><span class="sc">{</span>resultado<span class="sc">.</span>groups()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Também é possível recuperar os grupos nomeados como um dicionário usando groupdict():</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>resultado.groupdict()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Data: 18/03/2025
+Dia: 18
+Mês: 03
+Ano: 2025
+Grupos: ('18', '03', '2025')</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>{'dia': '18', 'mes': '03', 'ano': '2025'}</code></pre>
+</div>
+</div>
+</section>
+<section id="rematch" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="rematch"><span class="header-section-number">7.5</span> <code>re.match</code></h2>
+<p>A função <code>re.match</code> é semelhante a <code>re.search</code>, mas com uma diferença importante: ela só verifica se o padrão aparece no <strong>início da string</strong>. Na prática, isso equivale a usar <code>^</code> no começo do padrão com <code>re.search</code>.</p>
+<div id="177eccc5" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>codigo_ibge <span class="op">=</span> <span class="st">"Código IBGE: 3550308"</span> <span class="co"># código do município de São Paulo</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># search procura em qualquer posição da string</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Usando search:"</span>, re.search(<span class="vs">r"</span><span class="dv">\d</span><span class="op">{7}</span><span class="vs">"</span>, codigo_ibge).group())</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># match tenta encontrar o padrão apenas no início</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Usando match:"</span>, re.match(<span class="vs">r"</span><span class="dv">\d</span><span class="op">{7}</span><span class="vs">"</span>, codigo_ibge))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Usando match:"</span>, re.match(<span class="vs">r"Código"</span>, codigo_ibge))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Usando match:"</span>, re.match(<span class="vs">r"Código"</span>, codigo_ibge).group())</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Usando search: 3550308
+Usando match: None
+Usando match: &lt;re.Match object; span=(0, 6), match='Código'&gt;
+Usando match: Código</code></pre>
+</div>
+</div>
+</section>
+<section id="refindall" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="refindall"><span class="header-section-number">7.6</span> <code>re.findall</code></h2>
+<p>A função <code>re.findall</code> percorre toda a string em busca de correspondências e retorna todas as ocorrências encontradas como uma lista. Cada elemento dessa lista representa uma correspondência do padrão.</p>
+<p>Como o <code>re.findall</code> não retorna objetos <code>Match</code>, mas sim os resultados já extraídos (strings ou tuplas), não é possível usar os métodos <code>group()</code> e <code>groups()</code>. Isso acontece porque cada elemento retornado já contém diretamente os dados capturados — ou seja, os grupos já vêm “prontos” no resultado, tornando desnecessário o uso de <code>.group()</code> ou <code>.groups()</code>.</p>
+<p>O formato dos elementos retornados depende do uso de grupos de captura <code>()</code> no padrão:</p>
+<ul>
+<li><strong>Sem grupos de captura</strong>: retorna uma lista de strings com os trechos completos de correspondência</li>
+<li><strong>Com 1 grupo de captura</strong>: retorna uma lista de strings contendo apenas o conteúdo desse grupo</li>
+<li><strong>Com múltiplos grupos</strong>: retorna uma lista de tuplas, onde cada tupla corresponde a uma ocorrência e contém os grupos capturados</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use grupos de captura quando quiser extrair partes específicas do texto. Isso torna o resultado do <code>re.findall</code> mais flexível e especialmente útil para análise e processamento de dados.</p>
+</div>
+</div>
+<div id="7bd54c52" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="st">Segundo dados divulgados nesta quinta-feira, o IPCA registrou alta de 4,83</span><span class="sc">% e</span><span class="st">m 2025, enquanto o IGP-M ficou em 7,12%. Já o INPC teve variação de 4,61% no ano passado.</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) Sem grupos: retorna as correspondências completas</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Sem grupos:"</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"</span><span class="dv">\d</span><span class="op">+</span><span class="vs">,</span><span class="dv">\d</span><span class="op">+</span><span class="vs">%"</span>, texto))</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Com 1 grupo: retorna apenas o conteúdo do grupo</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Com 1 grupo:"</span>)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"</span><span class="kw">(</span><span class="dv">\d</span><span class="op">+</span><span class="vs">,</span><span class="dv">\d</span><span class="op">+</span><span class="vs">%</span><span class="kw">)</span><span class="vs">"</span>, texto))</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Com múltiplos grupos: retorna lista de tuplas (índice, valor)</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Com múltiplos grupos (índice + valor):"</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>padrao <span class="op">=</span> <span class="vs">r"</span><span class="dv">\b</span><span class="kw">(</span><span class="vs">IPCA</span><span class="cf">|</span><span class="vs">IGP-M</span><span class="cf">|</span><span class="vs">INPC</span><span class="kw">)</span><span class="dv">\b.</span><span class="op">{0,50}?</span><span class="kw">(</span><span class="dv">\d</span><span class="op">{1,3}</span><span class="vs">,</span><span class="dv">\d</span><span class="op">+</span><span class="kw">)</span><span class="vs">%"</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>resultados <span class="op">=</span> re.findall(padrao, texto)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(resultados)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> indice, valor <span class="kw">in</span> resultados:</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>indice<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>valor<span class="sc">}</span><span class="ss">%"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Sem grupos:
+['4,83%', '7,12%', '4,61%']
+
+Com 1 grupo:
+['4,83%', '7,12%', '4,61%']
+
+Com múltiplos grupos (índice + valor):
+[('IPCA', '4,83'), ('IGP-M', '7,12'), ('INPC', '4,61')]
+
+IPCA: 4,83%
+IGP-M: 7,12%
+INPC: 4,61%</code></pre>
+</div>
+</div>
+</section>
+<section id="re.finditer" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="re.finditer"><span class="header-section-number">7.7</span> <code>re.finditer</code> <a id="refinditer"></a></h2>
+<p>A função <code>re.finditer</code> é semelhante ao <code>re.findall</code>: ela encontra <strong>todas as ocorrências</strong> do padrão ao longo da string.</p>
+<p>A diferença é que, em vez de retornar uma lista de resultados, ela retorna um <strong>iterador de objetos</strong> <code>Match</code>.</p>
+<p>Em outras palavras, <code>re.finditer</code> permite percorrer todas as ocorrências e acessar detalhes de cada uma, como:</p>
+<ul>
+<li>o texto correspondente</li>
+<li>os grupos de captura</li>
+<li>a posição inicial e final na string</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>finditer()</code> é uma excelente escolha quando você precisa de mais informações sobre cada correspondência. Os objetos <code>Match</code> retornados contêm não apenas o texto encontrado, mas também sua posição na string original.</p>
+</div>
+</div>
+<p>Além dos métodos <code>.group()</code>, <code>.groups()</code>, os objetos <code>Match</code> também possuem outros métodos úteis, como <code>.start()</code>, <code>.end()</code> e <code>.span()</code>.</p>
+<div id="44296fef" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="st">Segundo dados divulgados nesta quinta-feira, o IPCA registrou alta de 4,83</span><span class="sc">% e</span><span class="st">m 2025, enquanto o IGP-M ficou em 7,12%. Já o INPC teve variação de 4,61% no ano passado.</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>padrao <span class="op">=</span> <span class="vs">r"</span><span class="dv">\b</span><span class="kw">(</span><span class="vs">IPCA</span><span class="cf">|</span><span class="vs">IGP-M</span><span class="cf">|</span><span class="vs">INPC</span><span class="kw">)</span><span class="dv">\b.</span><span class="op">{0,50}?</span><span class="kw">(</span><span class="dv">\d</span><span class="op">{1,3}</span><span class="vs">,</span><span class="dv">\d</span><span class="op">+</span><span class="kw">)</span><span class="vs">%"</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> match <span class="kw">in</span> re.finditer(padrao, texto):</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(match)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(match.group())</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Grupos: </span><span class="sc">{</span>match<span class="sc">.</span>groups()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Índice: </span><span class="sc">{</span>match<span class="sc">.</span>group(<span class="dv">1</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Valor:  </span><span class="sc">{</span>match<span class="sc">.</span>group(<span class="dv">2</span>)<span class="sc">}</span><span class="ss">%"</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Posição: </span><span class="sc">{</span>match<span class="sc">.</span>span()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"-"</span> <span class="op">*</span> <span class="dv">20</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;re.Match object; span=(48, 76), match='IPCA registrou alta de 4,83%'&gt;
+IPCA registrou alta de 4,83%
+Grupos: ('IPCA', '4,83')
+Índice: IPCA
+Valor:  4,83%
+Posição: (48, 76)
+--------------------
+&lt;re.Match object; span=(97, 117), match='IGP-M ficou em 7,12%'&gt;
+IGP-M ficou em 7,12%
+Grupos: ('IGP-M', '7,12')
+Índice: IGP-M
+Valor:  7,12%
+Posição: (97, 117)
+--------------------
+&lt;re.Match object; span=(124, 151), match='INPC teve variação de 4,61%'&gt;
+INPC teve variação de 4,61%
+Grupos: ('INPC', '4,61')
+Índice: INPC
+Valor:  4,61%
+Posição: (124, 151)
+--------------------</code></pre>
+</div>
+</div>
+</section>
+<section id="resplit" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="resplit"><span class="header-section-number">7.8</span> <code>re.split</code></h2>
+<p>A função <code>re.split</code> divide a string sempre que o padrão é encontrado e retorna o resultado como uma lista. Se o argumento opcional <code>maxsplit</code> for diferente de zero, será realizado no máximo esse número de divisões.</p>
+<p>Ela é mais poderosa que o <code>.split()</code> nativo do Python, pois aceita padrões complexos, como múltiplos delimitadores, espaços variáveis e combinações de caracteres.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use <code>re.split</code> para tratar textos “sujos” ou inconsistentes, em que os separadores não seguem um padrão fixo.</p>
+</div>
+</div>
+<div id="6d6a8c27" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># .split() nativo: delimitador fixo</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"São Paulo/SP: 05508-010"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Usando .split():"</span>, texto.split(<span class="st">":"</span>))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>([p.strip() <span class="cf">for</span> p <span class="kw">in</span> texto.split(<span class="st">":"</span>)])</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># re.split: delimitador flexível — ponto e vírgula OU vírgula OU barra</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"Av. Professor Luciano Gualberto, 908; Butantã, São Paulo/SP: 05508-010"</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Usando re.split():"</span>, re.split(<span class="vs">r"</span><span class="pp">[;,/]</span><span class="vs">"</span>, texto))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Usando re.split():"</span>, re.split(<span class="vs">r"</span><span class="dv">\s</span><span class="op">*</span><span class="pp">[;,/]</span><span class="dv">\s</span><span class="op">*</span><span class="vs">"</span>, texto))</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>([p.strip() <span class="cf">for</span> p <span class="kw">in</span> re.split(<span class="vs">r"</span><span class="pp">[;,/]</span><span class="vs">"</span>, texto)])</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Usando .split(): ['São Paulo/SP', ' 05508-010']
+['São Paulo/SP', '05508-010']
+Usando re.split(): ['Av. Professor Luciano Gualberto', ' 908', ' Butantã', ' São Paulo', 'SP: 05508-010']
+Usando re.split(): ['Av. Professor Luciano Gualberto', '908', 'Butantã', 'São Paulo', 'SP: 05508-010']
+['Av. Professor Luciano Gualberto', '908', 'Butantã', 'São Paulo', 'SP: 05508-010']</code></pre>
+</div>
+</div>
+</section>
+<section id="resub" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="resub"><span class="header-section-number">7.9</span> <code>re.sub</code></h2>
+<p>A função <code>re.sub</code> realiza substituições em uma string. Ela retorna uma nova string onde todas as ocorrências não sobrepostas do padrão são substituídas pelo valor definido em repl.</p>
+<p>Se o padrão não for encontrado, a string original é retornada sem alterações.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>re.sub</code> é indispensável para limpeza e normalização de dados, como remover caracteres indesejados, padronizar formatos ou ajustar textos antes de análises.</p>
+</div>
+</div>
+<div id="7bccde20" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Removendo formatação de valores monetários brasileiros</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>dados <span class="op">=</span> [<span class="st">"R$ 1.234,56"</span>, <span class="st">"R$9.800,00"</span>, <span class="st">"$ 12.345.678,90"</span>]</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>dados_limpos <span class="op">=</span> []</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> d <span class="kw">in</span> dados:</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    sem_simbolo <span class="op">=</span> re.sub(<span class="vs">r"</span><span class="pp">[R$</span><span class="dv">\s</span><span class="pp">]</span><span class="vs">"</span>, <span class="st">""</span>, d)       <span class="co"># remove R$ e espaços</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    sem_milhar  <span class="op">=</span> re.sub(<span class="vs">r"</span><span class="ch">\.</span><span class="vs">"</span>, <span class="st">""</span>, sem_simbolo) <span class="co"># remove ponto de milhar</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    decimal  <span class="op">=</span> re.sub(<span class="vs">r","</span>, <span class="st">"."</span>, sem_milhar)     <span class="co"># substitui vírgula por ponto</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    dados_limpos.append(<span class="bu">float</span>(decimal))</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dados)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(dados_limpos)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['R$ 1.234,56', 'R$9.800,00', '$ 12.345.678,90']
+[1234.56, 9800.0, 12345678.9]</code></pre>
+</div>
+</div>
+</section>
+<section id="flags" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="flags"><span class="header-section-number">7.10</span> Flags</h2>
+<p>As <strong>flags</strong> permitem modificar o comportamento das buscas com expressões regulares, tornando-as mais flexíveis e adaptáveis a diferentes situações. Elas são passadas como um terceiro argumento nas funções do módulo <code>re</code>, por exemplo: <code>re.search(padrão, string, flags=re.I)</code>.</p>
+<p>As principais flags são:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 79%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Flag</th>
+<th>Efeito</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>re.IGNORECASE</code></td>
+<td>Ignora a diferença entre maiúsculas e minúsculas (busca “case-insensitive”)</td>
+</tr>
+<tr class="even">
+<td><code>re.MULTILINE</code></td>
+<td>Faz com que <code>^</code> e <code>$</code> correspondam ao início e fim de cada linha, não só da string inteira</td>
+</tr>
+<tr class="odd">
+<td><code>re.DOTALL</code></td>
+<td>Faz com que o ponto <code>.</code> corresponda também à quebra de linha (<code>\n</code>)</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Dica</span>Dica:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Você pode combinar várias flags usando o operador <code>|</code>, por exemplo: <code>flags=re.IGNORECASE | re.MULTILINE</code>.</p>
+</div>
+</div>
+<div id="27da3ac0" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"A decisão do Copom de iniciar o ciclo de flexibilização monetária com um corte de 0,25 ponto percentual, levando a taxa selic de 15,00% para 14,75% ao ano.</span><span class="ch">\n</span><span class="st">A expectativa do mercado é que a Taxa Selic termine o ano em 14%."</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"Selic"</span>, texto))</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"Selic"</span>, texto, re.IGNORECASE))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>['Selic']
+['selic', 'Selic']</code></pre>
+</div>
+</div>
+<div id="359262bd" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="st">Aluno: Ana; Curso: Economia; Ingresso: 2023</span><span class="ch">\n</span><span class="st">aluno: Bruno; Curso: Administração; Ingresso: 2022</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Sem MULTILINE: ^ e $ correspondem ao início e fim de toda a string</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"MULTILINE"</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"</span><span class="dv">\d</span><span class="op">{4}</span><span class="dv">$</span><span class="vs">"</span>, texto))</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"</span><span class="dv">\d</span><span class="op">{4}</span><span class="dv">$</span><span class="vs">"</span>, texto, re.MULTILINE))</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>()</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Sem DOTALL: . não casa com quebras de linha</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"DOTALL"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.search(<span class="vs">r"</span><span class="dv">.</span><span class="op">+</span><span class="vs">"</span>, texto).group())</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.search(<span class="vs">r"</span><span class="dv">.</span><span class="op">+</span><span class="vs">"</span>, texto, re.DOTALL).group())</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Com IGNORECASE e MULTILINE</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"IGNORECASE + MULTILINE"</span>)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"</span><span class="dv">^</span><span class="vs">aluno</span><span class="dv">.</span><span class="op">+</span><span class="vs">"</span>, texto))</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"</span><span class="dv">^</span><span class="vs">aluno</span><span class="dv">.</span><span class="op">+</span><span class="vs">"</span>, texto, re.IGNORECASE))</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(re.findall(<span class="vs">r"</span><span class="dv">^</span><span class="vs">aluno</span><span class="dv">.</span><span class="op">+</span><span class="vs">"</span>, texto, re.IGNORECASE <span class="op">|</span> re.MULTILINE))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>MULTILINE
+['2022']
+['2023', '2022']
+
+DOTALL
+Aluno: Ana; Curso: Economia; Ingresso: 2023
+
+Aluno: Ana; Curso: Economia; Ingresso: 2023
+aluno: Bruno; Curso: Administração; Ingresso: 2022
+
+IGNORECASE + MULTILINE
+[]
+[]
+['Aluno: Ana; Curso: Economia; Ingresso: 2023', 'aluno: Bruno; Curso: Administração; Ingresso: 2022']</code></pre>
+</div>
+</div>
+</section>
+<section id="exercícios" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="exercícios"><span class="header-section-number">7.11</span> Exercícios</h2>
+<ol type="1">
+<li><p>Escreva uma função <code>validar_ticker(ticker)</code> que valide o formato de um ticker de ação brasileira na B3. Tickers válidos têm entre 4 e 6 letras maiúsculas seguidas de 1 ou 2 dígitos (ex: <code>"PETR4"</code>, <code>"VALE3"</code>, <code>"BBDC4"</code>, <code>"ABEV3"</code>). A função deve retornar <code>True</code> ou <code>False</code>.</p></li>
+<li><p>Dado o texto abaixo, use <code>re.findall</code> para extrair <strong>todas</strong> as taxas percentuais mencionadas e calcule a média:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>texto <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="st">A rentabilidade do CDB foi de 12,5% ao ano, enquanto o Tesouro Selic</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="st">rendeu 10,50%. Os fundos de renda fixa tiveram retorno médio de 11,2%,</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="st">e as debêntures incentivadas pagaram 13,8% ao ano. A inflação (IPCA)</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="st">ficou em 4,83%, resultando em um ganho real de aproximadamente 7,3%.</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>A tabela abaixo contém dados de exportações com delimitadores inconsistentes. Use <code>re.split</code> para separar corretamente cada linha e calcule o total exportado:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>dados <span class="op">=</span> [</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"soja;32.450,00|EUA;jan/2024"</span>,</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"milho,12.800,50;China,fev/2024"</span>,</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"petroleo</span><span class="ch">\t</span><span class="st">8.920,75|Argentina</span><span class="ch">\t</span><span class="st">fev/2024"</span>,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Escreva uma função <code>extrair_cnpj(texto)</code> que use <code>re.findall</code> para encontrar <strong>todos</strong> os CNPJs em um texto no formato <code>XX.XXX.XXX/XXXX-XX</code>. Teste com um parágrafo que contenha múltiplos CNPJs misturados com texto.</p></li>
+<li><p>Usando <code>re.sub</code>, escreva uma função <code>normalizar_serie(valores)</code> que receba uma lista de strings representando valores de uma série temporal — potencialmente com formatações inconsistentes como <code>"1.234,56"</code>, <code>"1234.56"</code>, <code>"R$ 1.234,56"</code> e <code>"1,234.56"</code> (formato americano) — e retorne uma lista de <code>float</code> com todos os valores normalizados.</p></li>
+</ol>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./excecoes.html" class="pagination-link" aria-label="Exceções">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Exceções</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./references.html" class="pagination-link" aria-label="References">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Arthur Viaro · Departamento de Economia · FEA-USP</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/arthurviaro/eae1106/issues/new" class="toc-action"><i class="bi bi-github"></i>Criar uma issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>EAE1106 - Métodos Computacionais para Economia</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
